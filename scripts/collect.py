@@ -24,7 +24,7 @@ def get_json(path, params):
 def get_doc_text(rcept_no):
     q = urllib.parse.urlencode({"crtfc_key": KEY, "rcept_no": rcept_no})
     req = urllib.request.Request(f"{BASE}/document.xml?{q}", headers=UA)
-    with urllib.request.urlopen(req, timeout=60) as r:
+    with urllib.request.urlopen(req, timeout=30) as r:
         raw = r.read()
     zf = zipfile.ZipFile(io.BytesIO(raw))
     names = [n for n in zf.namelist() if n.lower().endswith(".xml")]
