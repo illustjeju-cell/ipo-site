@@ -1,0 +1,145 @@
+# -*- coding: utf-8 -*-
+"""공모주 나침반 수집기 — OpenDART 공시 기반.
+
+증권신고서(지분증권) 공시를 모아 종목별로 묶고, 가장 최신 신고서 원본에서
+청약 일정·공모가·주관사·수요예측 결과를 뽑아 data/ipos.json 으로 저장한다.
+파싱이 빗나간 경우를 눈으로 확인할 수 있게 종목마다 debug 발췌를 함께 남긴다.
+"""
+import io, json, os, re, sys, zipfile, datetime, urllib.request, urllib.parse
+
+KEY = os.environ["OPENDART_KEY"]
+BASE = "https://opendart.fss.or.kr/api"
+UA = {"User-Agent": "Mozilla/5.0"}
+LOOKBACK_DAYS = 60
+MAX_DOCS = 40
+
+def get_json(path, params):
+    q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
+    req = urllib.request.Request(f"{BASE}{path}?{q}", headers=UA)
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+def get_doc_text(rcept_no):
+    q = urllib.parse.urlencode({"crtfc_key": KEY, "rcept_no": rcept_no})
+    req = urllib.request.Request(f"{BASE}/document.xml?{q}", headers=UA)
+    with urllib.request.urlopen(req, timeout=60) as r:
+        raw = r.read()
+    zf = zipfile.ZipFile(io.BytesIO(raw))
+    names = [n for n in zf.namelist() if n.lower().endswith(".xml")]
+    name = max(names, key=lambda n: zf.getinfo(n).file_size)
+    xml = zf.read(name).decode("utf-8", "replace")
+    t = re.sub(r"<[^>]+>", " ", xml)
+    t = t.replace("&nbsp;", " ").replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
+    return re.sub(r"\s+", " ", t)
+
+DATE_RE = re.compile(r"(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일")
+def dates_in(s):
+    return [f"{y}-{int(m):02d}-{int(d):02d}" for y, m, d in DATE_RE.findall(s)]
+
+def window(text, kw, size=350, nth=0):
+    idxs = [m.start() for m in re.finditer(re.escape(kw), text)]
+    if len(idxs) <= nth: return ""
+    i = idxs[nth]
+    return text[i:i + size]
+
+def first_num(s, unit="원"):
+    m = re.search(r"([\d,]{3,})\s*" + unit, s)
+    return int(m.group(1).replace(",", "")) if m else None
+
+def parse_fields(text):
+    f = {}
+    # 청약일: '청약기일' 또는 '청약일' 뒤 날짜 1~2개
+    w = window(text, "청약기일") or window(text, "청약일")
+    ds = dates_in(w)
+    if ds: f["sub_start"], f["sub_end"] = ds[0], ds[-1]
+    # 수요예측일
+    w = window(text, "수요예측일") or window(text, "수요예측기간")
+    ds = dates_in(w)
+    if ds: f["demand_start"], f["demand_end"] = ds[0], ds[-1]
+    # 상장일
+    w = window(text, "상장예정일") or window(text, "상장일")
+    ds = dates_in(w)
+    if ds: f["listing_date"] = ds[0]
+    # 희망공모가 밴드
+    w = window(text, "희망공모가")
+    m = re.search(r"([\d,]{3,})\s*(?:원)?\s*[~∼\-]\s*([\d,]{3,})", w)
+    if m: f["price_low"], f["price_high"] = int(m.group(1).replace(",", "")), int(m.group(2).replace(",", ""))
+    # 확정공모가
+    w = window(text, "확정공모가") or window(text, "확정 공모가")
+    v = first_num(w)
+    if v: f["price_final"] = v
+    # 공모주식수
+    w = window(text, "공모주식수") or window(text, "모집주식수") or window(text, "공모할 주식수")
+    m = re.search(r"([\d,]{3,})\s*주", w)
+    if m: f["shares"] = int(m.group(1).replace(",", ""))
+    # 대표주관회사
+    m = re.search(r"대표주관회사\s*[:：]?\s*([가-힣A-Za-z&· ]{2,24}?(?:증권|은행))", text)
+    if m: f["underwriter"] = m.group(1).strip()
+    # 수요예측 경쟁률: '수요예측' 창에서 N:1 또는 N대 1
+    for nth in range(3):
+        w = window(text, "수요예측", 600, nth)
+        if not w: break
+        m = re.search(r"([\d,]+\.?\d*)\s*[:：]\s*1(?![\d])", w) or re.search(r"([\d,]+\.?\d*)\s*대\s*1", w)
+        if m:
+            v = float(m.group(1).replace(",", ""))
+            if v > 1: f["demand_ratio"] = v; break
+    # 의무보유확약 비율
+    w = window(text, "의무보유확약")
+    m = re.search(r"([\d.]+)\s*%", w)
+    if m: f["lockup_pct"] = float(m.group(1))
+    return f
+
+def debug_excerpts(text):
+    out = {}
+    for kw in ("청약기일", "희망공모가", "확정공모가", "수요예측", "대표주관회사"):
+        i = text.find(kw)
+        if i >= 0: out[kw] = text[max(0, i - 60):i + 240]
+    return out
+
+def main():
+    today = datetime.date.today()
+    bgn = (today - datetime.timedelta(days=LOOKBACK_DAYS)).strftime("%Y%m%d")
+    end = today.strftime("%Y%m%d")
+    filings = []
+    for page in range(1, 6):
+        d = get_json("/list.json", {"bgn_de": bgn, "end_de": end, "pblntf_ty": "C",
+                                    "pblntf_detail_ty": "C001", "page_no": page, "page_count": 100})
+        if d.get("status") != "000":
+            print("list error:", d.get("status"), d.get("message")); break
+        filings += d.get("list") or []
+        if page * 100 >= int(d.get("total_count", 0)): break
+    print("filings:", len(filings))
+    by_corp = {}
+    for it in filings:
+        by_corp.setdefault(it["corp_code"], []).append(it)
+    items = []
+    docs = 0
+    for corp_code, fs in by_corp.items():
+        fs.sort(key=lambda x: x["rcept_no"])
+        def rank(x):
+            nm = x["report_nm"]
+            return (2 if "발행조건확정" in nm else 1 if "기재정정" in nm or "첨부정정" in nm else 0, x["rcept_no"])
+        main_f = max(fs, key=rank)
+        item = {"corp_code": corp_code, "corp_name": main_f["corp_name"],
+                "stage": "확정" if "발행조건확정" in main_f["report_nm"] else "예정",
+                "rcept_no": main_f["rcept_no"], "rcept_dt": main_f["rcept_dt"],
+                "dart_url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={main_f['rcept_no']}",
+                "filings": len(fs)}
+        if docs < MAX_DOCS:
+            try:
+                text = get_doc_text(main_f["rcept_no"])
+                item.update(parse_fields(text))
+                item["debug"] = debug_excerpts(text)
+                docs += 1
+            except Exception as e:
+                item["error"] = f"{type(e).__name__}: {e}"
+        items.append(item)
+    items.sort(key=lambda x: (x.get("sub_start") is None, x.get("sub_start") or "9999", x["corp_name"]))
+    out = {"updated": datetime.datetime.now().isoformat(timespec="seconds"), "items": items}
+    os.makedirs("data", exist_ok=True)
+    with open("data/ipos.json", "w", encoding="utf-8") as fh:
+        json.dump(out, fh, ensure_ascii=False, indent=1)
+    print("items:", len(items), "| docs parsed:", docs)
+
+if __name__ == "__main__":
+    main()

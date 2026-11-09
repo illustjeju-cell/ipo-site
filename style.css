@@ -1,0 +1,14 @@
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,"Malgun Gothic",sans-serif;color:#1c2333;background:#f6f8fb}
+header.site{background:#123a6d;padding:14px 18px}header.site a{color:#fff;font-weight:800;font-size:19px;text-decoration:none}
+main{max-width:860px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:23px;margin:6px 0 10px}.upd{color:#667;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:14px}
+.card{display:block;background:#fff;border:1px solid #dde4ee;border-radius:12px;padding:15px;text-decoration:none;color:inherit}
+.cname{font-weight:800;font-size:16px}.stage{font-size:11px;background:#e8f0fe;color:#123a6d;border-radius:20px;padding:2px 8px;vertical-align:2px}
+.cprice{margin-top:7px;font-size:14px}.cmeta{margin-top:4px;color:#667;font-size:13px}
+.lead{color:#345}.facts{width:100%;border-collapse:collapse;background:#fff;border:1px solid #dde4ee;border-radius:12px;overflow:hidden}
+.facts th,.facts td{padding:11px 13px;border-bottom:1px solid #edf1f6;text-align:left;font-size:14.5px}
+.facts th{width:32%;background:#f2f6fc;color:#345}
+.src{color:#667;font-size:13px;margin-top:14px}
+pre{white-space:pre-wrap;word-break:break-all;background:#fff;border:1px solid #dde4ee;border-radius:8px;padding:10px;font-size:12px}
+footer{max-width:860px;margin:0 auto;padding:18px 16px 30px;color:#889;font-size:12.5px}
