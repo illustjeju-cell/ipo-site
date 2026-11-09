@@ -5,14 +5,14 @@
 청약 일정·공모가·주관사·수요예측 결과를 뽑아 data/ipos.json 으로 저장한다.
 파싱이 빗나간 경우를 눈으로 확인할 수 있게 종목마다 debug 발췌를 함께 남긴다.
 """
-import io, json, os, re, sys, zipfile, datetime, urllib.request, urllib.parse
+import io, json, os, re, sys, time, zipfile, datetime, urllib.request, urllib.parse
 
 KEY = os.environ["OPENDART_KEY"]
 BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
 MAX_DOCS = 300
-PARSER_VER = 4
+PARSER_VER = 5
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -142,13 +142,13 @@ def main():
         d = get_json("/list.json", {"bgn_de": bgn, "end_de": end, "pblntf_ty": "C",
                                     "page_no": page, "page_count": 100})
         if d.get("status") != "000":
-            print("list error:", d.get("status"), d.get("message")); break
+            print("list error:", d.get("status"), d.get("message"), flush=True); break
         filings += d.get("list") or []
         if page * 100 >= int(d.get("total_count", 0)): break
-    print("filings(all C):", len(filings))
+    print("filings(all C):", len(filings), flush=True)
     # 상세유형 코드에 의존하지 않고 보고서명으로 지분증권만 거른다 (실측: 코드 필터가 채무증권을 섞어 반환함)
     filings = [f for f in filings if "지분증권" in (f.get("report_nm") or "")]
-    print("filings(지분증권):", len(filings))
+    print("filings(지분증권):", len(filings), flush=True)
     by_corp = {}
     for it in filings:
         by_corp.setdefault(it["corp_code"], []).append(it)
@@ -162,7 +162,10 @@ def main():
     items = []
     docs = 0
     reused = 0
-    for corp_code, fs in by_corp.items():
+    t0 = time.time()
+    for ci, (corp_code, fs) in enumerate(by_corp.items()):
+        if ci and ci % 20 == 0:
+            print(f"progress: corp {ci}/{len(by_corp)} docs={docs} elapsed={time.time() - t0:.0f}s", flush=True)
         fs.sort(key=lambda x: x["rcept_no"])
         def rank(x):
             nm = x["report_nm"]
@@ -181,18 +184,23 @@ def main():
         elif docs < MAX_DOCS:
             # v4: 대표 문서 1개만 보지 않고 상위 3개 공시를 병합한다.
             # 수요예측 경쟁률·확정가는 최초 신고서가 아닌 정정(발행조건확정)에만 있는 경우가 많다.
-            ranked = sorted(fs, key=rank, reverse=True)[:3]
+            ranked_all = sorted(fs, key=rank, reverse=True)
+            # 첫 문서는 무조건, 2·3번째는 정정(발행조건확정·기재정정·첨부정정)일 때만 추가로 읽는다
+            ranked = ranked_all[:1] + [x for x in ranked_all[1:] if rank(x)[0] >= 1][:2]
             merged = {}
             first_debug = None
             last_err = None
             for rf in ranked:
                 if docs >= MAX_DOCS: break
+                td = time.time()
                 try:
                     text = get_doc_text(rf["rcept_no"])
                     docs += 1
                 except Exception as e:
                     last_err = f"{type(e).__name__}: {e}"
                     continue
+                if time.time() - td > 20:
+                    print(f"slow doc: {item['corp_name']} {rf['rcept_no']} {time.time() - td:.0f}s len={len(text)}", flush=True)
                 if first_debug is None: first_debug = debug_excerpts(text)
                 for k, v in parse_fields(text).items():
                     if k not in merged: merged[k] = v
@@ -205,13 +213,13 @@ def main():
             elif last_err:
                 item["error"] = last_err
         items.append(item)
-    print("docs reused:", reused)
+    print("docs reused:", reused, flush=True)
     items.sort(key=lambda x: (x.get("sub_start") is None, x.get("sub_start") or "9999", x["corp_name"]))
     out = {"updated": datetime.datetime.now().isoformat(timespec="seconds"), "items": items}
     os.makedirs("data", exist_ok=True)
     with open("data/ipos.json", "w", encoding="utf-8") as fh:
         json.dump(out, fh, ensure_ascii=False, indent=1)
-    print("items:", len(items), "| docs parsed:", docs)
+    print("items:", len(items), "| docs parsed:", docs, f"| elapsed={time.time() - t0:.0f}s", flush=True)
 
 if __name__ == "__main__":
     main()
