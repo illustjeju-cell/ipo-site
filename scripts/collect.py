@@ -6,13 +6,14 @@
 파싱이 빗나간 경우를 눈으로 확인할 수 있게 종목마다 debug 발췌를 함께 남긴다.
 """
 import io, json, os, re, sys, time, zipfile, datetime, urllib.request, urllib.parse
+from collections import Counter
 
 KEY = os.environ["OPENDART_KEY"]
 BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
 MAX_DOCS = 500
-PARSER_VER = 7
+PARSER_VER = 8
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -79,26 +80,37 @@ def parse_fields(text, allow_final=False, is_result=False):
     # 확정공모가 (v6): 확정 단계 문서(발행조건확정 정정·실적보고서)에서만 뽑는다.
     # 최초·일반 정정 문서의 "확정공모가 N원"은 수수료 계산 예시 등 가정 문장이라 밴드 상한을 집는 오작동이 실측됨 (에이엘로봇 실제 15,700 vs 오추출 17,600).
     if allow_final:
-        m = re.search(r"확정공모가[^\d]{0,40}?([\d,]{3,})\s*원\s*(?:으로|로)?\s*결정", text)
-        if not m and is_result:
+        direct = None
+        m = re.search(r"확정공모가[^\d]{0,120}?([\d,]{3,})\s*원\s*(?:으로|로)\s*결정", text)
+        if m: direct = int(m.group(1).replace(",", ""))
+        if direct is None and is_result:
             m = re.search(r"(?:최종\s*)?발행가액[^\d]{0,20}([\d,]{3,})\s*원", text)
-        if not m:
+            if m: direct = int(m.group(1).replace(",", ""))
+        if direct is None:
             for hit in list(re.finditer("확정공모가", text))[:8]:
                 w = text[hit.start():hit.start() + 350]
                 if any(g in w for g in ("경우", "가정", "상한인", "하한인")): continue
                 mm = (re.search(r"확정공모가액?\s*(?:은|는|이|가)?\s*(?:금\s*)?([\d,]{3,})\s*원", w)
                       or re.search(r"1주당\s*확정공모가[^\d]{0,20}([\d,]{3,})\s*원", w))
-                if mm: m = mm; break
-        if m: f["price_final"] = int(m.group(1).replace(",", ""))
-        # 교차검증 (v7): 인수표 '보통주 주식수 총액'에서 단가를 역산해 우선한다.
-        # v6 가드에도 발행조건확정 문서에서 밴드 상한(17,600)을 집는 오추출이 남았다 (에이엘로봇 실제 15,700).
-        # 확정 단계 문서의 인수표 총액÷주식수는 실제 발행 조건과 정합하므로 가장 신뢰할 수 있다.
-        mi = re.search(r"보통주\s+([\d,]{3,})\s*주?\s+([\d,]{7,})\s*원?", text)
-        if mi:
+                if mm: direct = int(mm.group(1).replace(",", "")); break
+        # 교차검증 (v8): '인수금액'이 처음 나오는 위치부터 끝까지의 표에서 '보통주 주식수 총액' 쌍을 모아
+        # 단가로 역산하고 최빈값을 쓴다. v7은 문서 첫 매치만 써서 앞부분 예정표(밴드 하한 기준)에 걸려
+        # 확정가 전 건이 하한으로 쏠렸다. 인수표 이후의 표(인수·청약 안내)는 확정 조건으로 다시 쓰인 값이다.
+        region = text
+        ai = text.find("인수금액")
+        if ai >= 0: region = text[ai:]
+        vals = []
+        for mi in re.finditer(r"보통주\s+([\d,]{3,})\s*주?\s+([\d,]{7,})\s*원?", region):
             sh = int(mi.group(1).replace(",", "")); tot = int(mi.group(2).replace(",", ""))
             if sh and tot % sh == 0:
                 v = tot // sh
-                if 100 <= v <= 2000000: f["price_final"] = v
+                if 100 <= v <= 2000000: vals.append(v)
+        mode_imp = None
+        if vals:
+            v, c = Counter(vals).most_common(1)[0]
+            if ai >= 0 or c >= 2: mode_imp = v
+        if mode_imp is not None: f["price_final"] = mode_imp
+        elif direct is not None: f["price_final"] = direct
     # 공모주식수
     w = window(text, "공모주식수") or window(text, "모집주식수") or window(text, "공모할 주식수")
     m = re.search(r"([\d,]{3,})\s*주", w)
