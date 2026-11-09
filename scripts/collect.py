@@ -11,8 +11,8 @@ KEY = os.environ["OPENDART_KEY"]
 BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
-MAX_DOCS = 200
-PARSER_VER = 3
+MAX_DOCS = 300
+PARSER_VER = 4
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -92,25 +92,45 @@ def parse_fields(text):
     m = re.search(r"대표주관회사\s*(?:\(주\)|㈜)?\s*([가-힣A-Za-z]{2,12}(?:증권|은행))", text)
     if not m: m = re.search(r"대표\s+([가-힣A-Za-z]{2,12}(?:증권|은행))", text)
     if m: f["underwriter"] = m.group(1).strip()
-    # 수요예측 경쟁률: '경쟁률' 등장 위치를 스캔해 수요예측 맥락의 N:1을 찾는다
-    hits = [m.start() for m in re.finditer("경쟁률", text)][:12]
-    for i in hits:
-        w = text[max(0, i - 250):i + 250]
-        m = re.search(r"([\d,]+\.?\d*)\s*[:：]\s*1(?![\d])", w) or re.search(r"([\d,]+\.?\d*)\s*대\s*1", w)
-        if m:
-            v = float(m.group(1).replace(",", ""))
-            if v > 1: f["demand_ratio"] = v; break
+    # 수요예측 경쟁률 (v4): '수요예측 결과' 섹션을 앵커로 우선 탐색하고,
+    # 없으면 '경쟁률' 전 출현 위치에서 수요예측·기관 맥락이 있는 것만 스캔한다
+    r = find_demand_ratio(text)
+    if r: f["demand_ratio"] = r
     # 의무보유확약 비율
     w = window(text, "의무보유확약")
     m = re.search(r"([\d.]+)\s*%", w)
     if m: f["lockup_pct"] = float(m.group(1))
     return f
 
+def ratio_in(w):
+    for pat in (r"([\d,]+\.?\d*)\s*[:：]\s*1(?![\d])", r"([\d,]+\.?\d*)\s*대\s*1(?![\d])"):
+        for m in re.finditer(pat, w):
+            try: v = float(m.group(1).replace(",", ""))
+            except ValueError: continue
+            if 1 < v < 100000: return v
+    return None
+
+def find_demand_ratio(text):
+    # 1) '수요예측 결과' 섹션 앵커 — 결과 표가 이 뒤에 붙는다
+    for m in re.finditer(r"수요예측\s*결과", text):
+        r = ratio_in(text[m.start():m.start() + 1800])
+        if r: return r
+    # 2) '경쟁률' 전 출현 스캔 — 수요예측·기관 맥락이 있는 윈도우만
+    for m in list(re.finditer("경쟁률", text))[:60]:
+        w = text[max(0, m.start() - 300):m.start() + 300]
+        if "수요예측" not in w and "기관" not in w: continue
+        r = ratio_in(w)
+        if r: return r
+    return None
+
 def debug_excerpts(text):
     out = {}
     for kw in ("청약기일", "희망공모가", "확정공모가", "수요예측", "대표주관회사"):
         i = text.find(kw)
         if i >= 0: out[kw] = text[max(0, i - 60):i + 240]
+    i = text.find("수요예측 결과")
+    if i >= 0: out["수요예측결과"] = text[i:i + 600]
+    out["_경쟁률수"] = str(len(re.findall("경쟁률", text)))
     return out
 
 def main():
@@ -159,14 +179,31 @@ def main():
                 if k not in item: item[k] = v
             reused += 1
         elif docs < MAX_DOCS:
-            try:
-                text = get_doc_text(main_f["rcept_no"])
-                item.update(parse_fields(text))
-                item["debug"] = debug_excerpts(text)
+            # v4: 대표 문서 1개만 보지 않고 상위 3개 공시를 병합한다.
+            # 수요예측 경쟁률·확정가는 최초 신고서가 아닌 정정(발행조건확정)에만 있는 경우가 많다.
+            ranked = sorted(fs, key=rank, reverse=True)[:3]
+            merged = {}
+            first_debug = None
+            last_err = None
+            for rf in ranked:
+                if docs >= MAX_DOCS: break
+                try:
+                    text = get_doc_text(rf["rcept_no"])
+                    docs += 1
+                except Exception as e:
+                    last_err = f"{type(e).__name__}: {e}"
+                    continue
+                if first_debug is None: first_debug = debug_excerpts(text)
+                for k, v in parse_fields(text).items():
+                    if k not in merged: merged[k] = v
+                if merged.get("demand_ratio") and merged.get("price_final"): break
+            if merged:
+                item.update(merged)
+                if first_debug is not None: item["debug"] = first_debug
+                if merged.get("price_final"): item["stage"] = "확정"
                 item["pv"] = PARSER_VER
-                docs += 1
-            except Exception as e:
-                item["error"] = f"{type(e).__name__}: {e}"
+            elif last_err:
+                item["error"] = last_err
         items.append(item)
     print("docs reused:", reused)
     items.sort(key=lambda x: (x.get("sub_start") is None, x.get("sub_start") or "9999", x["corp_name"]))
