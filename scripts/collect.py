@@ -13,7 +13,7 @@ BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
 MAX_DOCS = 500
-PARSER_VER = 9
+PARSER_VER = 10
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -79,38 +79,49 @@ def parse_fields(text, allow_final=False, is_result=False):
     if band: f["price_low"], f["price_high"] = band
     # 확정공모가 (v6): 확정 단계 문서(발행조건확정 정정·실적보고서)에서만 뽑는다.
     # 최초·일반 정정 문서의 "확정공모가 N원"은 수수료 계산 예시 등 가정 문장이라 밴드 상한을 집는 오작동이 실측됨 (에이엘로봇 실제 15,700 vs 오추출 17,600).
+    # 확정공모가 (v10 — v9 진단 실측으로 확정된 우선순위):
+    # 1) 실적보고서 자금조달 표 '모집 보통주 예정총액 단가 수량 발행총액' (단가×수량==총액 산술 검증, 실제 발행 결과라 최우선)
+    # 2) 결정 문장 '확정공모가 ... N원으로 결정' (여러 번이면 최빈값)
+    # 3) 실적보고서 발행가액 직접 표기  4) 인수금액 이후 표 역산 최빈값  5) 기존 fallback
+    # 근거: v9 진단에서 실적 표는 9건 중 4건의 현행값(전부 하한)이 틀렸음을 산술로 입증했고(엘리스 90,500 등),
+    # 결정 문장은 3건 중 2건이 현행값과 달랐으며(옵토닉스 12,000·하나에어로 5,700),
+    # 에이엘로봇은 결정 문장 2회+뉴스(공모금액 422.4억=17,600×240만주)로 17,600이 맞고,
+    # 기존 기준점 '15,700'은 수수료 산정용 최저가액 표를 오독한 것이었음이 확인됐다.
     if allow_final:
-        direct = None
-        m = re.search(r"확정공모가[^\d]{0,120}?([\d,]{3,})\s*원\s*(?:으로|로)\s*결정", text)
-        if m: direct = int(m.group(1).replace(",", ""))
-        if direct is None and is_result:
+        final = None
+        if is_result:
+            for m in re.finditer(r"모집\s*보통주\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)", text):
+                _t1, p, sh, t2 = (int(g.replace(",", "")) for g in m.groups())
+                if p and sh and p * sh == t2 and 100 <= p <= 2000000:
+                    final = p; break
+        if final is None:
+            decs = re.findall(r"확정공모가[^\d]{0,120}?([\d,]{3,})\s*원\s*(?:으로|로)\s*결정", text)
+            if decs:
+                final = Counter(int(v.replace(",", "")) for v in decs).most_common(1)[0][0]
+        if final is None and is_result:
             m = re.search(r"(?:최종\s*)?발행가액[^\d]{0,20}([\d,]{3,})\s*원", text)
-            if m: direct = int(m.group(1).replace(",", ""))
-        if direct is None:
+            if m: final = int(m.group(1).replace(",", ""))
+        if final is None:
+            region = text
+            ai = text.find("인수금액")
+            if ai >= 0: region = text[ai:]
+            vals = []
+            for mi in re.finditer(r"보통주\s+([\d,]{3,})\s*주?\s+([\d,]{7,})\s*원?", region):
+                sh = int(mi.group(1).replace(",", "")); tot = int(mi.group(2).replace(",", ""))
+                if sh and tot % sh == 0:
+                    v = tot // sh
+                    if 100 <= v <= 2000000: vals.append(v)
+            if vals:
+                v, c = Counter(vals).most_common(1)[0]
+                if ai >= 0 or c >= 2: final = v
+        if final is None:
             for hit in list(re.finditer("확정공모가", text))[:8]:
                 w = text[hit.start():hit.start() + 350]
                 if any(g in w for g in ("경우", "가정", "상한인", "하한인")): continue
                 mm = (re.search(r"확정공모가액?\s*(?:은|는|이|가)?\s*(?:금\s*)?([\d,]{3,})\s*원", w)
                       or re.search(r"1주당\s*확정공모가[^\d]{0,20}([\d,]{3,})\s*원", w))
-                if mm: direct = int(mm.group(1).replace(",", "")); break
-        # 교차검증 (v8): '인수금액'이 처음 나오는 위치부터 끝까지의 표에서 '보통주 주식수 총액' 쌍을 모아
-        # 단가로 역산하고 최빈값을 쓴다. v7은 문서 첫 매치만 써서 앞부분 예정표(밴드 하한 기준)에 걸려
-        # 확정가 전 건이 하한으로 쏠렸다. 인수표 이후의 표(인수·청약 안내)는 확정 조건으로 다시 쓰인 값이다.
-        region = text
-        ai = text.find("인수금액")
-        if ai >= 0: region = text[ai:]
-        vals = []
-        for mi in re.finditer(r"보통주\s+([\d,]{3,})\s*주?\s+([\d,]{7,})\s*원?", region):
-            sh = int(mi.group(1).replace(",", "")); tot = int(mi.group(2).replace(",", ""))
-            if sh and tot % sh == 0:
-                v = tot // sh
-                if 100 <= v <= 2000000: vals.append(v)
-        mode_imp = None
-        if vals:
-            v, c = Counter(vals).most_common(1)[0]
-            if ai >= 0 or c >= 2: mode_imp = v
-        if mode_imp is not None: f["price_final"] = mode_imp
-        elif direct is not None: f["price_final"] = direct
+                if mm: final = int(mm.group(1).replace(",", "")); break
+        if final is not None: f["price_final"] = final
     # 공모주식수
     w = window(text, "공모주식수") or window(text, "모집주식수") or window(text, "공모할 주식수")
     m = re.search(r"([\d,]{3,})\s*주", w)
