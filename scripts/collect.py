@@ -48,10 +48,15 @@ def first_num(s, unit="원"):
 
 def parse_fields(text):
     f = {}
-    # 청약일: '청약기일' 또는 '청약일' 뒤 날짜 1~2개
-    w = window(text, "청약기일") or window(text, "청약일")
-    ds = dates_in(w)
-    if ds: f["sub_start"], f["sub_end"] = ds[0], ds[-1]
+    # 청약일: '청약기일' 뒤에서 날짜 범위(DATE ~ DATE)를 먼저 찾고, 없으면 첫 날짜 하루
+    w = window(text, "청약기일", 500) or window(text, "청약일", 500)
+    m = re.search(r"(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일\s*[~∼\-]\s*(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일", w)
+    if m:
+        f["sub_start"] = f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}"
+        f["sub_end"] = f"{m.group(4)}-{int(m.group(5)):02d}-{int(m.group(6)):02d}"
+    else:
+        ds = dates_in(w)
+        if ds: f["sub_start"] = f["sub_end"] = ds[0]
     # 수요예측일
     w = window(text, "수요예측일") or window(text, "수요예측기간")
     ds = dates_in(w)
@@ -72,8 +77,9 @@ def parse_fields(text):
     w = window(text, "공모주식수") or window(text, "모집주식수") or window(text, "공모할 주식수")
     m = re.search(r"([\d,]{3,})\s*주", w)
     if m: f["shares"] = int(m.group(1).replace(",", ""))
-    # 대표주관회사
-    m = re.search(r"대표주관회사\s*[:：]?\s*([가-힣A-Za-z&· ]{2,24}?(?:증권|은행))", text)
+    # 대표주관회사: '대표주관회사' 바로 뒤 회사명, 안 되면 인수표의 '대표 ○○증권'
+    m = re.search(r"대표주관회사\s*(?:\(주\)|㈜)?\s*([가-힣A-Za-z]{2,12}(?:증권|은행))", text)
+    if not m: m = re.search(r"대표\s+([가-힣A-Za-z]{2,12}(?:증권|은행))", text)
     if m: f["underwriter"] = m.group(1).strip()
     # 수요예측 경쟁률: '수요예측' 창에서 N:1 또는 N대 1
     for nth in range(3):
@@ -101,14 +107,17 @@ def main():
     bgn = (today - datetime.timedelta(days=LOOKBACK_DAYS)).strftime("%Y%m%d")
     end = today.strftime("%Y%m%d")
     filings = []
-    for page in range(1, 6):
+    for page in range(1, 41):
         d = get_json("/list.json", {"bgn_de": bgn, "end_de": end, "pblntf_ty": "C",
-                                    "pblntf_detail_ty": "C001", "page_no": page, "page_count": 100})
+                                    "page_no": page, "page_count": 100})
         if d.get("status") != "000":
             print("list error:", d.get("status"), d.get("message")); break
         filings += d.get("list") or []
         if page * 100 >= int(d.get("total_count", 0)): break
-    print("filings:", len(filings))
+    print("filings(all C):", len(filings))
+    # 상세유형 코드에 의존하지 않고 보고서명으로 지분증권만 거른다 (실측: 코드 필터가 채무증권을 섞어 반환함)
+    filings = [f for f in filings if "지분증권" in (f.get("report_nm") or "")]
+    print("filings(지분증권):", len(filings))
     by_corp = {}
     for it in filings:
         by_corp.setdefault(it["corp_code"], []).append(it)
