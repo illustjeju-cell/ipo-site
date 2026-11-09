@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - name: 수집
-        env: { OPENDART_KEY: "${{ secrets.OPENDART_KEY }}" }
+        env: { OPENDART_KEY: "${{ secrets.IPO }}" }
         run: python scripts/collect.py
       - name: 데이터 커밋
         run: |
