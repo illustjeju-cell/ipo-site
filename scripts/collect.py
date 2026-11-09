@@ -12,7 +12,7 @@ BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
 MAX_DOCS = 300
-PARSER_VER = 5
+PARSER_VER = 6
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -47,7 +47,7 @@ def first_num(s, unit="원"):
     m = re.search(r"([\d,]{3,})\s*" + unit, s)
     return int(m.group(1).replace(",", "")) if m else None
 
-def parse_fields(text):
+def parse_fields(text, allow_final=False, is_result=False):
     f = {}
     # 청약일: '청약기일' 뒤에서 날짜 범위(DATE ~ DATE)를 먼저 찾고, 없으면 첫 날짜 하루
     w = window(text, "청약기일", 500) or window(text, "청약일", 500)
@@ -76,14 +76,20 @@ def parse_fields(text):
             if m: band = (int(m.group(1).replace(",", "")), int(m.group(2).replace(",", ""))); break
         if band: break
     if band: f["price_low"], f["price_high"] = band
-    # 확정공모가: 명시 패턴 우선, 여러 등장 위치 스캔
-    for nth in range(8):
-        w = window(text, "확정공모가", 350, nth)
-        if not w: break
-        m = (re.search(r"최저가액인\s*([\d,]{3,})\s*원", w)
-             or re.search(r"확정공모가액?\s*(?:은|는|이|가)?\s*(?:금\s*)?([\d,]{3,})\s*원", w)
-             or re.search(r"1주당\s*확정공모가[^\d]{0,20}([\d,]{3,})\s*원", w))
-        if m: f["price_final"] = int(m.group(1).replace(",", "")); break
+    # 확정공모가 (v6): 확정 단계 문서(발행조건확정 정정·실적보고서)에서만 뽑는다.
+    # 최초·일반 정정 문서의 "확정공모가 N원"은 수수료 계산 예시 등 가정 문장이라 밴드 상한을 집는 오작동이 실측됨 (에이엘로봇 실제 15,700 vs 오추출 17,600).
+    if allow_final:
+        m = re.search(r"확정공모가[^\d]{0,40}?([\d,]{3,})\s*원\s*(?:으로|로)?\s*결정", text)
+        if not m and is_result:
+            m = re.search(r"(?:최종\s*)?발행가액[^\d]{0,20}([\d,]{3,})\s*원", text)
+        if not m:
+            for hit in list(re.finditer("확정공모가", text))[:8]:
+                w = text[hit.start():hit.start() + 350]
+                if any(g in w for g in ("경우", "가정", "상한인", "하한인")): continue
+                mm = (re.search(r"확정공모가액?\s*(?:은|는|이|가)?\s*(?:금\s*)?([\d,]{3,})\s*원", w)
+                      or re.search(r"1주당\s*확정공모가[^\d]{0,20}([\d,]{3,})\s*원", w))
+                if mm: m = mm; break
+        if m: f["price_final"] = int(m.group(1).replace(",", ""))
     # 공모주식수
     w = window(text, "공모주식수") or window(text, "모집주식수") or window(text, "공모할 주식수")
     m = re.search(r"([\d,]{3,})\s*주", w)
@@ -96,6 +102,13 @@ def parse_fields(text):
     # 없으면 '경쟁률' 전 출현 위치에서 수요예측·기관 맥락이 있는 것만 스캔한다
     r = find_demand_ratio(text)
     if r: f["demand_ratio"] = r
+    # 실적보고서: 일반청약 경쟁률 ('청약' 맥락 윈도우의 첫 비율)
+    if is_result:
+        for hit in list(re.finditer("경쟁률", text))[:20]:
+            w = text[max(0, hit.start() - 200):hit.start() + 200]
+            if "청약" not in w: continue
+            r = ratio_in(w)
+            if r: f["sub_ratio"] = r; break
     # 의무보유확약 비율
     w = window(text, "의무보유확약")
     m = re.search(r"([\d.]+)\s*%", w)
@@ -138,17 +151,20 @@ def main():
     bgn = (today - datetime.timedelta(days=LOOKBACK_DAYS)).strftime("%Y%m%d")
     end = today.strftime("%Y%m%d")
     filings = []
-    for page in range(1, 41):
+    total_c = None
+    for page in range(1, 121):
         d = get_json("/list.json", {"bgn_de": bgn, "end_de": end, "pblntf_ty": "C",
                                     "page_no": page, "page_count": 100})
         if d.get("status") != "000":
             print("list error:", d.get("status"), d.get("message"), flush=True); break
+        total_c = int(d.get("total_count", 0))
         filings += d.get("list") or []
-        if page * 100 >= int(d.get("total_count", 0)): break
-    print("filings(all C):", len(filings), flush=True)
-    # 상세유형 코드에 의존하지 않고 보고서명으로 지분증권만 거른다 (실측: 코드 필터가 채무증권을 섞어 반환함)
-    filings = [f for f in filings if "지분증권" in (f.get("report_nm") or "")]
-    print("filings(지분증권):", len(filings), flush=True)
+        if page * 100 >= total_c: break
+    print("filings(all C):", len(filings), "of total", total_c, flush=True)
+    # 상세유형 코드에 의존하지 않고 보고서명으로 거른다 (실측: 코드 필터가 채무증권을 섞어 반환함).
+    # v6: 증권발행실적보고서도 포함 — 확정가·청약 결과의 최종 출처다 (제목에 '지분증권'이 없어 v5까지 누락됨).
+    filings = [f for f in filings if "지분증권" in (f.get("report_nm") or "") or "증권발행실적보고서" in (f.get("report_nm") or "")]
+    print("filings(지분증권+실적):", len(filings), flush=True)
     by_corp = {}
     for it in filings:
         by_corp.setdefault(it["corp_code"], []).append(it)
@@ -169,13 +185,16 @@ def main():
         fs.sort(key=lambda x: x["rcept_no"])
         def rank(x):
             nm = x["report_nm"]
-            return (2 if "발행조건확정" in nm else 1 if "기재정정" in nm or "첨부정정" in nm else 0, x["rcept_no"])
+            return (3 if "증권발행실적보고서" in nm else
+                    2 if "발행조건확정" in nm else
+                    1 if "기재정정" in nm or "첨부정정" in nm else 0, x["rcept_no"])
         main_f = max(fs, key=rank)
         item = {"corp_code": corp_code, "corp_name": main_f["corp_name"],
-                "stage": "확정" if "발행조건확정" in main_f["report_nm"] else "예정",
+                "stage": "확정" if ("발행조건확정" in main_f["report_nm"] or "증권발행실적보고서" in main_f["report_nm"]) else "예정",
                 "rcept_no": main_f["rcept_no"], "rcept_dt": main_f["rcept_dt"],
                 "dart_url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={main_f['rcept_no']}",
-                "filings": len(fs)}
+                "filings": len(fs),
+                "filings_nm": [x["report_nm"] for x in fs]}
         old = cache.get(corp_code)
         if old and old.get("rcept_no") == main_f["rcept_no"] and not old.get("error") and old.get("pv") == PARSER_VER:
             for k, v in old.items():
@@ -202,7 +221,9 @@ def main():
                 if time.time() - td > 20:
                     print(f"slow doc: {item['corp_name']} {rf['rcept_no']} {time.time() - td:.0f}s len={len(text)}", flush=True)
                 if first_debug is None: first_debug = debug_excerpts(text)
-                for k, v in parse_fields(text).items():
+                pf = parse_fields(text, allow_final=rank(rf)[0] >= 2,
+                                  is_result="증권발행실적보고서" in rf["report_nm"])
+                for k, v in pf.items():
                     if k not in merged: merged[k] = v
                 if merged.get("demand_ratio") and merged.get("price_final"): break
             if merged:
