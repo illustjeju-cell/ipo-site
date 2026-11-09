@@ -13,7 +13,7 @@ BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
 MAX_DOCS = 500
-PARSER_VER = 8
+PARSER_VER = 9
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -165,6 +165,25 @@ def debug_excerpts(text):
     i = text.find("수요예측 결과")
     if i >= 0: out["수요예측결과"] = text[i:i + 600]
     out["_경쟁률수"] = str(len(re.findall("경쟁률", text)))
+    # v9 진단: 확정가 추출 방식을 실제 문서 구조로 확정하기 위해 후보를 그대로 남긴다 (추출 로직은 v8과 동일)
+    hits = []
+    for m in re.finditer(r"확정공모가[^\d]{0,120}?([\d,]{3,})\s*원\s*(?:으로|로)\s*결정", text):
+        hits.append(text[max(0, m.start() - 40):m.end() + 10])
+        if len(hits) >= 3: break
+    if hits: out["_결정문장"] = " || ".join(hits)
+    def imp_vals(region):
+        vs = []
+        for mi in re.finditer(r"보통주\s+([\d,]{3,})\s*주?\s+([\d,]{7,})\s*원?", region):
+            sh = int(mi.group(1).replace(",", "")); tot = int(mi.group(2).replace(",", ""))
+            if sh and tot % sh == 0:
+                v = tot // sh
+                if 100 <= v <= 2000000: vs.append(v)
+        return dict(Counter(vs))
+    out["_역산전체"] = str(imp_vals(text))
+    ai = text.find("인수금액")
+    out["_역산인수후"] = str(imp_vals(text[ai:])) if ai >= 0 else "-"
+    i = text.find("발행가액")
+    if i >= 0: out["발행가액"] = text[max(0, i - 60):i + 240]
     return out
 
 def main():
