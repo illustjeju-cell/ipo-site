@@ -11,8 +11,8 @@ KEY = os.environ["OPENDART_KEY"]
 BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
-MAX_DOCS = 300
-PARSER_VER = 6
+MAX_DOCS = 500
+PARSER_VER = 7
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -90,6 +90,15 @@ def parse_fields(text, allow_final=False, is_result=False):
                       or re.search(r"1주당\s*확정공모가[^\d]{0,20}([\d,]{3,})\s*원", w))
                 if mm: m = mm; break
         if m: f["price_final"] = int(m.group(1).replace(",", ""))
+        # 교차검증 (v7): 인수표 '보통주 주식수 총액'에서 단가를 역산해 우선한다.
+        # v6 가드에도 발행조건확정 문서에서 밴드 상한(17,600)을 집는 오추출이 남았다 (에이엘로봇 실제 15,700).
+        # 확정 단계 문서의 인수표 총액÷주식수는 실제 발행 조건과 정합하므로 가장 신뢰할 수 있다.
+        mi = re.search(r"보통주\s+([\d,]{3,})\s*주?\s+([\d,]{7,})\s*원?", text)
+        if mi:
+            sh = int(mi.group(1).replace(",", "")); tot = int(mi.group(2).replace(",", ""))
+            if sh and tot % sh == 0:
+                v = tot // sh
+                if 100 <= v <= 2000000: f["price_final"] = v
     # 공모주식수
     w = window(text, "공모주식수") or window(text, "모집주식수") or window(text, "공모할 주식수")
     m = re.search(r"([\d,]{3,})\s*주", w)
@@ -168,6 +177,12 @@ def main():
     by_corp = {}
     for it in filings:
         by_corp.setdefault(it["corp_code"], []).append(it)
+    # v7: 종목은 지분증권 신고서가 있는 회사만 만든다. 실적보고서만 있는 회사(상장사·금융사 발행 등)는
+    # 공모주가 아니므로 제외하고, 실적보고서는 해당 종목의 병합 문서로만 쓴다.
+    # (v6 실측: 실적 단독 종목 109개가 섞여 문서 예산을 잠식하고 진짜 종목이 빈칸이 됐다.)
+    by_corp = {cc: fs for cc, fs in by_corp.items()
+               if any("지분증권" in (x.get("report_nm") or "") for x in fs)}
+    print("items 대상(지분증권 보유):", len(by_corp), flush=True)
     # 지난 실행 결과 캐시: 접수번호가 같은 종목은 파싱 결과를 재사용한다
     cache = {}
     try:
@@ -179,9 +194,10 @@ def main():
     docs = 0
     reused = 0
     t0 = time.time()
-    for ci, (corp_code, fs) in enumerate(by_corp.items()):
-        if ci and ci % 20 == 0:
-            print(f"progress: corp {ci}/{len(by_corp)} docs={docs} elapsed={time.time() - t0:.0f}s", flush=True)
+    # v7: 2단계 파싱. 1차는 전 종목 대표 문서만 읽어 문서 상한에 중간 종목이 굶는 일을 막고,
+    # 2차는 핵심 필드가 빈 종목만 추가 문서(정정·실적)를 병합한다.
+    prepared = []
+    for corp_code, fs in by_corp.items():
         fs.sort(key=lambda x: x["rcept_no"])
         def rank(x):
             nm = x["report_nm"]
@@ -195,46 +211,56 @@ def main():
                 "dart_url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={main_f['rcept_no']}",
                 "filings": len(fs),
                 "filings_nm": [x["report_nm"] for x in fs]}
+        items.append(item)
         old = cache.get(corp_code)
         if old and old.get("rcept_no") == main_f["rcept_no"] and not old.get("error") and old.get("pv") == PARSER_VER:
             for k, v in old.items():
                 if k not in item: item[k] = v
             reused += 1
-        elif docs < MAX_DOCS:
-            # v4: 대표 문서 1개만 보지 않고 상위 3개 공시를 병합한다.
-            # 수요예측 경쟁률·확정가는 최초 신고서가 아닌 정정(발행조건확정)에만 있는 경우가 많다.
-            ranked_all = sorted(fs, key=rank, reverse=True)
-            # 첫 문서는 무조건, 2·3번째는 정정(발행조건확정·기재정정·첨부정정)일 때만 추가로 읽는다
-            ranked = ranked_all[:1] + [x for x in ranked_all[1:] if rank(x)[0] >= 1][:2]
-            merged = {}
-            first_debug = None
-            last_err = None
-            for rf in ranked:
+            prepared.append(None)
+        else:
+            prepared.append({"item": item, "ranked": sorted(fs, key=rank, reverse=True),
+                             "rank": rank, "fields": {}, "debug": None, "err": None})
+    print("docs reused:", reused, flush=True)
+    for pass_no in (1, 2):
+        for ci, p in enumerate(prepared):
+            if p is None: continue
+            if ci and ci % 20 == 0:
+                print(f"progress(pass{pass_no}): corp {ci}/{len(prepared)} docs={docs} elapsed={time.time() - t0:.0f}s", flush=True)
+            if docs >= MAX_DOCS: break
+            if pass_no == 1:
+                targets = p["ranked"][:1]
+            else:
+                f = p["fields"]
+                if f.get("sub_start") and f.get("price_low") and f.get("price_final") and f.get("demand_ratio"): continue
+                targets = [x for x in p["ranked"][1:] if p["rank"](x)[0] >= 1][:2]
+            for rf in targets:
                 if docs >= MAX_DOCS: break
                 td = time.time()
                 try:
                     text = get_doc_text(rf["rcept_no"])
                     docs += 1
                 except Exception as e:
-                    last_err = f"{type(e).__name__}: {e}"
+                    p["err"] = f"{type(e).__name__}: {e}"
                     continue
                 if time.time() - td > 20:
-                    print(f"slow doc: {item['corp_name']} {rf['rcept_no']} {time.time() - td:.0f}s len={len(text)}", flush=True)
-                if first_debug is None: first_debug = debug_excerpts(text)
-                pf = parse_fields(text, allow_final=rank(rf)[0] >= 2,
+                    print(f"slow doc: {p['item']['corp_name']} {rf['rcept_no']} {time.time() - td:.0f}s len={len(text)}", flush=True)
+                if p["debug"] is None: p["debug"] = debug_excerpts(text)
+                pf = parse_fields(text, allow_final=p["rank"](rf)[0] >= 2,
                                   is_result="증권발행실적보고서" in rf["report_nm"])
                 for k, v in pf.items():
-                    if k not in merged: merged[k] = v
-                if merged.get("demand_ratio") and merged.get("price_final"): break
-            if merged:
-                item.update(merged)
-                if first_debug is not None: item["debug"] = first_debug
-                if merged.get("price_final"): item["stage"] = "확정"
-                item["pv"] = PARSER_VER
-            elif last_err:
-                item["error"] = last_err
-        items.append(item)
-    print("docs reused:", reused, flush=True)
+                    if k not in p["fields"]: p["fields"][k] = v
+                if p["fields"].get("demand_ratio") and p["fields"].get("price_final"): break
+    for p in prepared:
+        if p is None: continue
+        item = p["item"]
+        if p["fields"]:
+            item.update(p["fields"])
+            if p["debug"] is not None: item["debug"] = p["debug"]
+            if p["fields"].get("price_final"): item["stage"] = "확정"
+            item["pv"] = PARSER_VER
+        elif p["err"]:
+            item["error"] = p["err"]
     items.sort(key=lambda x: (x.get("sub_start") is None, x.get("sub_start") or "9999", x["corp_name"]))
     out = {"updated": datetime.datetime.now().isoformat(timespec="seconds"), "items": items}
     os.makedirs("data", exist_ok=True)
