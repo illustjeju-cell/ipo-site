@@ -11,7 +11,8 @@ KEY = os.environ["OPENDART_KEY"]
 BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
-MAX_DOCS = 40
+MAX_DOCS = 200
+PARSER_VER = 3
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -65,14 +66,24 @@ def parse_fields(text):
     w = window(text, "상장예정일") or window(text, "상장일")
     ds = dates_in(w)
     if ds: f["listing_date"] = ds[0]
-    # 희망공모가 밴드
-    w = window(text, "희망공모가")
-    m = re.search(r"([\d,]{3,})\s*(?:원)?\s*[~∼\-]\s*([\d,]{3,})", w)
-    if m: f["price_low"], f["price_high"] = int(m.group(1).replace(",", "")), int(m.group(2).replace(",", ""))
-    # 확정공모가
-    w = window(text, "확정공모가") or window(text, "확정 공모가")
-    v = first_num(w)
-    if v: f["price_final"] = v
+    # 희망공모가 밴드: 목차에 먼저 걸리므로 여러 등장 위치를 스캔한다
+    band = None
+    for kw in ("희망공모가", "공모희망가액", "희망공모가액"):
+        for nth in range(8):
+            w = window(text, kw, 350, nth)
+            if not w: break
+            m = re.search(r"([\d,]{3,})\s*원\s*[~∼\-]\s*([\d,]{3,})\s*원", w)
+            if m: band = (int(m.group(1).replace(",", "")), int(m.group(2).replace(",", ""))); break
+        if band: break
+    if band: f["price_low"], f["price_high"] = band
+    # 확정공모가: 명시 패턴 우선, 여러 등장 위치 스캔
+    for nth in range(8):
+        w = window(text, "확정공모가", 350, nth)
+        if not w: break
+        m = (re.search(r"최저가액인\s*([\d,]{3,})\s*원", w)
+             or re.search(r"확정공모가액?\s*(?:은|는|이|가)?\s*(?:금\s*)?([\d,]{3,})\s*원", w)
+             or re.search(r"1주당\s*확정공모가[^\d]{0,20}([\d,]{3,})\s*원", w))
+        if m: f["price_final"] = int(m.group(1).replace(",", "")); break
     # 공모주식수
     w = window(text, "공모주식수") or window(text, "모집주식수") or window(text, "공모할 주식수")
     m = re.search(r"([\d,]{3,})\s*주", w)
@@ -81,10 +92,10 @@ def parse_fields(text):
     m = re.search(r"대표주관회사\s*(?:\(주\)|㈜)?\s*([가-힣A-Za-z]{2,12}(?:증권|은행))", text)
     if not m: m = re.search(r"대표\s+([가-힣A-Za-z]{2,12}(?:증권|은행))", text)
     if m: f["underwriter"] = m.group(1).strip()
-    # 수요예측 경쟁률: '수요예측' 창에서 N:1 또는 N대 1
-    for nth in range(3):
-        w = window(text, "수요예측", 600, nth)
-        if not w: break
+    # 수요예측 경쟁률: '경쟁률' 등장 위치를 스캔해 수요예측 맥락의 N:1을 찾는다
+    hits = [m.start() for m in re.finditer("경쟁률", text)][:12]
+    for i in hits:
+        w = text[max(0, i - 250):i + 250]
         m = re.search(r"([\d,]+\.?\d*)\s*[:：]\s*1(?![\d])", w) or re.search(r"([\d,]+\.?\d*)\s*대\s*1", w)
         if m:
             v = float(m.group(1).replace(",", ""))
@@ -121,8 +132,16 @@ def main():
     by_corp = {}
     for it in filings:
         by_corp.setdefault(it["corp_code"], []).append(it)
+    # 지난 실행 결과 캐시: 접수번호가 같은 종목은 파싱 결과를 재사용한다
+    cache = {}
+    try:
+        prev = json.load(open("data/ipos.json", encoding="utf-8"))
+        cache = {x["corp_code"]: x for x in prev.get("items", [])}
+    except Exception:
+        pass
     items = []
     docs = 0
+    reused = 0
     for corp_code, fs in by_corp.items():
         fs.sort(key=lambda x: x["rcept_no"])
         def rank(x):
@@ -134,15 +153,22 @@ def main():
                 "rcept_no": main_f["rcept_no"], "rcept_dt": main_f["rcept_dt"],
                 "dart_url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={main_f['rcept_no']}",
                 "filings": len(fs)}
-        if docs < MAX_DOCS:
+        old = cache.get(corp_code)
+        if old and old.get("rcept_no") == main_f["rcept_no"] and not old.get("error") and old.get("pv") == PARSER_VER:
+            for k, v in old.items():
+                if k not in item: item[k] = v
+            reused += 1
+        elif docs < MAX_DOCS:
             try:
                 text = get_doc_text(main_f["rcept_no"])
                 item.update(parse_fields(text))
                 item["debug"] = debug_excerpts(text)
+                item["pv"] = PARSER_VER
                 docs += 1
             except Exception as e:
                 item["error"] = f"{type(e).__name__}: {e}"
         items.append(item)
+    print("docs reused:", reused)
     items.sort(key=lambda x: (x.get("sub_start") is None, x.get("sub_start") or "9999", x["corp_name"]))
     out = {"updated": datetime.datetime.now().isoformat(timespec="seconds"), "items": items}
     os.makedirs("data", exist_ok=True)
