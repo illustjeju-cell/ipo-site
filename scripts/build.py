@@ -100,6 +100,7 @@ def detail(x, today):
 {score_box(x)}
 <table class="facts">{"".join(rows)}</table>
 <p><a class="calcbtn" href="/calculator.html?price={x.get('price_final') or x.get('price_high') or ''}&name={esc(x['corp_name'])}&ratio={x.get('demand_ratio') or ''}">🧮 이 종목 증거금 계산하기</a></p>
+{ics_link(x)}
 <p class="src">출처: <a href="{esc(x['dart_url'])}" rel="nofollow">DART 공시 원문</a> ({esc(x['rcept_dt'])} 접수)</p>"""
     return head(f"{x['corp_name']} 공모주 청약 일정·공모가 | 공모주 나침반",
                 f"{x['corp_name']} 공모주 청약 일정, 희망공모가·확정공모가, 수요예측 결과를 정리했습니다.",
@@ -165,6 +166,22 @@ render();
     return head("공모주 일정 캘린더 | 공모주 나침반",
                 "공모주 청약·수요예측·상장 일정을 한 달 달력으로 확인하세요.",
                 SITE_URL + "/calendar.html") + body + FOOT
+
+def ics_link(x):
+    if not x.get("sub_start"): return ""
+    return f"""<p><a class="icslink" href="/i/{x['corp_code']}.ics" download>📅 청약 일정을 내 캘린더에 저장 (.ics)</a></p>"""
+
+def ics_file(x):
+    start = x["sub_start"].replace("-", "")
+    end_d = datetime.date.fromisoformat(x.get("sub_end") or x["sub_start"]) + datetime.timedelta(days=1)
+    end = end_d.isoformat().replace("-", "")
+    desc = f"{price_line(x)} · 주관 {x.get('underwriter') or ''} · {SITE_URL}/i/{x['corp_code']}.html"
+    lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//ipo-compass//KO",
+             "BEGIN:VEVENT", f"UID:{x['corp_code']}@ipo.acoustic42.com",
+             f"DTSTART;VALUE=DATE:{start}", f"DTEND;VALUE=DATE:{end}",
+             f"SUMMARY:{x['corp_name']} 공모주 청약", f"DESCRIPTION:{desc}",
+             "END:VEVENT", "END:VCALENDAR"]
+    return "\r\n".join(lines) + "\r\n"
 
 def calculator_page(items, today):
     presets = []
@@ -245,6 +262,8 @@ def main():
     open(os.path.join(dist, "calculator.html"), "w", encoding="utf-8").write(calculator_page(items, today))
     for x in items:
         open(os.path.join(dist, "i", x["corp_code"] + ".html"), "w", encoding="utf-8").write(detail(x, today))
+        if x.get("sub_start"):
+            open(os.path.join(dist, "i", x["corp_code"] + ".ics"), "w", encoding="utf-8", newline="").write(ics_file(x))
     dbg = ["<h1>parse debug</h1>"]
     for x in items:
         dbg.append(f"<h2>{esc(x['corp_name'])} ({esc(x['rcept_no'])}) stage={esc(x['stage'])} err={esc(x.get('error'))}</h2>")
