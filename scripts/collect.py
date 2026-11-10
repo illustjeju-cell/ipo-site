@@ -13,7 +13,7 @@ BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
 MAX_DOCS = 500
-PARSER_VER = 11
+PARSER_VER = 12
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -157,39 +157,36 @@ def ratio_in(w):
             if 1 < v < 100000: return v
     return None
 
-def bare_ratio_after_keyword(w):
-    # 표가 선형화되면서 단위(:1·대1)가 숫자에서 떨어진 경우: '경쟁률' 뒤 30자 안의 소수값.
-    # 건수·수량은 정수라 소수점 있는 값만 후보로 삼아 오탐을 막는다.
-    for m in re.finditer(r"경쟁률[^\d]{0,30}([\d,]+\.\d+)(?![\d])", w):
-        try: v = float(m.group(1).replace(",", ""))
-        except ValueError: continue
-        if 1 < v < 100000: return v
-    return None
-
-def decimal_after_keyword(w):
-    # 표 선형화 2형: '경쟁률' 헤더 뒤에 건수·수량(정수)이 먼저 오고 비율(소수)이 뒤에 오는 경우.
-    # 마지막 '경쟁률' 위치부터 300자 안에서 %가 붙지 않은 첫 소수값을 비율로 본다.
-    i = w.rfind("경쟁률")
-    if i < 0: return None
-    for m in re.finditer(r"([\d,]+\.\d+)(?![\d%])", w[i:i + 300]):
-        try: v = float(m.group(1).replace(",", ""))
-        except ValueError: continue
-        if 1 < v < 100000: return v
+def compute_demand_ratio(text):
+    # v12: 비율 토큰이 본문에 없는 문서는 신청수량 ÷ 기관 배정수량으로 계산한다.
+    # (v11의 '경쟁률 뒤 첫 소수값' 추측 방식은 엉뚱한 소수를 집어 폐기 — 에이엘로봇 343.97 오탐)
+    applied = None
+    for m in re.finditer(r"신청수량\s*([\d,]+)\s*주", text):
+        w = text[max(0, m.start() - 250):m.start()]
+        if "수요예측" in w and ("참여" in w or "합계" in w or "총" in w):
+            applied = int(m.group(1).replace(",", "")); break
+    if not applied: return None
+    m = re.search(r"기관투자자\s*배정\s*수량\s*\(?\s*([\d,]+)\s*주", text)
+    if not m: return None
+    allot = int(m.group(1).replace(",", ""))
+    if not allot: return None
+    r = applied / allot
+    if 1 < r < 100000: return round(r, 2)
     return None
 
 def find_demand_ratio(text):
-    # 1) '수요예측 결과' 섹션 앵커 — 결과 표가 이 뒤에 붙는다 (v11: 윈도우 1800→4000, 단위 분리형도 시도)
+    # 1) '수요예측 결과' 섹션 앵커 — 결과 표가 이 뒤에 붙는다 (윈도우 4000)
     for m in re.finditer(r"수요예측\s*결과", text):
-        w = text[m.start():m.start() + 4000]
-        r = ratio_in(w) or bare_ratio_after_keyword(w) or decimal_after_keyword(w)
+        r = ratio_in(text[m.start():m.start() + 4000])
         if r: return r
     # 2) '경쟁률' 전 출현 스캔 — 수요예측·기관 맥락이 있는 윈도우만
     for m in re.finditer("경쟁률", text):
         w = text[max(0, m.start() - 300):m.start() + 300]
         if "수요예측" not in w and "기관" not in w: continue
-        r = ratio_in(w) or bare_ratio_after_keyword(w) or decimal_after_keyword(w)
+        r = ratio_in(w)
         if r: return r
-    return None
+    # 3) 토큰이 없으면 신청수량÷배정수량으로 계산
+    return compute_demand_ratio(text)
 
 def debug_excerpts(text):
     out = {}
@@ -225,6 +222,11 @@ def debug_excerpts(text):
     if ctx: out["_경쟁률맥락"] = " || ".join(ctx)
     toks = [m.group(0) for m in re.finditer(r"[\d,]+\.\d+\s*(?:대\s*1|[:：]\s*1|배)", text)]
     if toks: out["_비율후보"] = str(Counter(toks))
+    # v12 진단: 계산식(신청÷배정) 재료가 문서에 있는지 남긴다
+    apps = [text[max(0, m.start() - 60):m.end() + 10] for m in list(re.finditer(r"신청수량\s*[\d,]+\s*주", text))[:3]]
+    if apps: out["_신청후보"] = " || ".join(apps)
+    m = re.search(r"기관투자자\s*배정\s*수량\s*\(?\s*[\d,]+\s*주", text)
+    if m: out["_배정후보"] = text[max(0, m.start() - 40):m.end() + 10]
     return out
 
 def main():
