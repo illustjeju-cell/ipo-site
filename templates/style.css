@@ -41,3 +41,13 @@ table.cal td.out .dn{color:#c3ccd9}
 .snote{color:#889;font-size:12px;margin:8px 0 0}
 .cscore{margin-top:8px;font-size:13px;color:#123a6d;background:#eef4fd;border-radius:7px;padding:4px 8px;display:inline-block}
 @media(max-width:560px){.slab{width:96px}.sval{width:96px;font-size:12px}}
+.calc{background:#fff;border:1px solid #dde4ee;border-radius:12px;padding:18px;margin:14px 0}
+.calc label{display:block;font-size:14px;font-weight:600;color:#345;margin:12px 0}
+.calc input,.calc select{display:block;width:100%;margin-top:6px;padding:11px 12px;font-size:16px;border:1px solid #c9d4e6;border-radius:9px;background:#fbfcfe}
+.result{margin-top:16px;border-top:1px solid #edf1f6;padding-top:12px}
+.rrow{display:flex;justify-content:space-between;font-size:15.5px;padding:6px 0}
+.rrow b{color:#123a6d}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{border:1px solid #c9d4e6;background:#fff;border-radius:20px;padding:7px 13px;font-size:13.5px;cursor:pointer}
+.chip:hover{background:#eef4fd}
+.calcbtn{display:inline-block;background:#123a6d;color:#fff;font-weight:700;font-size:14.5px;border-radius:9px;padding:10px 16px;text-decoration:none;margin-top:12px}
