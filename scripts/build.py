@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """공모주 나침반 빌드 — data/ipos.json 을 정적 사이트로 만든다."""
-import json, os, re, html, shutil, datetime
+import json, os, re, html, shutil, datetime, math
 
 SITE_URL = os.environ.get("SITE_URL", "https://ipo.acoustic42.com").rstrip("/")
 ADSENSE = os.environ.get("ADSENSE_CLIENT", "")
@@ -34,15 +34,53 @@ def price_line(x):
     if x.get("price_low") and x.get("price_high"): return f"희망공모가 {won(x['price_low'])} ~ {won(x['price_high'])}"
     return "공모가 미정"
 
+def demand_score(x):
+    """수요예측 지표 점수 — 공시에서 확인되는 지표만으로 계산하는 참고 수치.
+    구성: 기관 경쟁률(0.5) · 의무보유확약 비율(0.25) · 공모가의 희망밴드 내 위치(0.25).
+    핵심 지표인 경쟁률이 없으면 점수를 만들지 않는다 — 공모가 위치만으로는 수요를 판단할 수 없어
+    '밴드 상단 확정 = 100점' 같은 오해를 부른다 (2026-11-10 로컬 검수에서 확인).
+    종목 추천이 아니라 기관 수요 지표의 정리다."""
+    if not x.get("demand_ratio"): return None
+    parts = []
+    if x.get("demand_ratio"):
+        frac = min(1.0, math.log10(max(x["demand_ratio"], 1.0)) / math.log10(3000.0))
+        parts.append(("수요예측 경쟁률", f"{x['demand_ratio']:,} : 1", frac, 0.5))
+    if x.get("lockup_pct"):
+        frac = min(1.0, x["lockup_pct"] / 40.0)
+        parts.append(("의무보유확약 비율", f"{x['lockup_pct']}%", frac, 0.25))
+    if x.get("price_final") and x.get("price_low") and x.get("price_high") and x["price_high"] > x["price_low"]:
+        pos = (x["price_final"] - x["price_low"]) / (x["price_high"] - x["price_low"])
+        pos = max(0.0, min(1.0, pos))
+        where = "밴드 상단" if pos >= 0.99 else "밴드 하단" if pos <= 0.01 else f"밴드 내 {pos * 100:.0f}% 위치"
+        parts.append(("확정가의 위치", where, pos, 0.25))
+    if not parts: return None
+    wsum = sum(p[3] for p in parts)
+    score = round(100 * sum(p[2] * p[3] for p in parts) / wsum)
+    grade = "기관 수요 강함" if score >= 70 else "기관 수요 보통" if score >= 40 else "기관 수요 약함"
+    return score, grade, parts
+
+def score_box(x):
+    s = demand_score(x)
+    if not s: return ""
+    score, grade, parts = s
+    bars = "".join(
+        f"""<div class="srow"><span class="slab">{esc(lab)}</span><span class="sbar"><i style="width:{frac * 100:.0f}%"></i></span><span class="sval">{esc(val)}</span></div>"""
+        for lab, val, frac, _w in parts)
+    lack = "<p class='snote'>지표가 부족해 참고용으로만 보세요.</p>" if len(parts) < 2 else ""
+    return f"""<section class="score"><div class="shead"><span class="snum">{score}</span><span class="sgrade">{esc(grade)}</span></div>
+{bars}{lack}<p class="snote">공시 지표(경쟁률·확약·공모가 위치)로 계산한 참고 수치입니다. 투자 권유가 아닙니다.</p></section>"""
+
 def card(x, today):
     sub = ""
     if x.get("sub_start"):
         sub = f"청약 {x['sub_start']} ~ {x.get('sub_end') or x['sub_start']} <b>{dday(x['sub_start'], today)}</b>"
+    s = demand_score(x)
+    badge = f"<div class='cscore'>수요예측 지표 <b>{s[0]}점</b> · {esc(s[1])}</div>" if s and len(s[2]) >= 2 else ""
     return f"""<a class="card" href="/i/{x['corp_code']}.html">
 <div class="cname">{esc(x['corp_name'])} <span class="stage">{esc(x['stage'])}</span></div>
 <div class="cprice">{esc(price_line(x))}</div>
 <div class="cmeta">{sub}</div>
-<div class="cmeta">{esc(x.get('underwriter') or '')}</div></a>"""
+<div class="cmeta">{esc(x.get('underwriter') or '')}</div>{badge}</a>"""
 
 def detail(x, today):
     rows = []
@@ -59,6 +97,7 @@ def detail(x, today):
     if x.get("listing_date"): row("상장예정일", x["listing_date"])
     body = f"""<h1>{esc(x['corp_name'])} 공모주 청약 일정·공모가</h1>
 <p class="lead">{esc(price_line(x))} · {esc(x.get('underwriter') or '')}</p>
+{score_box(x)}
 <table class="facts">{"".join(rows)}</table>
 <p class="src">출처: <a href="{esc(x['dart_url'])}" rel="nofollow">DART 공시 원문</a> ({esc(x['rcept_dt'])} 접수)</p>"""
     return head(f"{x['corp_name']} 공모주 청약 일정·공모가 | 공모주 나침반",
