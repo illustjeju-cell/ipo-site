@@ -13,7 +13,7 @@ BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
 LOOKBACK_DAYS = 60
 MAX_DOCS = 500
-PARSER_VER = 12
+PARSER_VER = 13
 
 def get_json(path, params):
     q = urllib.parse.urlencode({"crtfc_key": KEY, **params})
@@ -28,8 +28,10 @@ def get_doc_text(rcept_no):
         raw = r.read()
     zf = zipfile.ZipFile(io.BytesIO(raw))
     names = [n for n in zf.namelist() if n.lower().endswith(".xml")]
-    name = max(names, key=lambda n: zf.getinfo(n).file_size)
-    xml = zf.read(name).decode("utf-8", "replace")
+    # v13: 가장 큰 파트만 읽으면 수요예측 결과 표가 다른 파트에 있을 때 통째로 놓친다.
+    # 전 파트를 큰 순서대로 이어붙인다 (기존 파트가 앞에 있어 첫 등장 기준 추출은 그대로).
+    names.sort(key=lambda n: -zf.getinfo(n).file_size)
+    xml = "\n".join(zf.read(n).decode("utf-8", "replace") for n in names)
     t = re.sub(r"<[^>]+>", " ", xml)
     t = t.replace("&nbsp;", " ").replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
     return re.sub(r"\s+", " ", t)
@@ -148,23 +150,38 @@ def parse_fields(text, allow_final=False, is_result=False):
     return f
 
 def ratio_in(w):
-    # v11: '871.74배' 표기도 추가. 경쟁률은 관행적으로 소수 둘째 자리까지 적힌다.
-    for pat in (r"([\d,]+\.?\d*)\s*[:：]\s*1(?![\d])", r"([\d,]+\.?\d*)\s*대\s*1(?![\d])",
-                r"([\d,]+\.\d+)\s*배(?![\d])"):
+    # 단위(:1·대1)가 붙은 값만 인정한다. '배'는 PER 배수와 헷갈려 경쟁률에 붙은 경우만 별도로 본다
+    # (v12에서 일반 '배' 패턴이 에이엘로봇 PER 37.17배를 경쟁률로 오인한 사고).
+    for pat in (r"([\d,]+\.?\d*)\s*[:：]\s*1(?![\d])", r"([\d,]+\.?\d*)\s*대\s*1(?![\d])"):
         for m in re.finditer(pat, w):
             try: v = float(m.group(1).replace(",", ""))
             except ValueError: continue
             if 1 < v < 100000: return v
     return None
 
+def ratio_bae(w):
+    # '경쟁률 1,234.30배'처럼 경쟁률 바로 뒤에 붙은 배 표기만 인정한다.
+    for m in re.finditer(r"경쟁률[^\d]{0,15}([\d,]+\.\d+)\s*배", w):
+        try: v = float(m.group(1).replace(",", ""))
+        except ValueError: continue
+        if 1 < v < 100000: return v
+    return None
+
 def compute_demand_ratio(text):
     # v12: 비율 토큰이 본문에 없는 문서는 신청수량 ÷ 기관 배정수량으로 계산한다.
     # (v11의 '경쟁률 뒤 첫 소수값' 추측 방식은 엉뚱한 소수를 집어 폐기 — 에이엘로봇 343.97 오탐)
+    # v13: 신청수량의 '23억1431만주'식 억·만 표기도 읽는다.
     applied = None
-    for m in re.finditer(r"신청수량\s*([\d,]+)\s*주", text):
+    for m in re.finditer(r"신청수량\s*(?:은|는|이)?\s*(?:총\s*)?([\d,]+)\s*주", text):
         w = text[max(0, m.start() - 250):m.start()]
         if "수요예측" in w and ("참여" in w or "합계" in w or "총" in w):
             applied = int(m.group(1).replace(",", "")); break
+    if not applied:
+        for m in re.finditer(r"신청수량\s*(?:은|는|이)?\s*(?:총\s*)?([\d,]+)\s*억\s*(?:([\d,]+)\s*만)?\s*주", text):
+            w = text[max(0, m.start() - 250):m.start()]
+            if "수요예측" in w:
+                applied = int(m.group(1).replace(",", "")) * 100000000 + int((m.group(2) or "0").replace(",", "")) * 10000
+                break
     if not applied: return None
     m = re.search(r"기관투자자\s*배정\s*수량\s*\(?\s*([\d,]+)\s*주", text)
     if not m: return None
@@ -177,13 +194,14 @@ def compute_demand_ratio(text):
 def find_demand_ratio(text):
     # 1) '수요예측 결과' 섹션 앵커 — 결과 표가 이 뒤에 붙는다 (윈도우 4000)
     for m in re.finditer(r"수요예측\s*결과", text):
-        r = ratio_in(text[m.start():m.start() + 4000])
+        w = text[m.start():m.start() + 4000]
+        r = ratio_in(w) or ratio_bae(w)
         if r: return r
     # 2) '경쟁률' 전 출현 스캔 — 수요예측·기관 맥락이 있는 윈도우만
     for m in re.finditer("경쟁률", text):
         w = text[max(0, m.start() - 300):m.start() + 300]
         if "수요예측" not in w and "기관" not in w: continue
-        r = ratio_in(w)
+        r = ratio_in(w) or ratio_bae(w)
         if r: return r
     # 3) 토큰이 없으면 신청수량÷배정수량으로 계산
     return compute_demand_ratio(text)
@@ -223,7 +241,7 @@ def debug_excerpts(text):
     toks = [m.group(0) for m in re.finditer(r"[\d,]+\.\d+\s*(?:대\s*1|[:：]\s*1|배)", text)]
     if toks: out["_비율후보"] = str(Counter(toks))
     # v12 진단: 계산식(신청÷배정) 재료가 문서에 있는지 남긴다
-    apps = [text[max(0, m.start() - 60):m.end() + 10] for m in list(re.finditer(r"신청수량\s*[\d,]+\s*주", text))[:3]]
+    apps = [text[max(0, m.start() - 60):m.end() + 10] for m in list(re.finditer(r"신청수량\s*[\d,]+\s*(?:억\s*(?:[\d,]+\s*만)?\s*)?주", text))[:3]]
     if apps: out["_신청후보"] = " || ".join(apps)
     m = re.search(r"기관투자자\s*배정\s*수량\s*\(?\s*[\d,]+\s*주", text)
     if m: out["_배정후보"] = text[max(0, m.start() - 40):m.end() + 10]
