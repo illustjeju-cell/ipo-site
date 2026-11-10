@@ -25,7 +25,7 @@ def head(title, desc, url, body_cls=""):
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}">
 {ads}<style>{CSS}</style></head>
-<body class="{body_cls}"><header class="site"><a href="/">공모주 나침반</a><nav><a href="/calendar.html">📅 일정 캘린더</a></nav></header><main>"""
+<body class="{body_cls}"><header class="site"><a href="/">공모주 나침반</a><nav><a href="/calculator.html">🧮 증거금 계산기</a> <a href="/calendar.html">📅 일정 캘린더</a></nav></header><main>"""
 
 FOOT = """</main><footer>공모 일정과 공모가는 금융감독원 전자공시시스템(DART) 공시를 바탕으로 정리합니다. 투자 판단의 책임은 본인에게 있습니다.</footer></body></html>"""
 
@@ -99,6 +99,7 @@ def detail(x, today):
 <p class="lead">{esc(price_line(x))} · {esc(x.get('underwriter') or '')}</p>
 {score_box(x)}
 <table class="facts">{"".join(rows)}</table>
+<p><a class="calcbtn" href="/calculator.html?price={x.get('price_final') or x.get('price_high') or ''}&name={esc(x['corp_name'])}&ratio={x.get('demand_ratio') or ''}">🧮 이 종목 증거금 계산하기</a></p>
 <p class="src">출처: <a href="{esc(x['dart_url'])}" rel="nofollow">DART 공시 원문</a> ({esc(x['rcept_dt'])} 접수)</p>"""
     return head(f"{x['corp_name']} 공모주 청약 일정·공모가 | 공모주 나침반",
                 f"{x['corp_name']} 공모주 청약 일정, 희망공모가·확정공모가, 수요예측 결과를 정리했습니다.",
@@ -165,6 +166,69 @@ render();
                 "공모주 청약·수요예측·상장 일정을 한 달 달력으로 확인하세요.",
                 SITE_URL + "/calendar.html") + body + FOOT
 
+def calculator_page(items, today):
+    presets = []
+    for x in items:
+        price = x.get("price_final") or x.get("price_high")
+        if not price: continue
+        presets.append({"n": x["corp_name"], "p": price,
+                        "r": x.get("demand_ratio"),
+                        "s": x.get("sub_start") or "9999"})
+    presets.sort(key=lambda z: z["s"])
+    chips = "".join(
+        f"""<button type="button" class="chip" onclick="preset({z['p']}, '{esc(z['n'])}', {z['r'] if z['r'] else 'null'})">{esc(z['n'])}</button>"""
+        for z in presets[:14])
+    js = """<script>
+function fmt(n){ return Math.round(n).toLocaleString("ko-KR"); }
+function preset(p, n, r){
+  document.getElementById("price").value = p;
+  document.getElementById("cname").textContent = n ? (n + " 기준") : "";
+  if (r) document.getElementById("ratio").value = r;
+  calc();
+}
+function calc(){
+  var price = parseFloat(document.getElementById("price").value) || 0;
+  var qty = parseFloat(document.getElementById("qty").value) || 0;
+  var rate = parseFloat(document.getElementById("rate").value) || 0.5;
+  var ratio = parseFloat(document.getElementById("ratio").value) || 0;
+  var margin = price * qty * rate;
+  var out = "<div class='rrow'><span>필요 증거금</span><b>" + fmt(margin) + "원</b></div>";
+  out += "<div class='rrow'><span>청약 금액 (전액)</span><b>" + fmt(price * qty) + "원</b></div>";
+  out += "<div class='rrow'><span>최소 청약 (10주) 증거금</span><b>" + fmt(price * 10 * rate) + "원</b></div>";
+  if (ratio > 0 && qty > 0) {
+    var est = qty / ratio;
+    out += "<div class='rrow'><span>비례 예상 배정</span><b>약 " + (est < 1 ? est.toFixed(2) : fmt(est)) + "주</b></div>";
+    out += "<p class='snote'>예상 배정은 청약 주식수 ÷ 경쟁률의 단순 계산입니다. 실제 배정은 균등·비례 방식과 청약 건수에 따라 달라집니다.</p>";
+  }
+  document.getElementById("result").innerHTML = out;
+}
+var q = new URLSearchParams(location.search);
+if (q.get("price")) {
+  document.getElementById("price").value = q.get("price");
+  if (q.get("name")) document.getElementById("cname").textContent = q.get("name") + " 기준";
+  if (q.get("ratio")) document.getElementById("ratio").value = q.get("ratio");
+}
+["price", "qty", "rate", "ratio"].forEach(function(id){ document.getElementById(id).addEventListener("input", calc); });
+calc();
+</script>"""
+    body = f"""<h1>공모주 증거금 계산기</h1>
+<p class="lead">공모가와 청약 주식수를 넣으면 필요한 증거금을 계산합니다. <span id="cname"></span></p>
+<div class="calc">
+<label>공모가 (원)<input type="number" id="price" min="0" step="100" placeholder="예: 17600"></label>
+<label>청약 주식수 (주)<input type="number" id="qty" min="0" step="10" value="100"></label>
+<label>증거금률
+<select id="rate"><option value="0.5" selected>50% (일반적)</option><option value="1">100%</option></select></label>
+<label>예상 경쟁률 (선택, 비례 배정 추정용)<input type="number" id="ratio" min="0" step="0.01" placeholder="예: 871.74"></label>
+<div id="result" class="result"></div>
+</div>
+<h2 style="font-size:17px">종목으로 바로 계산</h2>
+<div class="chips">{chips}</div>
+<p class="snote">종목을 누르면 그 종목의 공모가(확정가, 없으면 희망가 상단)와 수요예측 경쟁률이 자동으로 들어갑니다. 증거금률은 종목·증권사 공고에 따라 다를 수 있으니 청약 전 공고에서 확인하세요.</p>
+""" + js
+    return head("공모주 증거금 계산기 | 공모주 나침반",
+                "공모주 청약에 필요한 증거금을 공모가·주식수·경쟁률로 계산하세요.",
+                SITE_URL + "/calculator.html") + body + FOOT
+
 def main():
     data = json.load(open(os.path.join(ROOT, "data", "ipos.json"), encoding="utf-8"))
     items = data["items"]
@@ -178,6 +242,7 @@ def main():
                 SITE_URL + "/") + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + FOOT
     open(os.path.join(dist, "index.html"), "w", encoding="utf-8").write(home)
     open(os.path.join(dist, "calendar.html"), "w", encoding="utf-8").write(calendar_page(items, today))
+    open(os.path.join(dist, "calculator.html"), "w", encoding="utf-8").write(calculator_page(items, today))
     for x in items:
         open(os.path.join(dist, "i", x["corp_code"] + ".html"), "w", encoding="utf-8").write(detail(x, today))
     dbg = ["<h1>parse debug</h1>"]
