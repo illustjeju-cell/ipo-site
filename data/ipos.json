@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T02:19:00",
+ "updated": "2026-11-11T06:17:55",
  "items": [
   {
    "corp_code": "00130587",
@@ -2092,13 +2092,14 @@
    "corp_code": "02041694",
    "corp_name": "신영해피투모로우제12호기업인수목적",
    "stage": "예정",
-   "rcept_no": "20261029000239",
-   "rcept_dt": "20261029",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261029000239",
-   "filings": 2,
+   "rcept_no": "20261111000235",
+   "rcept_dt": "20261111",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111000235",
+   "filings": 3,
    "filings_nm": [
     "증권신고서(지분증권)",
-    "[첨부정정]증권신고서(지분증권)"
+    "[첨부정정]증권신고서(지분증권)",
+    "[기재정정]증권신고서(지분증권)"
    ],
    "error": "BadZipFile: File is not a zip file"
   },
