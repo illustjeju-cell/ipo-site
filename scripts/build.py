@@ -43,8 +43,8 @@ FOOT = """</main><footer>공모 일정과 공모가는 금융감독원 전자공
 
 # 디스플레이 광고 슬롯 — 광고 단위 코드(숫자)가 오면 AD_SLOTS에 채운다. 비어 있으면 렌더링하지 않는다.
 AD_SLOTS = {
-    "detail-top": "",
-    "detail-bottom": "",
+    "detail-top": "7760079595",
+    "detail-bottom": "7760079595",
 }
 
 def ad(name):
