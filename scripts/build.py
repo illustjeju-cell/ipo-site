@@ -2,6 +2,15 @@
 """공모주 나침반 빌드 — data/ipos.json 을 정적 사이트로 만든다."""
 import json, os, re, html, shutil, datetime, math
 
+try:
+    from PIL import Image, ImageDraw, ImageFont
+    _FONT_DIR = "/usr/share/fonts/opentype/noto"
+    FONT_B = f"{_FONT_DIR}/NotoSansCJK-Bold.ttc" if os.path.exists(f"{_FONT_DIR}/NotoSansCJK-Bold.ttc") else None
+    FONT_R = f"{_FONT_DIR}/NotoSansCJK-Regular.ttc" if os.path.exists(f"{_FONT_DIR}/NotoSansCJK-Regular.ttc") else None
+    HAS_PIL = bool(FONT_B and FONT_R)
+except Exception:
+    HAS_PIL = False
+
 SITE_URL = os.environ.get("SITE_URL", "https://ipo.acoustic42.com").rstrip("/")
 ADSENSE = os.environ.get("ADSENSE_CLIENT", "")
 CNAME = os.environ.get("CNAME", "")
@@ -16,14 +25,17 @@ def dday(iso, today):
     d = (datetime.date.fromisoformat(iso) - today).days
     return "오늘" if d == 0 else f"D-{d}" if d > 0 else "종료"
 
-def head(title, desc, url, body_cls=""):
+def head(title, desc, url, body_cls="", img=""):
     ads = f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE}" crossorigin="anonymous"></script>' if ADSENSE else ""
+    ogimg = f"""
+<meta property="og:image" content="{img}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">""" if img else ""
     return f"""<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title><meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}">
-<meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}">
+<meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}">{ogimg}
 {ads}<style>{CSS}</style></head>
 <body class="{body_cls}"><header class="site"><a href="/">공모주 나침반</a><nav><a href="/calculator.html">🧮 증거금 계산기</a> <a href="/calendar.html">📅 일정 캘린더</a></nav></header><main>"""
 
@@ -82,7 +94,52 @@ def card(x, today):
 <div class="cmeta">{sub}</div>
 <div class="cmeta">{esc(x.get('underwriter') or '')}</div>{badge}</a>"""
 
-def detail(x, today):
+def mdd(iso):
+    if not iso: return ""
+    d = datetime.date.fromisoformat(iso)
+    return f"{d.month}월 {d.day}일"
+
+def _card_img(path, name, main, sub):
+    """링크 미리보기(OG)용 카드 이미지 1200x630 생성. 실패하면 False (빌드는 계속)."""
+    if not HAS_PIL: return False
+    try:
+        W, H = 1200, 630
+        NAVY, BLACK, GRAY = (18, 58, 109), (17, 17, 17), (110, 110, 110)
+        img = Image.new("RGB", (W, H), (255, 255, 255))
+        d = ImageDraw.Draw(img)
+        def fit(text, fp, size, min_size=30):
+            while size > min_size:
+                f = ImageFont.truetype(fp, size)
+                if d.textbbox((0, 0), text, font=f)[2] <= 1080: return f
+                size -= 4
+            return ImageFont.truetype(fp, min_size)
+        def center(text, y, f, fill):
+            b = d.textbbox((0, 0), text, font=f)
+            d.text(((W - (b[2] - b[0])) / 2 - b[0], y), text, font=f, fill=fill)
+        d.rectangle([0, 0, W, 84], fill=NAVY)
+        center("공모주 나침반", 22, ImageFont.truetype(FONT_B, 38), (255, 255, 255))
+        center(name, 150, fit(name, FONT_B, 76), NAVY)
+        center(main, 262, fit(main, FONT_B, 96), BLACK)
+        d.line([300, 440, 900, 440], fill=(200, 208, 220), width=3)
+        center(sub, 472, fit(sub, FONT_R, 44, 26), GRAY)
+        d.rectangle([0, H - 26, W, H], fill=NAVY)
+        img.save(path, optimize=True)
+        return True
+    except Exception:
+        return False
+
+def og_card(path, x, today):
+    bits = []
+    if x.get("sub_start"):
+        bits.append(f"청약 {mdd(x['sub_start'])} ~ {mdd(x.get('sub_end') or x['sub_start'])}")
+    elif x.get("listing_date"):
+        bits.append(f"상장 {mdd(x['listing_date'])}")
+    s = demand_score(x)
+    if s: bits.append(f"수요예측 지표 {s[0]}점")
+    if x.get("underwriter"): bits.append(x["underwriter"])
+    return _card_img(path, x["corp_name"], price_line(x), " · ".join(bits))
+
+def detail(x, today, img=""):
     rows = []
     def row(k, v):
         if v: rows.append(f"<tr><th>{k}</th><td>{esc(v)}</td></tr>")
@@ -104,7 +161,7 @@ def detail(x, today):
 <p class="src">출처: <a href="{esc(x['dart_url'])}" rel="nofollow">DART 공시 원문</a> ({esc(x['rcept_dt'])} 접수)</p>"""
     return head(f"{x['corp_name']} 공모주 청약 일정·공모가 | 공모주 나침반",
                 f"{x['corp_name']} 공모주 청약 일정, 희망공모가·확정공모가, 수요예측 결과를 정리했습니다.",
-                f"{SITE_URL}/i/{x['corp_code']}.html") + body + FOOT
+                f"{SITE_URL}/i/{x['corp_code']}.html", img=img) + body + FOOT
 
 def calendar_page(items, today):
     ev = {}
@@ -253,15 +310,18 @@ def main():
     dist = os.path.join(ROOT, "dist")
     shutil.rmtree(dist, ignore_errors=True)
     os.makedirs(os.path.join(dist, "i"))
+    os.makedirs(os.path.join(dist, "cards"))
+    default_img = f"{SITE_URL}/cards/default.png" if _card_img(os.path.join(dist, "cards", "default.png"), "공모주 나침반", "청약 일정 한눈에", "공모가·수요예측 점수까지 정리") else ""
     cards = "\n".join(card(x, today) for x in items)
     home = head("공모주 나침반 | 공모주 청약 일정·공모가·수요예측",
                 "다가오는 공모주 청약 일정과 공모가, 수요예측 결과를 DART 공시 기준으로 정리합니다.",
-                SITE_URL + "/") + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + FOOT
+                SITE_URL + "/", img=default_img) + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + FOOT
     open(os.path.join(dist, "index.html"), "w", encoding="utf-8").write(home)
     open(os.path.join(dist, "calendar.html"), "w", encoding="utf-8").write(calendar_page(items, today))
     open(os.path.join(dist, "calculator.html"), "w", encoding="utf-8").write(calculator_page(items, today))
     for x in items:
-        open(os.path.join(dist, "i", x["corp_code"] + ".html"), "w", encoding="utf-8").write(detail(x, today))
+        cimg = f"{SITE_URL}/cards/{x['corp_code']}.png" if og_card(os.path.join(dist, "cards", x["corp_code"] + ".png"), x, today) else ""
+        open(os.path.join(dist, "i", x["corp_code"] + ".html"), "w", encoding="utf-8").write(detail(x, today, cimg))
         if x.get("sub_start"):
             open(os.path.join(dist, "i", x["corp_code"] + ".ics"), "w", encoding="utf-8", newline="").write(ics_file(x))
     dbg = ["<h1>parse debug</h1>"]
