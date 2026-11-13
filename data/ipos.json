@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T06:21:40",
+ "updated": "2026-11-13T10:21:55",
  "items": [
   {
    "corp_code": "00130587",
@@ -668,12 +668,13 @@
    "corp_code": "00781202",
    "corp_name": "파이온엑스",
    "stage": "예정",
-   "rcept_no": "20261012000512",
-   "rcept_dt": "20261013",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261012000512",
-   "filings": 4,
+   "rcept_no": "20261113001228",
+   "rcept_dt": "20261113",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113001228",
+   "filings": 5,
    "filings_nm": [
     "소액공모공시서류(지분증권)",
+    "[기재정정]소액공모공시서류(지분증권)",
     "[기재정정]소액공모공시서류(지분증권)",
     "[기재정정]소액공모공시서류(지분증권)",
     "[기재정정]소액공모공시서류(지분증권)"
@@ -1164,15 +1165,16 @@
    "corp_code": "01950720",
    "corp_name": "제논",
    "stage": "예정",
-   "rcept_no": "20261026000367",
-   "rcept_dt": "20261026",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261026000367",
-   "filings": 4,
+   "rcept_no": "20261113001531",
+   "rcept_dt": "20261113",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113001531",
+   "filings": 5,
    "filings_nm": [
-    "증권신고서(지분증권)",
+    "[첨부추가]증권신고서(지분증권)",
     "[기재정정]증권신고서(지분증권)",
     "[기재정정]증권신고서(지분증권)",
-    "[첨부정정]증권신고서(지분증권)"
+    "[첨부정정]증권신고서(지분증권)",
+    "[기재정정]증권신고서(지분증권)"
    ],
    "sub_start": "2026-11-04",
    "sub_end": "2026-11-04",
@@ -2129,6 +2131,19 @@
     "_배정후보": "회사는 총 2개의 관계인수인에게 총 11,660주를 배정하였으며, 이는 기관투자자 배정 수량(1,335,000주)의 1.0% 이내"
    },
    "pv": 13
+  },
+  {
+   "corp_code": "00403793",
+   "corp_name": "바이브컴퍼니",
+   "stage": "예정",
+   "rcept_no": "20261113001623",
+   "rcept_dt": "20261113",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113001623",
+   "filings": 1,
+   "filings_nm": [
+    "소액공모공시서류(지분증권)"
+   ],
+   "error": "BadZipFile: File is not a zip file"
   },
   {
    "corp_code": "01801026",
