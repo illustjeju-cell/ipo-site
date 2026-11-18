@@ -58,6 +58,53 @@ def ad(name):
             f'data-ad-slot="{slot}" data-ad-format="auto" data-full-width-responsive="true"></ins>'
             f'<script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script></div>')
 
+# 주관사(증권사) 메인 홈페이지 — 상세 페이지 '공모주 청약 바로가기' 대형 배너용 (2026-11-18).
+BROKER_URLS = {
+    "한국투자증권": "https://www.truefriend.com",
+    "미래에셋증권": "https://securities.miraeasset.com",
+    "NH투자증권": "https://www.nhqv.com",
+    "삼성증권": "https://www.samsungpop.com",
+    "KB증권": "https://www.kbsec.com",
+    "하나증권": "https://www.hanaw.com",
+    "신한투자증권": "https://www.shinhansec.com",
+    "키움증권": "https://www.kiwoom.com",
+    "대신증권": "https://www.daishin.com",
+    "유진투자증권": "https://www.eugenefn.com",
+    "아이비케이투자증권": "https://www.ibks.com",
+    "IBK투자증권": "https://www.ibks.com",
+    "아이엠증권": "https://www.imfnsec.com",
+    "iM증권": "https://www.imfnsec.com",
+    "하이투자증권": "https://www.imfnsec.com",
+    "유안타증권": "https://www.myasset.com",
+    "우리투자증권": "https://www.wooriib.com",
+    "SK증권": "https://www.sks.co.kr",
+    "신영증권": "https://www.shinyoung.com",
+    "한양증권": "https://www.hygood.co.kr",
+    "한화투자증권": "https://www.hanwhawm.com",
+    "교보증권": "https://www.iprovest.com",
+    "현대차증권": "https://www.hmsec.com",
+    "BNK투자증권": "https://www.bnkfn.co.kr",
+}
+
+def broker_name(x):
+    u = (x.get("underwriter") or "").strip()
+    if not u: return ""
+    return re.split(r"[,·/]", u)[0].strip()
+
+def broker_url(x):
+    n = broker_name(x)
+    return BROKER_URLS.get(n, "") if n else ""
+
+def action_btns(x):
+    """상세 페이지 대형 행동 배너: ① 주관사 공모주 청약 바로가기 ② 이 종목 증거금 계산하기.
+    2026-11-18 사용자 지시 — 작은 버튼이 아니라 가운데 큼직한 배너로."""
+    btns = []
+    bu = broker_url(x)
+    if bu:
+        btns.append(f'<a href="{bu}" target="_blank" rel="noopener" style="display:block;text-align:center;background:#123a6d;color:#fff;font-size:19px;font-weight:800;padding:18px 14px;border-radius:14px;text-decoration:none">🏦 {esc(broker_name(x))} 공모주 청약 바로가기</a>')
+    btns.append(f'<a href="/calculator.html?price={x.get("price_final") or x.get("price_high") or ""}&name={esc(x["corp_name"])}&ratio={x.get("demand_ratio") or ""}" style="display:block;text-align:center;background:#eef3fa;color:#123a6d;font-size:19px;font-weight:800;padding:18px 14px;border-radius:14px;text-decoration:none;border:2px solid #123a6d">🧮 이 종목 증거금 계산하기</a>')
+    return '<div style="display:flex;flex-direction:column;gap:10px;margin:18px 0">' + "".join(btns) + "</div>"
+
 def price_line(x):
     if x.get("price_final"): return f"확정공모가 {won(x['price_final'])}"
     if x.get("price_low") and x.get("price_high"): return f"희망공모가 {won(x['price_low'])} ~ {won(x['price_high'])}"
@@ -174,7 +221,7 @@ def detail(x, today, img=""):
 {score_box(x)}
 {ad("detail-top")}
 <table class="facts">{"".join(rows)}</table>
-<p><a class="calcbtn" href="/calculator.html?price={x.get('price_final') or x.get('price_high') or ''}&name={esc(x['corp_name'])}&ratio={x.get('demand_ratio') or ''}">🧮 이 종목 증거금 계산하기</a></p>
+{action_btns(x)}
 {ics_link(x)}
 <p class="src">출처: <a href="{esc(x['dart_url'])}" rel="nofollow">DART 공시 원문</a> ({esc(x['rcept_dt'])} 접수)</p>
 {ad("detail-bottom")}"""
@@ -332,9 +379,12 @@ def main():
     os.makedirs(os.path.join(dist, "cards"))
     default_img = f"{SITE_URL}/cards/default.png" if _card_img(os.path.join(dist, "cards", "default.png"), "공모주 나침반", "청약 일정 한눈에", "공모가·수요예측 점수까지 정리") else ""
     cards = "\n".join(card(x, today) for x in items)
+    home_banner = ('<div style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 20px">'
+                   '<a href="/calendar.html" style="flex:1 1 240px;display:block;text-align:center;background:#123a6d;color:#fff;font-size:19px;font-weight:800;padding:18px 14px;border-radius:14px;text-decoration:none">📅 공모주 일정 캘린더</a>'
+                   '<a href="/calculator.html" style="flex:1 1 240px;display:block;text-align:center;background:#eef3fa;color:#123a6d;font-size:19px;font-weight:800;padding:18px 14px;border-radius:14px;text-decoration:none;border:2px solid #123a6d">🧮 공모주 증거금 계산기</a></div>')
     home = head("공모주 나침반 | 공모주 청약 일정·공모가·수요예측",
                 "다가오는 공모주 청약 일정과 공모가, 수요예측 결과를 DART 공시 기준으로 정리합니다.",
-                SITE_URL + "/", img=default_img) + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + FOOT
+                SITE_URL + "/", img=default_img) + home_banner + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + FOOT
     open(os.path.join(dist, "index.html"), "w", encoding="utf-8").write(home)
     open(os.path.join(dist, "calendar.html"), "w", encoding="utf-8").write(calendar_page(items, today))
     open(os.path.join(dist, "calculator.html"), "w", encoding="utf-8").write(calculator_page(items, today))
