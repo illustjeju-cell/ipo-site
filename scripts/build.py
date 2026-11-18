@@ -34,6 +34,7 @@ def head(title, desc, url, body_cls="", img=""):
 <meta name="twitter:card" content="summary_large_image">""" if img else ""
     return f"""<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="naver-site-verification" content="91aee779d77f133a196ee07d1d94801eba426e0b">
 <title>{esc(title)}</title><meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}">
@@ -393,6 +394,14 @@ def main():
         open(os.path.join(dist, "i", x["corp_code"] + ".html"), "w", encoding="utf-8").write(detail(x, today, cimg))
         if x.get("sub_start"):
             open(os.path.join(dist, "i", x["corp_code"] + ".ics"), "w", encoding="utf-8", newline="").write(ics_file(x))
+    sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for u in ("/", "/calendar.html", "/calculator.html"):
+        sm.append(f"<url><loc>{SITE_URL}{u}</loc><lastmod>{data['updated'][:10]}</lastmod></url>")
+    for x in items:
+        sm.append(f"<url><loc>{SITE_URL}/i/{x['corp_code']}.html</loc><lastmod>{data['updated'][:10]}</lastmod></url>")
+    sm.append("</urlset>")
+    open(os.path.join(dist, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(sm))
+    open(os.path.join(dist, "robots.txt"), "w", encoding="utf-8").write(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
     dbg = ["<h1>parse debug</h1>"]
     for x in items:
         dbg.append(f"<h2>{esc(x['corp_name'])} ({esc(x['rcept_no'])}) stage={esc(x['stage'])} err={esc(x.get('error'))}</h2>")
