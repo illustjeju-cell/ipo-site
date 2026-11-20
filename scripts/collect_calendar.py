@@ -19,7 +19,7 @@ import io, json, os, re, sys, time, zipfile, datetime, urllib.request, urllib.pa
 KEY = os.environ["OPENDART_KEY"]
 BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
-PARSER_VER = 2
+PARSER_VER = 3
 
 # 공시 분류 가정 (v1에서 실측 검증): B 주요사항·E 기타·I 거래소공시
 SEARCH_TYPES = ["B", "E", "I"]
@@ -89,11 +89,33 @@ def date_near(text, keywords, size=350):
         if found: return found
     return None
 
+def first_date_near(text, keywords, size=350):
+    """키워드 첫 윈도우의 첫 날짜 (구간 안에서는 첫 등장이 정본)."""
+    for kw in keywords:
+        w = window(text, kw, size)
+        if w:
+            ds = dates_in(w)
+            if ds: return ds[0]
+    return None
+
+def section_date(text, section_re, kw, seg_len):
+    """본문 섹션(결의·결정 표)의 날짜를 뒤에서부터 찾는다.
+    정정 문서는 정정대조표 뒤에 본문 표가 통째로 다시 실리므로 마지막 섹션이
+    정본이고, 일반 문서의 뒤쪽 안내문(전자투표 일시 등)에 속지 않기 위해
+    '첫 윈도우'(v1)·'마지막 윈도우'(v2) 대신 섹션 기준 탐색을 쓴다.
+    (v2 실측: 한전 본문 12-07을 뒤쪽 안내 날짜 12-11로 오독한 사고.)"""
+    starts = [m.start() for m in re.finditer(section_re, text)]
+    for s in reversed(starts):
+        d = first_date_near(text[s:s + seg_len], [kw], 400)
+        if d: return d
+    return None
+
 # ---------- 종류별 파싱 ----------
 def parse_dividend(text):
     """배당결정 원문 → {date: 배당기준일, dps: 주당배당금(보통주 우선)}"""
     f = {}
-    d = date_near(text, ["배당기준일", "기준일"], 300)
+    d = section_date(text, r"배당\s*결정", "배당기준일", 2500)
+    if not d: d = date_near(text, ["배당기준일", "기준일"], 300)
     if d: f["date"] = d
     # 주당배당금: '1주당 배당금' 표 구간(시가배당률 항목 앞까지)만 본다.
     # v1 실측 교정: 표기는 '보통주식'이 많고, 구간을 안 자르면 발행주식수 같은
@@ -114,7 +136,8 @@ def parse_dividend(text):
 def parse_meeting(text):
     """주총 소집 원문 → {date: 주주총회일}"""
     f = {}
-    d = date_near(text, ["주주총회일", "총회일", "개최일시", "일시"], 300)
+    d = section_date(text, r"주주총회소집\s*(결의|공고)", "일시", 900)
+    if not d: d = first_date_near(text, ["주주총회일", "일시"], 300)
     if d: f["date"] = d
     return f
 
