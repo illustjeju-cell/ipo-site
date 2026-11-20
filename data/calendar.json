@@ -1,24 +1,24 @@
 {
- "updated": "2026-11-20T06:08:05",
+ "updated": "2026-11-20T06:25:49",
  "meta": {
   "parser_ver": 3,
   "window": "20261106~20261120",
   "types": {
    "B": {
-    "total": 346,
-    "fetched": 346,
+    "total": 347,
+    "fetched": 347,
     "hits": {}
    },
    "E": {
-    "total": 196,
-    "fetched": 196,
+    "total": 197,
+    "fetched": 197,
     "hits": {
-     "meeting": 77
+     "meeting": 78
     }
    },
    "I": {
-    "total": 1954,
-    "fetched": 1954,
+    "total": 1959,
+    "fetched": 1959,
     "hits": {
      "meeting": 107,
      "earnings": 218,
