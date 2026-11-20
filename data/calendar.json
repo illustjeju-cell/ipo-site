@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-20T04:21:51",
+ "updated": "2026-11-20T04:35:16",
  "meta": {
-  "parser_ver": 1,
+  "parser_ver": 2,
   "window": "20261106~20261120",
   "types": {
    "B": {
@@ -17,22 +17,422 @@
     }
    },
    "I": {
-    "total": 1938,
-    "fetched": 1938,
+    "total": 1941,
+    "fetched": 1941,
     "hits": {
-     "meeting": 106,
-     "earnings": 5,
+     "meeting": 107,
+     "earnings": 218,
      "dividend": 35
     }
    }
   },
   "events": {
-   "dividend": 12,
-   "earnings": 5,
-   "meeting": 82
+   "dividend": 11,
+   "earnings": 191,
+   "meeting": 81
   }
  },
  "events": [
+  {
+   "type": "earnings",
+   "corp_code": "01203808",
+   "corp_name": "AP시스템",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900830",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900830"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00303873",
+   "corp_name": "CJ CGV",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800724",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800724"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00140168",
+   "corp_name": "HS애드",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800671",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800671"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00372882",
+   "corp_name": "KTcs",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800464",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800464"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00503668",
+   "corp_name": "LIG디펜스앤에어로스페이스",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800588",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800588"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00133511",
+   "corp_name": "SG세계물산",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800688",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800688"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00131780",
+   "corp_name": "SK네트웍스",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800840",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800840"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00255619",
+   "corp_name": "강원랜드",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800609",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800609"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00453284",
+   "corp_name": "교촌에프앤비",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800611",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800611"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00106368",
+   "corp_name": "금호석유화학",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800457",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800457"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01563667",
+   "corp_name": "더즌",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900194",
+   "rcept_dt": "20261106",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900194"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00120526",
+   "corp_name": "롯데쇼핑",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800080",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800080"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00165413",
+   "corp_name": "롯데케미칼",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800601",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800601"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01046708",
+   "corp_name": "바디텍메드",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900371",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900371"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00126955",
+   "corp_name": "삼양식품",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800605",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800605"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00132318",
+   "corp_name": "성광벤드",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900261",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900261"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00136271",
+   "corp_name": "신성이엔지",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800484",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800484"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00219486",
+   "corp_name": "신세계I&C",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800695",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800695"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00357430",
+   "corp_name": "쎌바이오텍",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900577",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900577"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01514227",
+   "corp_name": "씨어스",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900007",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900007"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00670340",
+   "corp_name": "씨에스윈드",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800395",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800395"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00788773",
+   "corp_name": "씨젠",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900600",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900600"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01381805",
+   "corp_name": "아로마티카",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900727",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900727"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00442145",
+   "corp_name": "아바코",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900736",
+   "rcept_dt": "20261106",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900736"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01492217",
+   "corp_name": "엑셀세라퓨틱스",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900711",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900711"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00405320",
+   "corp_name": "웹젠",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900615",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900615"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00604426",
+   "corp_name": "인터로조",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900251",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900251"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01165739",
+   "corp_name": "잉글우드랩",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900712",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900712"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00653024",
+   "corp_name": "진에어",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800652",
+   "rcept_dt": "20261106",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800652"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00656289",
+   "corp_name": "코스맥스엔비티",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900590",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900590"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00763473",
+   "corp_name": "코스메카코리아",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900602",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900602"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00170558",
+   "corp_name": "코웨이",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800224",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800224"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00970453",
+   "corp_name": "파마리서치",
+   "date": "2026-11-06",
+   "rcept_no": "20261106900196",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900196"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00939331",
+   "corp_name": "한국콜마",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800125",
+   "rcept_dt": "20261106",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800125"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00937324",
+   "corp_name": "한국타이어앤테크놀로지",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800449",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800449"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00361008",
+   "corp_name": "한화엔진",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800463",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800463"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00105280",
+   "corp_name": "현대지에프홀딩스",
+   "date": "2026-11-06",
+   "rcept_no": "20261106800399",
+   "rcept_dt": "20261106",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800399"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00220057",
+   "corp_name": "GC메디아이",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900159",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900159"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00486097",
+   "corp_name": "KT나스미디어",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900460",
+   "rcept_dt": "20261109",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900460"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01267170",
+   "corp_name": "SK케미칼",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800448",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800448"
+  },
   {
    "type": "earnings",
    "corp_code": "00168401",
@@ -42,6 +442,1186 @@
    "rcept_dt": "20261109",
    "report_nm": "매출액또는손익구조30%(대규모법인은15%)이상변경              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800220"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00551920",
+   "corp_name": "네오팜",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900455",
+   "rcept_dt": "20261109",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900455"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00110893",
+   "corp_name": "대신증권",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800639",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800639"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00117212",
+   "corp_name": "두산",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800403",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800403"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00120571",
+   "corp_name": "롯데칠성음료",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800266",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800266"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00364740",
+   "corp_name": "머큐리",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900171",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900171"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01074862",
+   "corp_name": "메가스터디교육",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900648",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900648"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01596656",
+   "corp_name": "메쎄이상",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900216",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900216"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00442835",
+   "corp_name": "메타랩스",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800371",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800371"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00524786",
+   "corp_name": "비엠티",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900187",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900187"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00541349",
+   "corp_name": "셀트리온제약",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900452",
+   "rcept_dt": "20261109",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900452"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00152127",
+   "corp_name": "심텍홀딩스",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900589",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900589"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01226410",
+   "corp_name": "씨앤씨인터내셔널",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900490",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900490"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00360142",
+   "corp_name": "아이마켓코리아",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800522",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800522"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00200910",
+   "corp_name": "아이즈비전",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900188",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900188"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00405719",
+   "corp_name": "아이크래프트",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900549",
+   "rcept_dt": "20261109",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900549"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00527464",
+   "corp_name": "에이치시티",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900222",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900222"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01181515",
+   "corp_name": "엘앤씨바이오",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900320",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900320"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00613318",
+   "corp_name": "와이지엔터테인먼트",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900258",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900258"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00628189",
+   "corp_name": "웅진씽크빅",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800552",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800552"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01135941",
+   "corp_name": "원익IPS",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900411",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900411"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00623661",
+   "corp_name": "원익머트리얼즈",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900376",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900376"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00222435",
+   "corp_name": "제이엠아이",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900239",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900239"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00305297",
+   "corp_name": "코텍",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900205",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900205"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00153375",
+   "corp_name": "태광",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900145",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900145"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00761059",
+   "corp_name": "펌텍코리아",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900494",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900494"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00165060",
+   "corp_name": "하이록코리아",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900300",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900300"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00160047",
+   "corp_name": "한국앤컴퍼니",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800233",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800233"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00161693",
+   "corp_name": "한샘",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800732",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800732"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00159218",
+   "corp_name": "한전KPS",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800416",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800416"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00159209",
+   "corp_name": "한전기술",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800643",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800643"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00763701",
+   "corp_name": "헥토파이낸셜",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900131",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900131"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00166500",
+   "corp_name": "화천기계",
+   "date": "2026-11-09",
+   "rcept_no": "20261109800780",
+   "rcept_dt": "20261109",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800780"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00916516",
+   "corp_name": "흥국에프엔비",
+   "date": "2026-11-09",
+   "rcept_no": "20261109900316",
+   "rcept_dt": "20261109",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900316"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00113410",
+   "corp_name": "CJ대한통운",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800050",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800050"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00129013",
+   "corp_name": "CJ씨푸드",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800341",
+   "rcept_dt": "20261110",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800341"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00635134",
+   "corp_name": "CJ제일제당",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800079",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800079"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01568413",
+   "corp_name": "F&F",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800544",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800544"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00557508",
+   "corp_name": "GKL",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800321",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800321"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00983271",
+   "corp_name": "NHN",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800035",
+   "rcept_dt": "20261110",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800035"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00357740",
+   "corp_name": "NHN KCP",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900013",
+   "rcept_dt": "20261110",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900013"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00645089",
+   "corp_name": "NHN벅스",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900034",
+   "rcept_dt": "20261110",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900034"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00101488",
+   "corp_name": "경동나비엔",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800567",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800567"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00220561",
+   "corp_name": "광주신세계",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800442",
+   "rcept_dt": "20261110",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800442"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01008762",
+   "corp_name": "데브시스터즈",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900194",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900194"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00526599",
+   "corp_name": "덴티움",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800570",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800570"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00118026",
+   "corp_name": "동원산업",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800753",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800753"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00580199",
+   "corp_name": "메디톡스",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900215",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900215"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01060814",
+   "corp_name": "삼양패키징",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800575",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800575"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00488402",
+   "corp_name": "서울바이오시스",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900487",
+   "rcept_dt": "20261110",
+   "report_nm": "[기재정정]연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900487"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00422895",
+   "corp_name": "세이브존I&C",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800813",
+   "rcept_dt": "20261110",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800813"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01384787",
+   "corp_name": "시프트업",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800546",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800546"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00136378",
+   "corp_name": "신세계",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800296",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800296"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00234412",
+   "corp_name": "신세계인터내셔날",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800326",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800326"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01144028",
+   "corp_name": "씨티케이",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900478",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900478"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00111689",
+   "corp_name": "아진전자부품",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800148",
+   "rcept_dt": "20261110",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800148"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00159698",
+   "corp_name": "지역난방공사",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800117",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800117"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00190321",
+   "corp_name": "케이티",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800099",
+   "rcept_dt": "20261110",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800099"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00760971",
+   "corp_name": "크래프톤",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800492",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800492"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00390365",
+   "corp_name": "토비스",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900157",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900157"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00409672",
+   "corp_name": "티비에이치글로벌",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800199",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800199"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00497631",
+   "corp_name": "티플랙스",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900531",
+   "rcept_dt": "20261110",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900531"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00171265",
+   "corp_name": "파라다이스",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800734",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800734"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00156691",
+   "corp_name": "한국공항",
+   "date": "2026-11-10",
+   "rcept_no": "20261110800677",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800677"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00528515",
+   "corp_name": "한라IMS",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900334",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900334"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01013311",
+   "corp_name": "헥토이노베이션",
+   "date": "2026-11-10",
+   "rcept_no": "20261110900127",
+   "rcept_dt": "20261110",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900127"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00258689",
+   "corp_name": "JYP Ent.",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900490",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900490"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00688996",
+   "corp_name": "KB금융",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800559",
+   "rcept_dt": "20261111",
+   "report_nm": "[기재정정]연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800559"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00366137",
+   "corp_name": "KG에코솔루션",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900351",
+   "rcept_dt": "20261111",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900351"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00101220",
+   "corp_name": "KG케미칼",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800459",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800459"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00372873",
+   "corp_name": "KTis",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800568",
+   "rcept_dt": "20261111",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800568"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00261443",
+   "corp_name": "NC",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800311",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800311"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00506294",
+   "corp_name": "가비아",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900509",
+   "rcept_dt": "20261111",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900509"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00103592",
+   "corp_name": "광동제약",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800697",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800697"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00628860",
+   "corp_name": "네오위즈",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900039",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900039"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00182696",
+   "corp_name": "대한조선",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800253",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800253"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00899459",
+   "corp_name": "레이언스",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900353",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900353"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01258507",
+   "corp_name": "롯데웰푸드",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800116",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800116"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00860332",
+   "corp_name": "메리츠금융지주",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800454",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)(자회사의 주요경영사항)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800454"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00264255",
+   "corp_name": "바텍",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900346",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900346"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00130763",
+   "corp_name": "서울반도체",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900477",
+   "rcept_dt": "20261111",
+   "report_nm": "[기재정정]연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900477"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00982023",
+   "corp_name": "실리콘투",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900551",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900551"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00141413",
+   "corp_name": "영화금속",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800437",
+   "rcept_dt": "20261111",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800437"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01238169",
+   "corp_name": "오리온",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800588",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800588"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00444329",
+   "corp_name": "위메이드",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900537",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900537"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00643656",
+   "corp_name": "위메이드맥스",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900593",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900593"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00815767",
+   "corp_name": "위메이드플레이",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900470",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900470"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00872984",
+   "corp_name": "이마트",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800235",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800235"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00603348",
+   "corp_name": "케이아이엔엑스",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900306",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900306"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00260958",
+   "corp_name": "케이티알파",
+   "date": "2026-11-11",
+   "rcept_no": "20261111900417",
+   "rcept_dt": "20261111",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900417"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01009789",
+   "corp_name": "코스맥스",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800375",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800375"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00795135",
+   "corp_name": "코오롱인더",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800429",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800429"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00140131",
+   "corp_name": "키다리스튜디오",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800317",
+   "rcept_dt": "20261111",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800317"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00296290",
+   "corp_name": "키움증권",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800831",
+   "rcept_dt": "20261111",
+   "report_nm": "[기재정정]연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800831"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00261285",
+   "corp_name": "한국가스공사",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800145",
+   "rcept_dt": "20261111",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800145"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00135917",
+   "corp_name": "한화손해보험",
+   "date": "2026-11-11",
+   "rcept_no": "20261111800554",
+   "rcept_dt": "20261111",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800554"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00163345",
+   "corp_name": "DB",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800722",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800722"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00159102",
+   "corp_name": "DB손해보험",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800507",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800507"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00160843",
+   "corp_name": "DB하이텍",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800091",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800091"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00138190",
+   "corp_name": "GS글로벌",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800594",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800594"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00223762",
+   "corp_name": "KT지니뮤직",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900459",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900459"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00120021",
+   "corp_name": "LG",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800626",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800626"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00266961",
+   "corp_name": "NAVER",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800027",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800027"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00480367",
+   "corp_name": "SK오션플랜트",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800632",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800632"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01416235",
+   "corp_name": "고스트스튜디오",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900923",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900923"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01649204",
+   "corp_name": "달바글로벌",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800251",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800251"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00110893",
+   "corp_name": "대신증권",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800767",
+   "rcept_dt": "20261112",
+   "report_nm": "[기재정정]연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800767"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01010110",
+   "corp_name": "더블유게임즈",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800026",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800026"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00261355",
+   "corp_name": "레드캡투어",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900471",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900471"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01493535",
+   "corp_name": "모비데이즈",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900249",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900249"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00111722",
+   "corp_name": "미래에셋증권",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800178",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800178"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00965813",
+   "corp_name": "미투온",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900922",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900922"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00622787",
+   "corp_name": "바이오노트",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800369",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800369"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00126256",
+   "corp_name": "삼성생명",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800352",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800352"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00104856",
+   "corp_name": "삼성증권",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800651",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800651"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00139214",
+   "corp_name": "삼성화재해상보험",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800008",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800008"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01412822",
+   "corp_name": "솔루스첨단소재",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800395",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800395"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00220686",
+   "corp_name": "에스피지",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900261",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900261"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00303217",
+   "corp_name": "우진플라임",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800231",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800231"
   },
   {
    "type": "earnings",
@@ -65,6 +1645,186 @@
   },
   {
    "type": "earnings",
+   "corp_code": "00476498",
+   "corp_name": "컴투스",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900678",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900678"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00535746",
+   "corp_name": "컴투스홀딩스",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900711",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900711"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00152880",
+   "corp_name": "코오롱글로벌",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800408",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800408"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01061327",
+   "corp_name": "클래시스",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900535",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900535"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00957735",
+   "corp_name": "클리오",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900880",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900880"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00423177",
+   "corp_name": "텔레칩스",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900727",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900727"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01152470",
+   "corp_name": "펄어비스",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900686",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900686"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00862312",
+   "corp_name": "포스뱅크",
+   "date": "2026-11-12",
+   "rcept_no": "20261112901066",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112901066"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00261285",
+   "corp_name": "한국가스공사",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800429",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800429"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00159193",
+   "corp_name": "한국전력공사",
+   "date": "2026-11-12",
+   "rcept_no": "20261112800706",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800706"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01159853",
+   "corp_name": "휴온스",
+   "date": "2026-11-12",
+   "rcept_no": "20261112900558",
+   "rcept_dt": "20261112",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900558"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00118008",
+   "corp_name": "동원모빌리티",
+   "date": "2026-11-13",
+   "rcept_no": "20261113800647",
+   "rcept_dt": "20261113",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113800647"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01251489",
+   "corp_name": "라온피플",
+   "date": "2026-11-13",
+   "rcept_no": "20261113901235",
+   "rcept_dt": "20261113",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113901235"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00112332",
+   "corp_name": "미래에셋생명",
+   "date": "2026-11-13",
+   "rcept_no": "20261113800320",
+   "rcept_dt": "20261113",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113800320"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00112998",
+   "corp_name": "서울보증보험",
+   "date": "2026-11-13",
+   "rcept_no": "20261113800315",
+   "rcept_dt": "20261113",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113800315"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01803927",
+   "corp_name": "에이유브랜즈",
+   "date": "2026-11-13",
+   "rcept_no": "20261113900296",
+   "rcept_dt": "20261113",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113900296"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00660291",
+   "corp_name": "옵티시스",
+   "date": "2026-11-13",
+   "rcept_no": "20261113900971",
+   "rcept_dt": "20261113",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113900971"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00468374",
+   "corp_name": "원익QnC",
+   "date": "2026-11-13",
+   "rcept_no": "20261113900562",
+   "rcept_dt": "20261113",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113900562"
+  },
+  {
+   "type": "earnings",
    "corp_code": "00531078",
    "corp_name": "유비온",
    "date": "2026-11-13",
@@ -72,6 +1832,106 @@
    "rcept_dt": "20261113",
    "report_nm": "매출액또는손익구조30%(대규모법인은15%)이상변동              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113901937"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "01284876",
+   "corp_name": "인스피언",
+   "date": "2026-11-13",
+   "rcept_no": "20261113900629",
+   "rcept_dt": "20261113",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113900629"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00113191",
+   "corp_name": "코리안리",
+   "date": "2026-11-13",
+   "rcept_no": "20261113800181",
+   "rcept_dt": "20261113",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113800181"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00203290",
+   "corp_name": "콜마홀딩스",
+   "date": "2026-11-13",
+   "rcept_no": "20261113801450",
+   "rcept_dt": "20261113",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113801450"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00353762",
+   "corp_name": "키이스트",
+   "date": "2026-11-13",
+   "rcept_no": "20261113901139",
+   "rcept_dt": "20261113",
+   "report_nm": "[기재정정]영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113901139"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00426086",
+   "corp_name": "티케이지휴켐스",
+   "date": "2026-11-13",
+   "rcept_no": "20261113801408",
+   "rcept_dt": "20261113",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113801408"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00164973",
+   "corp_name": "현대해상",
+   "date": "2026-11-13",
+   "rcept_no": "20261113800595",
+   "rcept_dt": "20261113",
+   "report_nm": "영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113800595"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00791209",
+   "corp_name": "메타케어",
+   "date": "2026-11-16",
+   "rcept_no": "20261116801028",
+   "rcept_dt": "20261116",
+   "report_nm": "[기재정정]연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116801028"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00125530",
+   "corp_name": "삼립",
+   "date": "2026-11-16",
+   "rcept_no": "20261116800603",
+   "rcept_dt": "20261116",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116800603"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00126362",
+   "corp_name": "삼성SDI",
+   "date": "2026-11-16",
+   "rcept_no": "20261116801515",
+   "rcept_dt": "20261116",
+   "report_nm": "[기재정정]연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116801515"
+  },
+  {
+   "type": "earnings",
+   "corp_code": "00133618",
+   "corp_name": "우양피앤엘",
+   "date": "2026-11-16",
+   "rcept_no": "20261116800465",
+   "rcept_dt": "20261116",
+   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116800465"
   },
   {
    "type": "earnings",
@@ -95,48 +1955,16 @@
    "debug": "시는 분께서는 별첨 1 '서면투표에 의한 의결권 행사서'의 안내사항을 참조하시어 투표용지에 의사를 표시하여 주주총회일 전일까지 제출하여 주시기 바랍니다. 6. 주주총회 참석시 준비물- 직접행사 : 주주총회참석장, 신분증- 대리행사 : 주주총회참석장, 위임장(주주와 대리인의 인적사항 등 기재, 인감날인), 대리인의 신분증 2026년 11월 17일 하나31호기업인수목적 주식회사 대표청산인 한 규 정 (직인생략) (☏02-3771-3197) [별첨1] 서면투표에 의한 의결권 행사서 ( 서면투표에 의한 의결권행사서 ) 하나31호기업인수목적"
   },
   {
-   "type": "meeting",
-   "corp_code": "01326792",
-   "corp_name": "비투엔",
-   "date": "2026-11-18",
-   "rcept_no": "20261117900440",
-   "rcept_dt": "20261117",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261117900440",
-   "debug": " 2026-11-03 3. 정정사유 소집 일정 변경에 따른 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 - 날짜 2026-11-18 2026-12-18 - 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 오전 9시 2. 장소 서울시 영등포구 선유로 146, 지하1층 강당 3. 의결권행사기준일 2026-10-21 4. 이사회결의일(결정일) 2026-10-06 -사외이사 참석여부 참석(명) 0 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 불참 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00188973",
-   "corp_name": "화일약품",
-   "date": "2026-11-20",
-   "rcept_no": "20261116901329",
-   "rcept_dt": "20261116",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116901329",
-   "debug": " 2026년 11월 05일 3. 정정사유 일정 변경에 의한 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 2026-11-20 2026-12-18 - 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 오전 9시 2. 장소 경기도 평택시 산단로 241 3. 의결권행사기준일 2026-09-30 4. 이사회결의일(결정일) 2026-09-15 -사외이사 참석여부 참석(명) 1 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 - ※관련공시 - 【주주총"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "01169434",
-   "corp_name": "오가닉티코스메틱",
+   "type": "dividend",
+   "corp_code": "00365387",
+   "corp_name": "AJ네트웍스",
    "date": "2026-11-24",
-   "rcept_no": "20261109900348",
+   "rcept_no": "20261109800610",
    "rcept_dt": "20261109",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900348",
-   "debug": "자 승인의 건 제2호 의안: 이사회에 대한 신주, 사채권 등 발행권한 위임의 건 - 주주총회소집 결의 1. 일시 날짜 2026-11-24 시간 오전 10시 2. 장소 서울시 영등포구 의사당대로 22 이룸센터 교육실1 3. 의결권행사기준일 2026-11-02 4. 이사회결의일(결정일) 2026-10-16 -사외이사 참석여부 참석(명) 2 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 - 임시주주총회 안건 세부내역 확정. ※관련공시 2026-10-16 주주명"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00155373",
-   "corp_name": "풍강",
-   "date": "2026-11-24",
-   "rcept_no": "20261109900571",
-   "rcept_dt": "20261109",
-   "report_nm": "주주총회소집결의              (정기주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900571",
-   "debug": "ft; } 풍강/주주총회소집결의/(2026.11.09)주주총회소집결의(정기주주총회) 주주총회소집 결의 1. 일시 날짜 2026-11-24 시간 09:00 2. 장소 경기도 화성시 우정읍 남양만로 745 (주)풍강 강당 3. 의결권행사기준일 2026-08-31 4. 이사회결의일(결정일) 2026-11-09 -사외이사 참석여부 참석(명) 2 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 정기주주총회 5. 기타 투자판단에 참고할 사항 - ※관련공시 2026-08-14 주주명부폐쇄기간 또는 기준일 설정 20"
+   "report_nm": "현금ㆍ현물배당결정              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800610",
+   "debug": "해당 4. 시가배당률(%) 보통주식 2.4 종류주식 - 5. 배당금총액(원) 4,251,349,750 6. 배당기준일 2026-11-24 7. 배당금지급 예정일자 2026-12-08 8. 주주총회 개최여부 미개최 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-09 - 독립(사외)이사* 참석여부 참석(명) 2 불참(명) 0 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 1. 제3항의 1주당 배당금은 95원으로 결정하였으며, 이익잉여금(이익배당) 재원입니다. 2.",
+   "dps": 95
   },
   {
    "type": "meeting",
@@ -151,17 +1979,6 @@
   },
   {
    "type": "meeting",
-   "corp_code": "00440712",
-   "corp_name": "리튬포어스",
-   "date": "2026-11-25",
-   "rcept_no": "20261110900742",
-   "rcept_dt": "20261110",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900742",
-   "debug": "류제출일 2026-10-16 3. 정정사유 주주총회 소집일 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시-날짜 2026-11-25 2027-02-01 - 주주총회소집 결의 1. 일시 날짜 2027-02-01 시간 오전 9:30 2. 장소 서울시 성동구 아차산로 17길 48, 2층(SK V1 Center) 3. 의결권행사기준일 2026-11-02 4. 이사회결의일(결정일) 2026-10-16 -사외이사 참석여부 참석(명) 2 불참(명) 3 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 "
-  },
-  {
-   "type": "meeting",
    "corp_code": "00369569",
    "corp_name": "비케이홀딩스",
    "date": "2026-11-25",
@@ -170,28 +1987,6 @@
    "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900460",
    "debug": "·솔루션의 개발, 제조, 유통, 도소매, 판매, 임대, 수출입 및 부대사업 일체 - 주주총회소집 결의 1. 일시 날짜 2026-11-25 시간 09:00 2. 장소 경상북도 구미시 산동읍 신당2로 23, 제1동 309호 (주)비케이홀딩스 본사 3. 의결권행사기준일 2026-10-20 4. 이사회결의일(결정일) 2026-09-23 -사외이사 참석여부 참석(명) 3 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 - ※관련공시 - 【주주총회 안건 세부내역】 번"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00530413",
-   "corp_name": "더코디",
-   "date": "2026-11-26",
-   "rcept_no": "20261111900265",
-   "rcept_dt": "20261111",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900265",
-   "debug": "일 2026년 9월 17일 3. 정정사유 임시주주총회 소집일정변경 4. 정정사항 정정항목 정정전 정정후 1.일시 -날짜:2026-11-26 -시간:오전11시 -날짜:2026-12-30 -시간:오전9시 - 주주총회소집 결의 1. 일시 날짜 2026-12-30 시간 오전 9시 2. 장소 충남 천안시 서북구 백석공단2길 62 대회의실 3. 의결권행사기준일 2026-10-02 4. 이사회결의일(결정일) 2026-09-17 -사외이사 참석여부 참석(명) 3 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00556615",
-   "corp_name": "모바일어플라이언스",
-   "date": "2026-11-26",
-   "rcept_no": "20261113901053",
-   "rcept_dt": "20261113",
-   "report_nm": "[기재정정]주주총회소집결의              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113901053",
-   "debug": " 정정관련 공시서류 주주총회소집결의 2. 정정관련 공시서류제출일 2026.08.18 3. 정정사유 주주총회 일시변경 및 안건 추가 4. 정정사항 정정항목 정정전 정정후 1. 일시 2026-11-26 2026-11-30 5. 기타 투자판단에 참고할 사항 - 기존에 공시한 소집공고는 2026.11.13 재공고 예정입니다. [주주총회 안건 세부내역] - 제 3호 의안 : 임시의장 임수근 선임의 건 제 4호 의안 : 이사 선임의 건 (사내이사 6명, 독립이사 3명) 제 4-1호 의안 : 사내이사 이재신 선임의 건 제 4-2호 의안 : 사내"
   },
   {
    "type": "meeting",
@@ -209,22 +2004,11 @@
    "corp_code": "01714997",
    "corp_name": "신한글로벌액티브리츠",
    "date": "2026-11-26",
-   "rcept_no": "20261111800416",
+   "rcept_no": "20261111000251",
    "rcept_dt": "20261111",
-   "report_nm": "주주총회소집결의              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111800416",
-   "debug": "브리츠/주주총회소집결의/(2026.11.11)주주총회소집결의 주주총회소집 결의 1. 구분 정기주주총회 2. 일시 2026-11-26 10 : 00 3. 장소 서울특별시 영등포구 여의대방로 65길 6, 12층 한국리츠협회 회의실 4. 의결권행사기준일 2026-08-31 5. 이사회결의일(결정일) 2026-11-11 - 독립(사외)이사* 참석여부 참석(명) - 불참(명) - - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참석 6. 기타 투자판단과 관련한 중요사항 (1) 보고사항: 감사보고, 영업보고, 외부감사인 선임보고 (2) 하"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00367695",
-   "corp_name": "에이전트AI",
-   "date": "2026-11-26",
-   "rcept_no": "20261111900755",
-   "rcept_dt": "20261111",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900755",
-   "debug": "출일 2026-10-19 3. 정정사유 임시주주총회 개최일 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 - 날짜 2026-11-26 2026-12-10 - 주주총회소집 결의 1. 일시 날짜 2026-12-10 시간 오전 10시 2. 장소 서울특별시 용산구 소월로 375, 남산예술원 3. 의결권행사기준일 2026-11-03 4. 이사회결의일(결정일) 2026-10-19 -사외이사 참석여부 참석(명) 3 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 불참 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항"
+   "report_nm": "주주총회소집공고",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111000251",
+   "debug": "00,000,000원 나. 주당 배당금: 34원 다. 배당 방식: 전액 현금 라. 배당금 지급 예정일: 정기주주총회일로부터 1개월이내* 상기금액은 외부감사인의 감사 결과 및 주주총회 승인과정에서 변경될 수 있으며, 상세 사항은 향후 공시되는 감사보고서 및 사업보고서 등을 참고하시기 바랍니다. 제3호 의안 : 제9기 사업계획 승인의 건 □ 목 적 - 부동산투자회사법 제12조 제1항 및 당사 정관 제26조에 의거 제9기 사업계획을 확정하고자 함 □ 제9기 사업계획 재무 요약 (단위: 백만원) 구분 제9기 사업계획(안) 영업수익 2,00"
   },
   {
    "type": "meeting",
@@ -236,28 +2020,6 @@
    "report_nm": "주주총회소집공고",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111000088",
    "debug": "상법 제542조의4, 정관 제23조 제2항에 의거하여 본 공고로 소집통지를 갈음합니다. - 다 음 - 1. 일시: 2026년 11월 26일(목) 오전 9시 2. 장소: 서울특별시 서초구 강남대로 299, 에피소드 강남 262 B1 컨퍼런스룸 A 3. 주주총회 회의목적사항가. 보고 사항 - 감사보고나. 부의 안건 - 제1호 의안: 정관 일부 변경의 건 4. 주주총회소집통지 및 공고사항 상법 제542조의4 및 당사 정관 제23조에 의거 의결권 있는 발행주식총수의 100분의 1 이하의 주식을 소유한 주주에 대한 소집통지는 당사 홈페이지 "
-  },
-  {
-   "type": "meeting",
-   "corp_code": "01689266",
-   "corp_name": "케이쓰리아이",
-   "date": "2026-11-26",
-   "rcept_no": "20261111900419",
-   "rcept_dt": "20261111",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900419",
-   "debug": "026.10.27 3. 정정사유 임시주주총회 개최일 및 장소 변경 4. 정정사항 정정항목 정정전 정정후 1.일시 - 날짜 2026-11-26 2026-12-15 2. 장소 대전광역시 유성구 엑스포로 1, 16층 본사 회의실 대전광역시 유성구 대덕대로 593, 대덕테크비즈센터(TBC), 교육실2(410호) - 주주총회소집 결의 1. 일시 날짜 2026-12-15 시간 09:00 2. 장소 대전광역시 유성구 대덕대로 593, 대덕테크비즈센터(TBC), 교육실2(410호) 3. 의결권행사기준일 2026-10-16 4. 이사회결의일(결정일"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "01881800",
-   "corp_name": "한화플러스제5호스팩",
-   "date": "2026-11-26",
-   "rcept_no": "20261111000154",
-   "rcept_dt": "20261111",
-   "report_nm": "주주총회소집공고",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111000154",
-   "debug": "시는 분께서는 별첨 3 '서면투표에 의한 의결권 행사서'의 안내사항을 참조하시어 투표용지에 의사를 표시하여 주주총회일 전일까지 제출하여 주시기 바랍니다. 6. 합병 관련 주식매수청구권의 내용과 행사방법(제1호 의안 관련) 제1호 의안에 반대하는 주주는 임시주주총회 개최 전에 회사에 대하여 서면으로 반대의사를 통지하여야 합니다. 반대의사통지를 한 주주는 임시주주총회에서 제1호 의안이 가결된 경우, 매수 청구하고자 하는 주식의 종류 및 수를 정하여 매수를 청구할 수 있습니다. 자세한 내용에 관하여는 별첨 2 '주식매수청구권 행사 안내문"
   },
   {
    "type": "dividend",
@@ -306,17 +2068,6 @@
   },
   {
    "type": "meeting",
-   "corp_code": "01128622",
-   "corp_name": "이스트에이드",
-   "date": "2026-11-27",
-   "rcept_no": "20261111900543",
-   "rcept_dt": "20261111",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900543",
-   "debug": "제출일 2026-10-20 3. 정정사유 임시주주총회 일정 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 中 날짜 2026-11-27 2026-12-18 - 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 오전9시 2. 장소 서울특별시 서초구 반포대로 3, 이스트빌딩 6층 대회의실 3. 의결권행사기준일 2026-11-04 4. 이사회결의일(결정일) 2026-10-20 -사외이사 참석여부 참석(명) 1 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참"
-  },
-  {
-   "type": "meeting",
    "corp_code": "01394377",
    "corp_name": "이지스밸류플러스리츠",
    "date": "2026-11-27",
@@ -361,28 +2112,6 @@
   },
   {
    "type": "dividend",
-   "corp_code": "00148540",
-   "corp_name": "CJ",
-   "date": "2026-11-30",
-   "rcept_no": "20261109800712",
-   "rcept_dt": "20261109",
-   "report_nm": "현금ㆍ현물배당결정(자회사의 주요경영사항)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800712",
-   "debug": "4. 시가배당률(%) 보통주식 0.8 종류주식 1.5 5. 배당금총액(원) 24,034,773,000 6. 배당기준일 2026-11-30 7. 배당금지급 예정일자 - 8. 주주총회 개최여부 미개최 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-09 - 독립(사외)이사* 참석여부 참석(명) 4 불참(명) 0 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 - 11. 기타 투자판단과 관련한 중요사항 - 상기 3, 4항의 종류주식은 우선주를 의미하며 당사 정관 제34조의2(분기배당) 제3항에 따라 분기배당을 할"
-  },
-  {
-   "type": "dividend",
-   "corp_code": "01379129",
-   "corp_name": "매드업",
-   "date": "2026-11-30",
-   "rcept_no": "20261112900257",
-   "rcept_dt": "20261112",
-   "report_nm": "현금ㆍ현물배당결정              (분기배당)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900257",
-   "debug": "당 4. 시가배당률(%) 보통주식 1.05 종류주식 0 5. 배당금총액(원) 1,005,923,664 6. 배당기준일 2026-11-30 7. 배당금지급 예정일자 2026-12-18 8. 승인기관 이사회 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-12 - 사외이사 참석여부 참석(명) 2 불참(명) 0 - 감사(감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 1. 상기 4항의 시가배당률은 배당결정을 한 직전 매매거래일부터 과거 1주일간의 증권시장에서 형성된 최종가격의 산술평균가격에 대한 1주"
-  },
-  {
-   "type": "dividend",
    "corp_code": "00136378",
    "corp_name": "신세계",
    "date": "2026-11-30",
@@ -390,7 +2119,8 @@
    "rcept_dt": "20261110",
    "report_nm": "현금ㆍ현물배당결정              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800287",
-   "debug": "당 4. 시가배당률(%) 보통주식 1.0 종류주식 - 5. 배당금총액(원) 22,795,970,600 6. 배당기준일 2026-11-30 7. 배당금지급 예정일자 2026-12-18 8. 주주총회 개최여부 미개최 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-10 - 독립(사외)이사* 참석여부 참석(명) 4 불참(명) - - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 - 11. 기타 투자판단과 관련한 중요사항 - 상기 4항 시가배당율의 기준주가는 이사회 전일부터 과거 1주일간 거래소에서 형성된 최종가격의"
+   "debug": "당 4. 시가배당률(%) 보통주식 1.0 종류주식 - 5. 배당금총액(원) 22,795,970,600 6. 배당기준일 2026-11-30 7. 배당금지급 예정일자 2026-12-18 8. 주주총회 개최여부 미개최 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-10 - 독립(사외)이사* 참석여부 참석(명) 4 불참(명) - - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 - 11. 기타 투자판단과 관련한 중요사항 - 상기 4항 시가배당율의 기준주가는 이사회 전일부터 과거 1주일간 거래소에서 형성된 최종가격의",
+   "dps": 2600
   },
   {
    "type": "dividend",
@@ -401,7 +2131,8 @@
    "rcept_dt": "20261113",
    "report_nm": "현금ㆍ현물배당결정              (분기배당)",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113901134",
-   "debug": "해당 4. 시가배당률(%) 보통주식 1.5 종류주식 - 5. 배당금총액(원) 1,981,938,600 6. 배당기준일 2026-11-30 7. 배당금지급 예정일자 2026-12-18 8. 승인기관 이사회 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-13 - 사외이사 참석여부 참석(명) 3 불참(명) - - 감사(감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 - 상기 4.시가배당율은 배당결정일의 직전 매매거래일로부터 과거 1주일간의 거래소시장에서 형성된 최종가격의 산술평균가격에 대한 1주당 "
+   "debug": "해당 4. 시가배당률(%) 보통주식 1.5 종류주식 - 5. 배당금총액(원) 1,981,938,600 6. 배당기준일 2026-11-30 7. 배당금지급 예정일자 2026-12-18 8. 승인기관 이사회 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-13 - 사외이사 참석여부 참석(명) 3 불참(명) - - 감사(감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 - 상기 4.시가배당율은 배당결정일의 직전 매매거래일로부터 과거 1주일간의 거래소시장에서 형성된 최종가격의 산술평균가격에 대한 1주당 ",
+   "dps": 40
   },
   {
    "type": "dividend",
@@ -412,7 +2143,8 @@
    "rcept_dt": "20261113",
    "report_nm": "현금ㆍ현물배당결정              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113801223",
-   "debug": "당 4. 시가배당률(%) 보통주식 1.5 종류주식 - 5. 배당금총액(원) 36,249,315,000 6. 배당기준일 2026-11-30 7. 배당금지급 예정일자 2026-12-18 8. 주주총회 개최여부 미개최 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-13 - 독립(사외)이사* 참석여부 참석(명) 4 불참(명) 0 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 - 11. 기타 투자판단과 관련한 중요사항 - 상기 '4. 시가배당율(%)'은 이사회결의일(결정일) 직전 매매거래일로부터 과거 1주일간 거"
+   "debug": "당 4. 시가배당률(%) 보통주식 1.5 종류주식 - 5. 배당금총액(원) 36,249,315,000 6. 배당기준일 2026-11-30 7. 배당금지급 예정일자 2026-12-18 8. 주주총회 개최여부 미개최 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-13 - 독립(사외)이사* 참석여부 참석(명) 4 불참(명) 0 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 - 11. 기타 투자판단과 관련한 중요사항 - 상기 '4. 시가배당율(%)'은 이사회결의일(결정일) 직전 매매거래일로부터 과거 1주일간 거",
+   "dps": 1000
   },
   {
    "type": "meeting",
@@ -427,6 +2159,17 @@
   },
   {
    "type": "meeting",
+   "corp_code": "00556615",
+   "corp_name": "모바일어플라이언스",
+   "date": "2026-11-30",
+   "rcept_no": "20261113901053",
+   "rcept_dt": "20261113",
+   "report_nm": "[기재정정]주주총회소집결의              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113901053",
+   "debug": " 정정관련 공시서류 주주총회소집결의 2. 정정관련 공시서류제출일 2026.08.18 3. 정정사유 주주총회 일시변경 및 안건 추가 4. 정정사항 정정항목 정정전 정정후 1. 일시 2026-11-26 2026-11-30 5. 기타 투자판단에 참고할 사항 - 기존에 공시한 소집공고는 2026.11.13 재공고 예정입니다. [주주총회 안건 세부내역] - 제 3호 의안 : 임시의장 임수근 선임의 건 제 4호 의안 : 이사 선임의 건 (사내이사 6명, 독립이사 3명) 제 4-1호 의안 : 사내이사 이재신 선임의 건 제 4-2호 의안 : 사내"
+  },
+  {
+   "type": "meeting",
    "corp_code": "00622787",
    "corp_name": "바이오노트",
    "date": "2026-11-30",
@@ -435,39 +2178,6 @@
    "report_nm": "주주총회소집공고",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261119000304",
    "debug": " 수 있도록 전자투표제도(상법 제368조의4)를 활용하고 있습니다. 주주총회에 참석이 어려우신 주주님께서는 주주총회일 전에 아래와 같이 전자투표를 통해 귀중한 의결권을 행사해 주시기 부탁드립니다. 가. 전자투표시스템 인터넷 주소: https://evop.ksd.or.kr 모바일 주소: https://evop.ksd.or.kr/m ※ 관리업무는 한국예탁결제원에 위탁하였습니다. ※ 예탁결제원 전자투표 관리시스템의 확대ㆍ개편으로 인해, 기존 전자투표 관리시스템(K-VOTE)에 가입하신 개인 주주님께서는 신규 전자투표 관리시스템(eVOP)"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "01228515",
-   "corp_name": "앱튼",
-   "date": "2026-11-30",
-   "rcept_no": "20261116901394",
-   "rcept_dt": "20261116",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116901394",
-   "debug": "서류제출일 2026-10-21 3. 정정사유 개최내용 일부 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 2026-11-30 오전 09:00 2026-12-01 오전 09:00 2. 장소 경기도 성남시 수정구 위례대로 83, 밀리토피아 호텔 문화센터동 5층 아트홀 경기도 성남시 수정구 창업로 43(판교글로벌비즈센터 업무동 2층 대회의실) [주주총회 안건 세부내역] 제1호 의안 : 자본감소(감자)의 건 가.자본의 감소를 하는 이유 : 결손금 보전을 통한 재무구조 개선 나. 자본감소의 방법 : 기명식 보통주 10주를 동일한 액면"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00263654",
-   "corp_name": "오스코텍",
-   "date": "2026-11-30",
-   "rcept_no": "20261116902065",
-   "rcept_dt": "20261116",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116902065",
-   "debug": "3. 정정사유 주주총회 개최일 변경 및 회의 목적사항 변경·추가 4. 정정사항 정정항목 정정전 정정후 1. 일시-날짜 2026-11-30 2026-12-01 5. 기타 투자판단에 참고할 사항 - 당사는 공시진행을 위해 자료요청을 하였으나 현재 자료 제공을 받지 못하여, 추후 제공되는 추가자료와 관련하여 필요하다면 정정공시 및 첨부자료 정정을 진행할 예정입니다 - 삭제 [주주총회 안건 세부내역] - 3호 의안: 정관 변경의 건 (제35조의 2 이사회 의장 요건 변경) [주주총회 안건 세부내역] 3호의안: 이사선임의 건 4호 의안: 집"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00260611",
-   "corp_name": "웰킵스하이텍",
-   "date": "2026-11-30",
-   "rcept_no": "20261113900480",
-   "rcept_dt": "20261113",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113900480",
-   "debug": "6-10-12 3. 정정사유 임시주주총회 일정 변경에 따른 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 중 날짜 2026-11-30 2026-12-28 - 주주총회소집 결의 1. 일시 날짜 2026-12-28 시간 오전 9시 2. 장소 서울시 강동구 고덕비즈밸리로54, 2층 3. 의결권행사기준일 2026-10-30 4. 이사회결의일(결정일) 2026-10-12 -사외이사 참석여부 참석(명) 1 불참(명) 1 -감사(사외이사가 아닌 감사위원) 참석여부 불참 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 상기 "
   },
   {
    "type": "meeting",
@@ -516,17 +2226,6 @@
   },
   {
    "type": "meeting",
-   "corp_code": "01353024",
-   "corp_name": "TS트릴리온",
-   "date": "2026-12-01",
-   "rcept_no": "20261116900749",
-   "rcept_dt": "20261116",
-   "report_nm": "[기재정정]주주총회소집결의              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116900749",
-   "debug": "026-10-20 3. 정정사유 주주총회 일정 변경에 따른 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 중 날짜 2026-12-01 2026-12-28 - 주주총회소집 결의 1. 일시 날짜 2026-12-28 시간 09:00 2. 장소 서울특별시 영등포구 양평로96, 7층 3. 의결권행사기준일 2026-11-06 4. 이사회결의일(결정일) 2026-10-20 -사외이사 참석여부 참석(명) 2 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 상기 임"
-  },
-  {
-   "type": "meeting",
    "corp_code": "00155948",
    "corp_name": "로젠",
    "date": "2026-12-01",
@@ -538,25 +2237,25 @@
   },
   {
    "type": "meeting",
-   "corp_code": "01409095",
-   "corp_name": "비트맥스",
+   "corp_code": "01228515",
+   "corp_name": "앱튼",
    "date": "2026-12-01",
-   "rcept_no": "20261116901913",
+   "rcept_no": "20261116901394",
    "rcept_dt": "20261116",
    "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116901913",
-   "debug": "일 2026.09.14 3. 정정사유 임시주주총회 소집일정 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 날짜:2026-12-01 시간:오전 09시 00분 날짜:2026-12-23 시간:오전 09시 00분 - 주주총회소집 결의 1. 일시 날짜 2026-12-23 시간 오전 09시 00분 2. 장소 미정 3. 의결권행사기준일 2026-09-29 4. 이사회결의일(결정일) 2026-09-14 -사외이사 참석여부 참석(명) 1 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투"
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116901394",
+   "debug": "서류제출일 2026-10-21 3. 정정사유 개최내용 일부 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 2026-11-30 오전 09:00 2026-12-01 오전 09:00 2. 장소 경기도 성남시 수정구 위례대로 83, 밀리토피아 호텔 문화센터동 5층 아트홀 경기도 성남시 수정구 창업로 43(판교글로벌비즈센터 업무동 2층 대회의실) [주주총회 안건 세부내역] 제1호 의안 : 자본감소(감자)의 건 가.자본의 감소를 하는 이유 : 결손금 보전을 통한 재무구조 개선 나. 자본감소의 방법 : 기명식 보통주 10주를 동일한 액면"
   },
   {
    "type": "meeting",
-   "corp_code": "00125725",
-   "corp_name": "디모아",
-   "date": "2026-12-02",
-   "rcept_no": "20261117900265",
-   "rcept_dt": "20261117",
-   "report_nm": "[기재정정]주주총회소집결의              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261117900265",
-   "debug": ". 정정사유 임시주주총회 소집일정 및 부의안건 변경에 따른 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 2026-12-02 오전 9시 2027-02-02 오전9시 3. 의결권행사기준일 2026-09-18 2026-12-03 [주주총회 안건 세부내역] 1. 이사선임의 건 1-1.사외이사 송효섭 선임의 건 1. 정관변경의 건 2. 이사선임의 건 2-1. 사외이사 송효섭 선임의 건 -정관변경 세부내용이 확정되는 대로 별도의 이사회결의 이후 재공시 예정입니다. 주주총회소집 결의 1. 일시 날짜 2027-02-02 시간 오전 9시 "
+   "corp_code": "00263654",
+   "corp_name": "오스코텍",
+   "date": "2026-12-01",
+   "rcept_no": "20261116902065",
+   "rcept_dt": "20261116",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116902065",
+   "debug": "3. 정정사유 주주총회 개최일 변경 및 회의 목적사항 변경·추가 4. 정정사항 정정항목 정정전 정정후 1. 일시-날짜 2026-11-30 2026-12-01 5. 기타 투자판단에 참고할 사항 - 당사는 공시진행을 위해 자료요청을 하였으나 현재 자료 제공을 받지 못하여, 추후 제공되는 추가자료와 관련하여 필요하다면 정정공시 및 첨부자료 정정을 진행할 예정입니다 - 삭제 [주주총회 안건 세부내역] - 3호 의안: 정관 변경의 건 (제35조의 2 이사회 의장 요건 변경) [주주총회 안건 세부내역] 3호의안: 이사선임의 건 4호 의안: 집"
   },
   {
    "type": "meeting",
@@ -579,28 +2278,6 @@
    "report_nm": "주주총회소집결의              (임시주주총회)",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113900782",
    "debug": "} 액토즈소프트/주주총회소집결의/(2026.11.13)주주총회소집결의(임시주주총회) 주주총회소집 결의 1. 일시 날짜 2026-12-02 시간 09시 00분 2. 장소 서울시 중구 퇴계로 205 2층(상상캔버스) 3. 의결권행사기준일 2026-11-05 4. 이사회결의일(결정일) 2026-09-28 -사외이사 참석여부 참석(명) 3 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 - -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 - 당사의 독립(사외)이사는 전원 감사위원을 겸직하고 있습니다. ※관련공시 20"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00108746",
-   "corp_name": "DKME",
-   "date": "2026-12-03",
-   "rcept_no": "20261118800389",
-   "rcept_dt": "20261118",
-   "report_nm": "[기재정정]주주총회소집결의              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261118800389",
-   "debug": "제출일 2026-10-13 3. 정정사유 임시주주총회 일정 변경 4. 정정사항 정정항목 정정전 정정후 2. 일시 2026-12-03 / 09:00 2026-12-17 / 09:00 - 주주총회소집 결의 1. 구분 임시주주총회 2. 일시 2026-12-17 09 : 00 3. 장소 울산광역시 남구 처용로 260-37 본사 3층 대회의실 4. 의결권행사기준일 2026-10-21 5. 이사회결의일(결정일) 2026-10-06 - 독립(사외)이사* 참석여부 참석(명) 2 불참(명) 0 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00426068",
-   "corp_name": "엑시온그룹",
-   "date": "2026-12-03",
-   "rcept_no": "20261119900672",
-   "rcept_dt": "20261119",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261119900672",
-   "debug": "정관련 공시서류제출일 2026-10-21 3. 정정사유 일정변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 날짜 - 2026-12-03 - 2026-12-17 - 주주총회소집 결의 1. 일시 날짜 2026-12-17 시간 오전 09시 2. 장소 미정 3. 의결권행사기준일 2026-10-01 4. 이사회결의일(결정일) 2026-09-16 -사외이사 참석여부 참석(명) 3 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 불참 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 가. 보고사항 - 감사보고 나. 부"
   },
   {
    "type": "meeting",
@@ -644,7 +2321,8 @@
    "rcept_dt": "20261112",
    "report_nm": "현금ㆍ현물배당결정(자회사의 주요경영사항)              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800691",
-   "debug": "해당 4. 시가배당률(%) 보통주식 - 종류주식 - 5. 배당금총액(원) 104,307,924,315 6. 배당기준일 2026-12-04 7. 배당금지급 예정일자 2026-12-18 8. 주주총회 개최여부 미개최 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-11 - 독립(사외)이사* 참석여부 참석(명) 0 불참(명) 0 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 - 상기 '4. 시가배당률(%)'은 삼성바이오에피스(주)가 비상장회사이므로 산출하지 않습니다."
+   "debug": "해당 4. 시가배당률(%) 보통주식 - 종류주식 - 5. 배당금총액(원) 104,307,924,315 6. 배당기준일 2026-12-04 7. 배당금지급 예정일자 2026-12-18 8. 주주총회 개최여부 미개최 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-11 - 독립(사외)이사* 참석여부 참석(명) 0 불참(명) 0 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 - 상기 '4. 시가배당률(%)'은 삼성바이오에피스(주)가 비상장회사이므로 산출하지 않습니다.",
+   "dps": 5043
   },
   {
    "type": "dividend",
@@ -656,7 +2334,7 @@
    "report_nm": "부동산투자회사금전배당결정              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112800684",
    "debug": "미해당 종류주식 기준가격 - 가격제한폭 초과 미해당 3. 시가배당률(%) 보통주식 5.5 종류주식 - 4. 배당기준일 2026-12-04 5. 배당금지급 예정일 2026-12-24 6. 주주총회 예정일자 2026-11-27 7. 이사회결의일(결정일) 2026-11-12 - 독립(사외)이사* 참석여부 참석(명) - 불참(명) - - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참석 8. 기타 투자판단과 관련한 중요사항 1. 상기 \"배당금총액\" 및 \"1주당 배당금\"은 재무제표를 기준으로 이사회 결의로 승인되었으므로, 추후 정기주 주",
-   "dps": 11158458172
+   "dps": 161
   },
   {
    "type": "dividend",
@@ -667,7 +2345,8 @@
    "rcept_dt": "20261112",
    "report_nm": "현금ㆍ현물배당결정              (분기배당)",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900355",
-   "debug": "당 4. 시가배당률(%) 보통주식 0.90 종류주식 - 5. 배당금총액(원) 2,183,694,600 6. 배당기준일 2026-12-04 7. 배당금지급 예정일자 2026-12-21 8. 승인기관 이사회 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-12 - 사외이사 참석여부 참석(명) 3 불참(명) - - 감사(감사위원) 참석여부 - 11. 기타 투자판단과 관련한 중요사항 1. 상기 시가배당율은 분기배당 결정일의 직전매매거래일로부터 과거 1주일간의 형성된 최종 시세가격의 산술평균에 대한 1주의 배당금을 백분"
+   "debug": "당 4. 시가배당률(%) 보통주식 0.90 종류주식 - 5. 배당금총액(원) 2,183,694,600 6. 배당기준일 2026-12-04 7. 배당금지급 예정일자 2026-12-21 8. 승인기관 이사회 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-12 - 사외이사 참석여부 참석(명) 3 불참(명) - - 감사(감사위원) 참석여부 - 11. 기타 투자판단과 관련한 중요사항 1. 상기 시가배당율은 분기배당 결정일의 직전매매거래일로부터 과거 1주일간의 형성된 최종 시세가격의 산술평균에 대한 1주의 배당금을 백분",
+   "dps": 200
   },
   {
    "type": "dividend",
@@ -678,7 +2357,8 @@
    "rcept_dt": "20261112",
    "report_nm": "현금ㆍ현물배당결정              (분기배당)",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900575",
-   "debug": "당 4. 시가배당률(%) 보통주식 1.24 종류주식 - 5. 배당금총액(원) 2,330,352,200 6. 배당기준일 2026-12-04 7. 배당금지급 예정일자 2026-12-21 8. 승인기관 이사회 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-12 - 사외이사 참석여부 참석(명) 3 불참(명) 0 - 감사(감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 - 이번 분기배당은 상법 제461조2(준비금의 감소)에 의거 자본준비금을 이익잉여금으로 전입한 금액을 재원으로 하므로, 과세소득에 해당"
+   "debug": "당 4. 시가배당률(%) 보통주식 1.24 종류주식 - 5. 배당금총액(원) 2,330,352,200 6. 배당기준일 2026-12-04 7. 배당금지급 예정일자 2026-12-21 8. 승인기관 이사회 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-12 - 사외이사 참석여부 참석(명) 3 불참(명) 0 - 감사(감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 - 이번 분기배당은 상법 제461조2(준비금의 감소)에 의거 자본준비금을 이익잉여금으로 전입한 금액을 재원으로 하므로, 과세소득에 해당",
+   "dps": 200
   },
   {
    "type": "dividend",
@@ -689,7 +2369,8 @@
    "rcept_dt": "20261112",
    "report_nm": "현금ㆍ현물배당결정(자회사의 주요경영사항)              (분기배당)",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261112900610",
-   "debug": "당 4. 시가배당률(%) 보통주식 1.24 종류주식 - 5. 배당금총액(원) 2,330,352,200 6. 배당기준일 2026-12-04 7. 배당금지급 예정일자 2026-12-21 8. 승인기관 이사회 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-12 - 사외이사 참석여부 참석(명) 3 불참(명) 0 - 감사(감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 - 이번 분기배당은 상법 제461조2(준비금의 감소)에 의거 자본준비금을 이익잉여금으로 전입한 금액을 재원으로 하므로, 과세소득에 해당"
+   "debug": "당 4. 시가배당률(%) 보통주식 1.24 종류주식 - 5. 배당금총액(원) 2,330,352,200 6. 배당기준일 2026-12-04 7. 배당금지급 예정일자 2026-12-21 8. 승인기관 이사회 9. 주주총회 예정일자 - 10. 이사회결의일(결정일) 2026-11-12 - 사외이사 참석여부 참석(명) 3 불참(명) 0 - 감사(감사위원) 참석여부 참석 11. 기타 투자판단과 관련한 중요사항 - 이번 분기배당은 상법 제461조2(준비금의 감소)에 의거 자본준비금을 이익잉여금으로 전입한 금액을 재원으로 하므로, 과세소득에 해당",
+   "dps": 200
   },
   {
    "type": "meeting",
@@ -704,17 +2385,6 @@
   },
   {
    "type": "meeting",
-   "corp_code": "00111111",
-   "corp_name": "대양금속",
-   "date": "2026-12-04",
-   "rcept_no": "20261119800705",
-   "rcept_dt": "20261119",
-   "report_nm": "[기재정정]주주총회소집결의              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261119800705",
-   "debug": "관련 공시서류제출일 2026-09-23 3. 정정사유 일정 변경 4. 정정사항 정정항목 정정전 정정후 2. 일시 2026-12-04 2027-01-27 5. 이사회결의일(결정일) 2026-10-13 2026-11-19 - 주주총회소집 결의 1. 구분 임시주주총회 2. 일시 2027-01-27 10 : 00 3. 장소 충남 예산군 신암면 추사로 146-8 ㈜대양금속 3층 회의실 4. 의결권행사기준일 2026-10-28 5. 이사회결의일(결정일) 2026-11-19 - 독립(사외)이사* 참석여부 참석(명) 1 불참(명) 1 - 감사(독"
-  },
-  {
-   "type": "meeting",
    "corp_code": "00862880",
    "corp_name": "새빗켐",
    "date": "2026-12-04",
@@ -726,28 +2396,6 @@
   },
   {
    "type": "meeting",
-   "corp_code": "01344336",
-   "corp_name": "신테카바이오",
-   "date": "2026-12-04",
-   "rcept_no": "20261119900344",
-   "rcept_dt": "20261119",
-   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261119900344",
-   "debug": "서류제출일 2026-11-09 3. 정정사유 임시주주총회 일정변경 4. 정정사항 정정항목 정정전 정정후 1.일시 2026-12-04 2026-12-18 - 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 10:30 2. 장소 대전광역시 유성구 국제과학17로 18 신테카바이오 ABS센터 4층 세미나실 3. 의결권행사기준일 2026-10-29 4. 이사회결의일(결정일) 2026-10-14 -사외이사 참석여부 참석(명) 1 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투"
-  },
-  {
-   "type": "meeting",
-   "corp_code": "00159193",
-   "corp_name": "한국전력공사",
-   "date": "2026-12-07",
-   "rcept_no": "20261120800298",
-   "rcept_dt": "20261120",
-   "report_nm": "주주총회소집결의              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261120800298",
-   "debug": "력공사/주주총회소집결의/(2026.11.20)주주총회소집결의 주주총회소집 결의 1. 구분 임시주주총회 2. 일시 2026-12-07 11 : 00 3. 장소 한국전력공사 본사 비전홀 (전남광주통합특별시 나주시 전력로 55) 4. 의결권행사기준일 2026-09-11 5. 이사회결의일(결정일) 2026-11-20 - 독립(사외)이사* 참석여부 참석(명) 7 불참(명) 1 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참석 6. 기타 투자판단과 관련한 중요사항 ○ 보고사항 : 감사보고 ○ 상법 제368조의4 제1항에 의거 상기 주주"
-  },
-  {
-   "type": "meeting",
    "corp_code": "00182696",
    "corp_name": "대한조선",
    "date": "2026-12-08",
@@ -756,6 +2404,17 @@
    "report_nm": "주주총회소집결의              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110800433",
    "debug": "한조선/주주총회소집결의/(2026.11.10)주주총회소집결의 주주총회소집 결의 1. 구분 임시주주총회 2. 일시 2026-12-08 09 : 00 3. 장소 전남광주통합특별시 해남군 화원면 관광레저로 1100 대한조선(주) 기술교육원 203호 4. 의결권행사기준일 2026-10-16 5. 이사회결의일(결정일) 2026-11-10 - 독립(사외)이사* 참석여부 참석(명) 3 불참(명) - - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 - 6. 기타 투자판단과 관련한 중요사항 - 상기 5. 당사의 감사위원은 전원 사외이사로 구성되"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00367695",
+   "corp_name": "에이전트AI",
+   "date": "2026-12-10",
+   "rcept_no": "20261111900755",
+   "rcept_dt": "20261111",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900755",
+   "debug": "출일 2026-10-19 3. 정정사유 임시주주총회 개최일 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 - 날짜 2026-11-26 2026-12-10 - 주주총회소집 결의 1. 일시 날짜 2026-12-10 시간 오전 10시 2. 장소 서울특별시 용산구 소월로 375, 남산예술원 3. 의결권행사기준일 2026-11-03 4. 이사회결의일(결정일) 2026-10-19 -사외이사 참석여부 참석(명) 3 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 불참 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항"
   },
   {
    "type": "meeting",
@@ -781,6 +2440,50 @@
   },
   {
    "type": "meeting",
+   "corp_code": "00159193",
+   "corp_name": "한국전력공사",
+   "date": "2026-12-11",
+   "rcept_no": "20261120800298",
+   "rcept_dt": "20261120",
+   "report_nm": "주주총회소집결의              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261120800298",
+   "debug": "력공사/주주총회소집결의/(2026.11.20)주주총회소집결의 주주총회소집 결의 1. 구분 임시주주총회 2. 일시 2026-12-07 11 : 00 3. 장소 한국전력공사 본사 비전홀 (전남광주통합특별시 나주시 전력로 55) 4. 의결권행사기준일 2026-09-11 5. 이사회결의일(결정일) 2026-11-20 - 독립(사외)이사* 참석여부 참석(명) 7 불참(명) 1 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참석 6. 기타 투자판단과 관련한 중요사항 ○ 보고사항 : 감사보고 ○ 상법 제368조의4 제1항에 의거 상기 주주"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "01689266",
+   "corp_name": "케이쓰리아이",
+   "date": "2026-12-15",
+   "rcept_no": "20261111900419",
+   "rcept_dt": "20261111",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900419",
+   "debug": "026.10.27 3. 정정사유 임시주주총회 개최일 및 장소 변경 4. 정정사항 정정항목 정정전 정정후 1.일시 - 날짜 2026-11-26 2026-12-15 2. 장소 대전광역시 유성구 엑스포로 1, 16층 본사 회의실 대전광역시 유성구 대덕대로 593, 대덕테크비즈센터(TBC), 교육실2(410호) - 주주총회소집 결의 1. 일시 날짜 2026-12-15 시간 09:00 2. 장소 대전광역시 유성구 대덕대로 593, 대덕테크비즈센터(TBC), 교육실2(410호) 3. 의결권행사기준일 2026-10-16 4. 이사회결의일(결정일"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00108746",
+   "corp_name": "DKME",
+   "date": "2026-12-17",
+   "rcept_no": "20261118800389",
+   "rcept_dt": "20261118",
+   "report_nm": "[기재정정]주주총회소집결의              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261118800389",
+   "debug": "제출일 2026-10-13 3. 정정사유 임시주주총회 일정 변경 4. 정정사항 정정항목 정정전 정정후 2. 일시 2026-12-03 / 09:00 2026-12-17 / 09:00 - 주주총회소집 결의 1. 구분 임시주주총회 2. 일시 2026-12-17 09 : 00 3. 장소 울산광역시 남구 처용로 260-37 본사 3층 대회의실 4. 의결권행사기준일 2026-10-21 5. 이사회결의일(결정일) 2026-10-06 - 독립(사외)이사* 참석여부 참석(명) 2 불참(명) 0 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00426068",
+   "corp_name": "엑시온그룹",
+   "date": "2026-12-17",
+   "rcept_no": "20261119900672",
+   "rcept_dt": "20261119",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261119900672",
+   "debug": "정관련 공시서류제출일 2026-10-21 3. 정정사유 일정변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 날짜 - 2026-12-03 - 2026-12-17 - 주주총회소집 결의 1. 일시 날짜 2026-12-17 시간 오전 09시 2. 장소 미정 3. 의결권행사기준일 2026-10-01 4. 이사회결의일(결정일) 2026-09-16 -사외이사 참석여부 참석(명) 3 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 불참 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 가. 보고사항 - 감사보고 나. 부"
+  },
+  {
+   "type": "meeting",
    "corp_code": "00799070",
    "corp_name": "딥커머스",
    "date": "2026-12-18",
@@ -789,6 +2492,28 @@
    "report_nm": "주주총회소집결의              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900486",
    "debug": "ign:left; } 딥커머스/주주총회소집결의/(2026.11.10)주주총회소집결의 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 오전 10시 2. 장소 서울시 영등포구 의사당대로 22 이룸센터 회의실1 3. 의결권행사기준일 2026-11-25 4. 이사회결의일(결정일) 2026-11-10 -사외이사 참석여부 참석(명) 1 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 - 임시주주총회 안건 세부내역은 미확정이며 추후 이사회 결의로 안건 확정시"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "01326792",
+   "corp_name": "비투엔",
+   "date": "2026-12-18",
+   "rcept_no": "20261117900440",
+   "rcept_dt": "20261117",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261117900440",
+   "debug": " 2026-11-03 3. 정정사유 소집 일정 변경에 따른 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 - 날짜 2026-11-18 2026-12-18 - 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 오전 9시 2. 장소 서울시 영등포구 선유로 146, 지하1층 강당 3. 의결권행사기준일 2026-10-21 4. 이사회결의일(결정일) 2026-10-06 -사외이사 참석여부 참석(명) 0 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 불참 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "01344336",
+   "corp_name": "신테카바이오",
+   "date": "2026-12-18",
+   "rcept_no": "20261119900344",
+   "rcept_dt": "20261119",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261119900344",
+   "debug": "서류제출일 2026-11-09 3. 정정사유 임시주주총회 일정변경 4. 정정사항 정정항목 정정전 정정후 1.일시 2026-12-04 2026-12-18 - 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 10:30 2. 장소 대전광역시 유성구 국제과학17로 18 신테카바이오 ABS센터 4층 세미나실 3. 의결권행사기준일 2026-10-29 4. 이사회결의일(결정일) 2026-10-14 -사외이사 참석여부 참석(명) 1 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투"
   },
   {
    "type": "meeting",
@@ -803,14 +2528,25 @@
   },
   {
    "type": "meeting",
-   "corp_code": "01755259",
-   "corp_name": "피스피스스튜디오",
+   "corp_code": "01128622",
+   "corp_name": "이스트에이드",
    "date": "2026-12-18",
-   "rcept_no": "20261109900506",
-   "rcept_dt": "20261109",
-   "report_nm": "주주총회소집결의              (임시주주총회)",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109900506",
-   "debug": "피스피스스튜디오/주주총회소집결의/(2026.11.09)주주총회소집결의(임시주주총회) 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 오전 9시 2. 장소 서울특별시 중구 다산로 43, 1층 회의실 3. 의결권행사기준일 2026-11-24 4. 이사회결의일(결정일) 2026-11-09 -사외이사 참석여부 참석(명) 3 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 - -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 2. 부의안건 - 안건 제2-2호 의안(감사위원회 위원이 되는 독립이사 이가람 선임의"
+   "rcept_no": "20261111900543",
+   "rcept_dt": "20261111",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900543",
+   "debug": "제출일 2026-10-20 3. 정정사유 임시주주총회 일정 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 中 날짜 2026-11-27 2026-12-18 - 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 오전9시 2. 장소 서울특별시 서초구 반포대로 3, 이스트빌딩 6층 대회의실 3. 의결권행사기준일 2026-11-04 4. 이사회결의일(결정일) 2026-10-20 -사외이사 참석여부 참석(명) 1 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00188973",
+   "corp_name": "화일약품",
+   "date": "2026-12-18",
+   "rcept_no": "20261116901329",
+   "rcept_dt": "20261116",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116901329",
+   "debug": " 2026년 11월 05일 3. 정정사유 일정 변경에 의한 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 2026-11-20 2026-12-18 - 주주총회소집 결의 1. 일시 날짜 2026-12-18 시간 오전 9시 2. 장소 경기도 평택시 산단로 241 3. 의결권행사기준일 2026-09-30 4. 이사회결의일(결정일) 2026-09-15 -사외이사 참석여부 참석(명) 1 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 - ※관련공시 - 【주주총"
   },
   {
    "type": "meeting",
@@ -913,6 +2649,17 @@
   },
   {
    "type": "meeting",
+   "corp_code": "01409095",
+   "corp_name": "비트맥스",
+   "date": "2026-12-23",
+   "rcept_no": "20261116901913",
+   "rcept_dt": "20261116",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116901913",
+   "debug": "일 2026.09.14 3. 정정사유 임시주주총회 소집일정 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 날짜:2026-12-01 시간:오전 09시 00분 날짜:2026-12-23 시간:오전 09시 00분 - 주주총회소집 결의 1. 일시 날짜 2026-12-23 시간 오전 09시 00분 2. 장소 미정 3. 의결권행사기준일 2026-09-29 4. 이사회결의일(결정일) 2026-09-14 -사외이사 참석여부 참석(명) 1 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투"
+  },
+  {
+   "type": "meeting",
    "corp_code": "01519790",
    "corp_name": "엠앤씨솔루션",
    "date": "2026-12-23",
@@ -979,6 +2726,17 @@
   },
   {
    "type": "meeting",
+   "corp_code": "01353024",
+   "corp_name": "TS트릴리온",
+   "date": "2026-12-28",
+   "rcept_no": "20261116900749",
+   "rcept_dt": "20261116",
+   "report_nm": "[기재정정]주주총회소집결의              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116900749",
+   "debug": "026-10-20 3. 정정사유 주주총회 일정 변경에 따른 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 중 날짜 2026-12-01 2026-12-28 - 주주총회소집 결의 1. 일시 날짜 2026-12-28 시간 09:00 2. 장소 서울특별시 영등포구 양평로96, 7층 3. 의결권행사기준일 2026-11-06 4. 이사회결의일(결정일) 2026-10-20 -사외이사 참석여부 참석(명) 2 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 상기 임"
+  },
+  {
+   "type": "meeting",
    "corp_code": "00288343",
    "corp_name": "삼영이엔씨",
    "date": "2026-12-28",
@@ -998,6 +2756,28 @@
    "report_nm": "주주총회소집결의              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261119600368",
    "debug": ":left; } 에스테크엠/주주총회소집 결의/(2026.11.19)주주총회소집 결의 주주총회소집 결의 1. 일시 날짜 2026-12-28 시간 오전 10시 2. 장소 경기도 화성시 만세구 남양읍 고향의봄길 333-3, 2층 대회의실 3. 의결권행사기준일 2026-12-04 4. 이사회결의일(결정일) 2026-11-19 -사외이사 참석여부 참석(명) - 불참(명) - -감사(사외이사가 아닌 감사위원) 참석여부 불참 -주주총회 구분 임시주주총회 5. 기타 투자판단과 관련한 중요사항 - ※관련공시 - 【주주총회 안건 세부내역】 번호 회의"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00260611",
+   "corp_name": "웰킵스하이텍",
+   "date": "2026-12-28",
+   "rcept_no": "20261113900480",
+   "rcept_dt": "20261113",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261113900480",
+   "debug": "6-10-12 3. 정정사유 임시주주총회 일정 변경에 따른 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 중 날짜 2026-11-30 2026-12-28 - 주주총회소집 결의 1. 일시 날짜 2026-12-28 시간 오전 9시 2. 장소 서울시 강동구 고덕비즈밸리로54, 2층 3. 의결권행사기준일 2026-10-30 4. 이사회결의일(결정일) 2026-10-12 -사외이사 참석여부 참석(명) 1 불참(명) 1 -감사(사외이사가 아닌 감사위원) 참석여부 불참 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 상기 "
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00164618",
+   "corp_name": "현대사료",
+   "date": "2026-12-28",
+   "rcept_no": "20261110900320",
+   "rcept_dt": "20261110",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900320",
+   "debug": "류제출일 2026-10-14 3. 정정사유 임시주주총회 일정변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 날짜 : 2026-11-13 시간 : 오전 09시 날짜 : 2026-12-28 시간 : 오전 09시 3. 의결권행사기준일 2026-08-20 2026-11-25 - 주주총회소집 결의 1. 일시 날짜 2026-12-28 시간 오전 09시 2. 장소 충남 천안시 서북구 음봉로 861-50, 한들문화센터 1층 다목적홀 3. 의결권행사기준일 2026-11-25 4. 이사회결의일(결정일) 2026-08-05 -사외이사 참석여부 참"
   },
   {
    "type": "meeting",
@@ -1034,6 +2814,17 @@
   },
   {
    "type": "meeting",
+   "corp_code": "00959229",
+   "corp_name": "세종메디칼",
+   "date": "2026-12-29",
+   "rcept_no": "20261110900558",
+   "rcept_dt": "20261110",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900558",
+   "debug": "류제출일 2026-10-08 3. 정정사유 임시주주총회 일정변경 4. 정정사항 정정항목 정정전 정정후 1. 일시 날짜 : 2026-11-13 시간 : 오전 09시 날짜 : 2026-12-29 시간 : 오전 09시 3. 의결권행사기준일 2026-08-20 2026-11-25 - 주주총회소집 결의 1. 일시 날짜 2026-12-29 시간 오전 09시 2. 장소 경기도 파주시 신촌2로 11(신촌동) 본사 1층 대회의실 3. 의결권행사기준일 2026-11-25 4. 이사회결의일(결정일) 2026-08-05 -사외이사 참석여부 참석(명) 1"
+  },
+  {
+   "type": "meeting",
    "corp_code": "01204056",
    "corp_name": "하이브",
    "date": "2026-12-29",
@@ -1042,6 +2833,17 @@
    "report_nm": "주주총회소집결의              ",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261118800277",
    "debug": "하이브/주주총회소집결의/(2026.11.18)주주총회소집결의 주주총회소집 결의 1. 구분 임시주주총회 2. 일시 2026-12-29 10 : 00 3. 장소 서울시 마포구 독막로 279, 상장회사회관 대강당 4. 의결권행사기준일 2026-12-03 5. 이사회결의일(결정일) 2026-11-18 - 독립(사외)이사* 참석여부 참석(명) 5 불참(명) 1 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 - 6. 기타 투자판단과 관련한 중요사항 - 보고사항 : 감사보고 - 금번 임시주주총회 의안에 대해 상법 제 368조의4에 따른 전"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00530413",
+   "corp_name": "더코디",
+   "date": "2026-12-30",
+   "rcept_no": "20261111900265",
+   "rcept_dt": "20261111",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900265",
+   "debug": "일 2026년 9월 17일 3. 정정사유 임시주주총회 소집일정변경 4. 정정사항 정정항목 정정전 정정후 1.일시 -날짜:2026-11-26 -시간:오전11시 -날짜:2026-12-30 -시간:오전9시 - 주주총회소집 결의 1. 일시 날짜 2026-12-30 시간 오전 9시 2. 장소 충남 천안시 서북구 백석공단2길 62 대회의실 3. 의결권행사기준일 2026-10-02 4. 이사회결의일(결정일) 2026-09-17 -사외이사 참석여부 참석(명) 3 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주"
   },
   {
    "type": "meeting",
@@ -1111,14 +2913,58 @@
   },
   {
    "type": "meeting",
-   "corp_code": "00125576",
-   "corp_name": "체시스",
-   "date": "2027-01-07",
-   "rcept_no": "20261109800720",
-   "rcept_dt": "20261109",
+   "corp_code": "00111111",
+   "corp_name": "대양금속",
+   "date": "2027-01-27",
+   "rcept_no": "20261119800705",
+   "rcept_dt": "20261119",
    "report_nm": "[기재정정]주주총회소집결의              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261109800720",
-   "debug": "업자 겸 대표이사 前 KB자산운용 액티브 주식펀드 운용역 - 주주총회소집 결의 1. 구분 임시주주총회 2. 일시 2027-01-07 10 : 00 3. 장소 경상북도 경산시 진량읍 공단6로 24길 23-9 (경산산업단지 관리공단 3층 강당) 4. 의결권행사기준일 2026-11-24 5. 이사회결의일(결정일) 2026-11-09 - 독립(사외)이사* 참석여부 참석(명) 0 불참(명) 2 - 감사(독립(사외)이사가 아닌 감사위원) 참석여부 참석 6. 기타 투자판단과 관련한 중요사항 - ※ 관련공시 - 【주주총회 안건 세부내역】 번호 회"
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261119800705",
+   "debug": "관련 공시서류제출일 2026-09-23 3. 정정사유 일정 변경 4. 정정사항 정정항목 정정전 정정후 2. 일시 2026-12-04 2027-01-27 5. 이사회결의일(결정일) 2026-10-13 2026-11-19 - 주주총회소집 결의 1. 구분 임시주주총회 2. 일시 2027-01-27 10 : 00 3. 장소 충남 예산군 신암면 추사로 146-8 ㈜대양금속 3층 회의실 4. 의결권행사기준일 2026-10-28 5. 이사회결의일(결정일) 2026-11-19 - 독립(사외)이사* 참석여부 참석(명) 1 불참(명) 1 - 감사(독"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00440712",
+   "corp_name": "리튬포어스",
+   "date": "2027-02-01",
+   "rcept_no": "20261110900742",
+   "rcept_dt": "20261110",
+   "report_nm": "[기재정정]주주총회소집결의              (임시주주총회)",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900742",
+   "debug": "류제출일 2026-10-16 3. 정정사유 주주총회 소집일 변경 4. 정정사항 정정항목 정정전 정정후 1. 일시-날짜 2026-11-25 2027-02-01 - 주주총회소집 결의 1. 일시 날짜 2027-02-01 시간 오전 9:30 2. 장소 서울시 성동구 아차산로 17길 48, 2층(SK V1 Center) 3. 의결권행사기준일 2026-11-02 4. 이사회결의일(결정일) 2026-10-16 -사외이사 참석여부 참석(명) 2 불참(명) 3 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 "
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00125725",
+   "corp_name": "디모아",
+   "date": "2027-02-02",
+   "rcept_no": "20261117900265",
+   "rcept_dt": "20261117",
+   "report_nm": "[기재정정]주주총회소집결의              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261117900265",
+   "debug": ". 정정사유 임시주주총회 소집일정 및 부의안건 변경에 따른 정정 4. 정정사항 정정항목 정정전 정정후 1. 일시 2026-12-02 오전 9시 2027-02-02 오전9시 3. 의결권행사기준일 2026-09-18 2026-12-03 [주주총회 안건 세부내역] 1. 이사선임의 건 1-1.사외이사 송효섭 선임의 건 1. 정관변경의 건 2. 이사선임의 건 2-1. 사외이사 송효섭 선임의 건 -정관변경 세부내용이 확정되는 대로 별도의 이사회결의 이후 재공시 예정입니다. 주주총회소집 결의 1. 일시 날짜 2027-02-02 시간 오전 9시 "
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00651901",
+   "corp_name": "에어부산",
+   "date": "2027-02-03",
+   "rcept_no": "20261116801406",
+   "rcept_dt": "20261116",
+   "report_nm": "[기재정정]주주총회소집결의              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116801406",
+   "debug": "출일 2026-08-21 3. 정정사유 임시주주총회 개최일 변경 4. 정정사항 정정항목 정정전 정정후 2. 일시 2026-12-07(10:00) 2027-02-03(10:00) 5. 이사회결의일(결정일) 2026-08-21 2026-11-16 6. 기타 투자판단과 관련한 중요사항 - 본건 합병과 관련한 상세 내용은 2026년 08월 21일 공시한 '주요사항보고서(회사합병결정)' 공시를 참고하시기 바랍니다. - 본건 합병과 관련한 상세 내용은 '주요사항보고서(회사합병결정)' 공시를 참고하시기 바랍니다. - 주주총회소집 결의 1. 구분"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "00653024",
+   "corp_name": "진에어",
+   "date": "2027-02-03",
+   "rcept_no": "20261116801227",
+   "rcept_dt": "20261116",
+   "report_nm": "[기재정정]주주총회소집결의              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261116801227",
+   "debug": "출일 2026-08-21 3. 정정사유 임시주주총회 개최일 변경 4. 정정사항 정정항목 정정전 정정후 2. 일시 2026-12-07(09:00) 2027-02-03(09:00) 5. 이사회결의일(결정일) 2026-08-21 2026-11-16 6. 기타 투자판단과 관련한 중요사항 - 본건 합병과 관련한 상세 내용은 2026년 08월 21일 공시한 ‘주요사항보고서(회사합병결정)’ 공시를 참고하시기 바랍니다. - 본건 합병과 관련한 상세 내용은 ‘주요사항보고서(회사합병결정)’ 공시를 참고하시기 바랍니다. - 주주총회소집 결의 1. 구분"
   }
  ]
 }
