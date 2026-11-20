@@ -19,7 +19,7 @@ import io, json, os, re, sys, time, zipfile, datetime, urllib.request, urllib.pa
 KEY = os.environ["OPENDART_KEY"]
 BASE = "https://opendart.fss.or.kr/api"
 UA = {"User-Agent": "Mozilla/5.0"}
-PARSER_VER = 1
+PARSER_VER = 2
 
 # 공시 분류 가정 (v1에서 실측 검증): B 주요사항·E 기타·I 거래소공시
 SEARCH_TYPES = ["B", "E", "I"]
@@ -75,13 +75,18 @@ def window(text, kw, size=350, nth=0):
     return text[i:i + size]
 
 def date_near(text, keywords, size=350):
-    """키워드 윈도우 안에서 찾은 첫 유효 날짜. 없으면 None."""
+    """키워드 윈도우들의 날짜 중 마지막 윈도우의 첫 날짜.
+    기재정정 문서에서는 앞부분 정정대조표에 '정정전' 옛 날짜가 먼저 나오므로
+    첫 윈도우를 집으면 변경 전 날짜를 잡는 사고가 난다 (v1 실측: 비투엔·화일약품).
+    본문 표는 문서 뒤쪽에 다시 실리므로 마지막 윈도우가 정본이다."""
     for kw in keywords:
-        for nth in range(4):
+        found = None
+        for nth in range(8):
             w = window(text, kw, size, nth)
             if not w: break
             ds = dates_in(w)
-            if ds: return ds[0]
+            if ds: found = ds[0]
+        if found: return found
     return None
 
 # ---------- 종류별 파싱 ----------
@@ -90,14 +95,20 @@ def parse_dividend(text):
     f = {}
     d = date_near(text, ["배당기준일", "기준일"], 300)
     if d: f["date"] = d
-    # 주당배당금: 표 형식(단위는 머리말 '(원)')과 문장 형식('500원')을 모두 읽는다.
+    # 주당배당금: '1주당 배당금' 표 구간(시가배당률 항목 앞까지)만 본다.
+    # v1 실측 교정: 표기는 '보통주식'이 많고, 구간을 안 자르면 발행주식수 같은
+    # 큰 숫자를 집는 사고가 난다 (이지스밸류플러스리츠 111억 오값).
     w = ""
     for kw in ("1주당 배당금", "주당배당금", "주당 배당금", "1주당배당금"):
         w = window(text, kw, 500)
         if w: break
     if w:
-        m = re.search(r"보통주\s*[:：]?\s*([\d,]{2,})", w) or re.search(r"([\d,]{2,})\s*원", w)
-        if m: f["dps"] = int(m.group(1).replace(",", ""))
+        cut = w.find("시가배당률")
+        if cut > 0: w = w[:cut]
+        m = re.search(r"보통주식?\s*[:：]?\s*([\d,]{2,})", w) or re.search(r"([\d,]{2,})\s*원", w)
+        if m:
+            v = int(m.group(1).replace(",", ""))
+            if 10 <= v <= 1000000: f["dps"] = v
     return f
 
 def parse_meeting(text):
@@ -113,7 +124,10 @@ def classify(report_nm):
     nm = report_nm or ""
     if "배당결정" in nm: return "dividend"
     if "주주총회소집" in nm: return "meeting"
-    if "잠정실적" in nm or "매출액또는손익구조" in nm: return "earnings"
+    # 잠정실적의 실제 보고서명은 '연결재무제표기준영업(잠정)실적(공정공시)' 형태가
+    # 대부분이라 '잠정실적' 부분일치만으로는 못 잡는다 (v1 실측: 잠정 히트 0건).
+    if "매출액또는손익구조" in nm: return "earnings"
+    if "잠정" in nm and "실적" in nm: return "earnings"
     return None
 
 def debug_excerpt(text, keywords):
@@ -163,9 +177,10 @@ def main():
               "report_nm": f["report_nm"],
               "dart_url": f"https://dart.fss.or.kr/dsaf001/main.do?rcpNo={f['rcept_no']}"}
         events[(f["corp_code"], "earnings", rd)] = ev
-    # 배당·주총은 최신 접수 순으로 원문 파싱 (정정 공시가 있으면 최신본이 이긴다)
+    # 배당·주총은 원문 파싱. 문서 상한 안에서 배당이 먼저 소진되지 않게
+    # 배당 → 주총 순, 각 종류 안에서는 최신 접수 순 (정정본이 이긴다).
     todo = sorted([h for h in hits if h[0] in PARSERS],
-                  key=lambda h: h[1]["rcept_no"], reverse=True)
+                  key=lambda h: (0 if h[0] == "dividend" else 1, -int(h[1]["rcept_no"])))
     seen_corp_kind = set()
     for kind, f in todo:
         if docs >= MAX_DOCS: break
