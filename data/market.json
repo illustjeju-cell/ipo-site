@@ -1,6 +1,6 @@
 {
  "date": "2026-11-20",
- "collected_at": "2026-11-20T19:35+09:00",
+ "collected_at": "2026-11-20T23:35+09:00",
  "scanned": 4332,
  "upper": [
   {
@@ -17,7 +17,7 @@
    "market": "KOSDAQ",
    "close": 7810,
    "ratio": 29.95,
-   "value": 5791
+   "value": 5792
   },
   {
    "name": "타임X AI",
@@ -35,7 +35,7 @@
    "market": "KOSDAQ",
    "close": 810,
    "ratio": -29.99,
-   "value": 1000
+   "value": 1001
   }
  ]
 }
