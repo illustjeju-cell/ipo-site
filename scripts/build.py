@@ -296,7 +296,39 @@ STOCK_NAMES = {"dividend": "배당 기준일", "earnings": "실적 발표", "mee
 STOCK_CLS = {"dividend": "div", "earnings": "ern", "meeting": "met"}
 WD = "월화수목금토일"
 
-def stock_calendar_page(events, today, img=""):
+def movers_html(market, today):
+    """오늘의 상한가·하한가 섹션 + 바로가기 버튼 (2026-11-20 사용자 제안).
+    데이터는 collect_market.py가 가격제한폭 도달 여부로 정확히 가려낸 data/market.json."""
+    if not market or (not market.get("upper") and not market.get("lower")):
+        return "", ""
+    mdate = market.get("date") or today.isoformat()
+    md = datetime.date.fromisoformat(mdate)
+    day_label = "오늘" if mdate == today.isoformat() else f"{md.month}월 {md.day}일"
+    def val_fmt(v):
+        eok = v / 100.0  # 백만원 → 억원
+        return f"{eok / 10000:.1f}조원" if eok >= 10000 else f"{eok:,.0f}억원"
+    def rows(items, up):
+        if not items:
+            return f"<p style='color:#889;font-size:14.5px'>{'상한가' if up else '하한가'} 종목이 없어요.</p>"
+        out = []
+        for it in items:
+            sign = "+" if up else ""
+            color = "#c62828" if up else "#1565c0"
+            out.append(f"<div class='scrow'><a class='scname' style='text-decoration:none' href='https://finance.naver.com/item/main.naver?code={esc(it['code'])}' target='_blank' rel='nofollow noopener'>{esc(it['name'])}</a>"
+                       f"<span class='scmk'>{esc(it['market'])}</span>"
+                       f"<span class='scmv'>{it['close']:,}원 <b style='color:{color}'>{sign}{it['ratio']:.2f}%</b> · 거래대금 {val_fmt(it['value'])}</span></div>")
+        return "".join(out)
+    btns = ('<div style="display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px">'
+            f'<a href="#upper" style="flex:1 1 200px;display:block;text-align:center;background:#c62828;color:#fff;font-size:17px;font-weight:800;padding:15px 12px;border-radius:14px;text-decoration:none">🔺 {day_label} 상한가 종목 바로가기</a>'
+            f'<a href="#lower" style="flex:1 1 200px;display:block;text-align:center;background:#1565c0;color:#fff;font-size:17px;font-weight:800;padding:15px 12px;border-radius:14px;text-decoration:none">🔻 {day_label} 하한가 종목 바로가기</a></div>')
+    secs = (f"<h2 class='scmonth' id='upper'>🔺 {md.month}월 {md.day}일 상한가 {len(market.get('upper') or [])}종목</h2>"
+            f"<div class='scday'>{rows(market.get('upper') or [], True)}</div>"
+            f"<h2 class='scmonth' id='lower'>🔻 {md.month}월 {md.day}일 하한가 {len(market.get('lower') or [])}종목</h2>"
+            f"<div class='scday'>{rows(market.get('lower') or [], False)}</div>"
+            f"<p style='color:#889;font-size:12.5px'>{esc((market.get('collected_at') or '')[11:16])} 기준 · 네이버 증권 시세로 가격제한폭 도달 종목을 계산했습니다. 장중에는 바뀔 수 있어요.</p>")
+    return btns, secs
+
+def stock_calendar_page(events, today, img="", market=None):
     """주식 일정 페이지 — 목록형 (2026-11-20 전면 개편).
     달력 그리드는 모바일에서 칩이 잘리고 빈 칸이 대부분이라 제거했다.
     구조: CTA 배너 → 광고 → 날짜순 일정 목록(날짜 그룹·종목 전체 표시) → 광고 → 최근 실적(접이식) → 하단 CTA."""
@@ -360,14 +392,19 @@ def stock_calendar_page(events, today, img=""):
 .scehead span{color:#889;font-size:12.5px}
 .scchips{display:flex;flex-wrap:wrap;gap:5px}
 .scchip{font-size:12.5px;background:#f2f6fc;color:#345;border-radius:12px;padding:3px 9px;text-decoration:none}
+.scmk{flex:0 0 auto;font-size:11px;font-weight:700;background:#eef1f6;color:#667;border-radius:5px;padding:2.5px 6px}
+.scmv{margin-left:auto;font-size:13.5px;color:#345;text-align:right}
 </style>"""
+    movers_btns, movers_secs = movers_html(market, today)
     body = f"""<h1>주식 일정 캘린더</h1>
 <p class="lead">배당 기준일과 주주총회 일정을 날짜순으로 정리했습니다. 배당 종목은 주당 배당금까지 표시합니다. (DART 공시 기준)</p>
+{movers_btns}
 {cta_top}
 {ad("detail-top")}
 <h2 class="scmonth" style="margin-top:18px">다가오는 배당·주총 일정</h2>
 {uplist}
 {ad("detail-bottom")}
+{movers_secs}
 <h2 class="scmonth">최근 실적 발표</h2>
 {earnings_block}
 {cta_bottom}
@@ -479,6 +516,10 @@ def main():
         events = cal.get("events", [])
     except Exception:
         events = []
+    try:
+        market = json.load(open(os.path.join(ROOT, "data", "market.json"), encoding="utf-8"))
+    except Exception:
+        market = None
     today = datetime.date.today()
     dist = os.path.join(ROOT, "dist")
     shutil.rmtree(dist, ignore_errors=True)
@@ -495,7 +536,7 @@ def main():
     open(os.path.join(dist, "index.html"), "w", encoding="utf-8").write(home)
     open(os.path.join(dist, "calendar.html"), "w", encoding="utf-8").write(calendar_page(items, today))
     simg = f"{SITE_URL}/cards/stockcal.png" if _card_img(os.path.join(dist, "cards", "stockcal.png"), "주식 일정 캘린더", "배당·실적·주총 한눈에", "DART 공시 기준 일정 정리") else ""
-    open(os.path.join(dist, "stock-calendar.html"), "w", encoding="utf-8").write(stock_calendar_page(events, today, simg))
+    open(os.path.join(dist, "stock-calendar.html"), "w", encoding="utf-8").write(stock_calendar_page(events, today, simg, market))
     open(os.path.join(dist, "calculator.html"), "w", encoding="utf-8").write(calculator_page(items, today))
     for x in items:
         cimg = f"{SITE_URL}/cards/{x['corp_code']}.png" if og_card(os.path.join(dist, "cards", x["corp_code"] + ".png"), x, today) else ""
