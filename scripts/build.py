@@ -297,8 +297,11 @@ STOCK_CLS = {"dividend": "div", "earnings": "ern", "meeting": "met"}
 WD = "월화수목금토일"
 
 def stock_calendar_page(events, today, img=""):
+    # 달력 그리드에는 배당·주총만 넣는다. 실적 발표는 시즌에 하루 수십 건이 몰려
+    # (2026-11 실측: 하루 최대 37건) 그리드가 무너지므로 아래 목록으로만 보여준다 (2026-11-20 가독성 개편).
     ev = {}
     for e in events:
+        if e.get("type") == "earnings": continue
         t = STOCK_CLS.get(e.get("type"))
         if not t: continue
         ev.setdefault(e["date"], []).append({"n": e["corp_name"], "t": t, "l": STOCK_NAMES[e["type"]], "u": e["dart_url"]})
@@ -339,8 +342,9 @@ function render(){
       var iso = cy + "-" + pad(cm + 1) + "-" + pad(cell.d);
       var isToday = !cell.out && iso === now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
       html += "<td class='" + (cell.out ? "out" : "") + (isToday ? " today" : "") + "'><span class='dn'>" + cell.d + "</span>";
-      if (!cell.out && EV[iso]) EV[iso].forEach(function(e){
-        html += "<a class='ev " + e.t + "' href='" + e.u + "' target='_blank' rel='nofollow noopener'>" + e.n + " " + e.l + "</a>";
+      if (!cell.out && EV[iso]) EV[iso].forEach(function(e, idx){
+        if (idx < 4) html += "<a class='ev " + e.t + "' href='" + e.u + "' target='_blank' rel='nofollow noopener'>" + e.n + " " + e.l + "</a>";
+        else if (idx === 4) html += "<span class='ev more'>+" + (EV[iso].length - 4) + "건 더 (아래 목록)</span>";
         list.push({iso: iso, e: e});
       });
       html += "</td>";
@@ -357,9 +361,9 @@ function move(m){ cm += m; if (cm < 0){ cm = 11; cy--; } if (cm > 11){ cm = 0; c
 render();
 </script>"""
     body = f"""<h1>주식 일정 캘린더</h1>
-<p class="lead">배당 기준일·실적 발표·주주총회 일정을 DART 공시 기준으로 정리합니다. 실적 발표는 공시가 접수된 날짜(발표일) 기준입니다.</p>
-<p class="legend"><span class="ev div">배당 기준일</span><span class="ev ern">실적 발표</span><span class="ev met">주주총회</span> 칩을 누르면 DART 공시 원문으로 이동합니다.</p>
-<style>.ev.div{{background:#fdf6e0;color:#7a5b00}}.ev.ern{{background:#efe9fb;color:#4b3480}}.ev.met{{background:#e6f2f7;color:#0f5b74}}</style>
+<p class="lead">배당 기준일·주주총회 일정을 DART 공시 기준으로 정리합니다. 실적 발표는 한 번에 수십 건씩 몰려 달력에 넣지 않고, 아래 "최근 실적 발표" 목록에서 확인하세요 (공시가 접수된 날짜 기준).</p>
+<p class="legend"><span class="ev div">배당 기준일</span><span class="ev met">주주총회</span> 칩을 누르면 DART 공시 원문으로 이동합니다.</p>
+<style>.ev.div{{background:#fdf6e0;color:#7a5b00}}.ev.met{{background:#e6f2f7;color:#0f5b74}}.ev.more{{background:#eef1f6;color:#667}}</style>
 <div class="calnav"><button onclick="move(-1)">← 이전 달</button><span class="cur" id="cur"></span><button onclick="move(1)">다음 달 →</button></div>
 <table class="cal" id="cal"></table>
 <h2 style="font-size:17px;margin-top:20px">이 달의 일정</h2>
