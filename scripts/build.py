@@ -297,84 +297,83 @@ STOCK_CLS = {"dividend": "div", "earnings": "ern", "meeting": "met"}
 WD = "월화수목금토일"
 
 def stock_calendar_page(events, today, img=""):
-    # 달력 그리드에는 배당·주총만 넣는다. 실적 발표는 시즌에 하루 수십 건이 몰려
-    # (2026-11 실측: 하루 최대 37건) 그리드가 무너지므로 아래 목록으로만 보여준다 (2026-11-20 가독성 개편).
-    ev = {}
-    for e in events:
-        if e.get("type") == "earnings": continue
-        t = STOCK_CLS.get(e.get("type"))
-        if not t: continue
-        ev.setdefault(e["date"], []).append({"n": e["corp_name"], "t": t, "l": STOCK_NAMES[e["type"]], "u": e["dart_url"]})
+    """주식 일정 페이지 — 목록형 (2026-11-20 전면 개편).
+    달력 그리드는 모바일에서 칩이 잘리고 빈 칸이 대부분이라 제거했다.
+    구조: CTA 배너 → 광고 → 날짜순 일정 목록(날짜 그룹·종목 전체 표시) → 광고 → 최근 실적(접이식) → 하단 CTA."""
     upcoming = sorted((e for e in events if e["type"] in ("dividend", "meeting") and e["date"] >= today.isoformat()),
                       key=lambda e: (e["date"], e["corp_name"]))
-    def uline(e):
-        d = datetime.date.fromisoformat(e["date"])
-        extra = f" · 주당 {e['dps']:,}원" if e["type"] == "dividend" and e.get("dps") else ""
-        return (f"<li>{e['date']} ({WD[d.weekday()]}) · {STOCK_NAMES[e['type']]} · "
-                f"<a href='{esc(e['dart_url'])}' target='_blank' rel='nofollow noopener'>{esc(e['corp_name'])}</a>"
-                f"{extra} <b>{dday(e['date'], today)}</b></li>")
-    uplist = "".join(uline(e) for e in upcoming[:100]) or "<li>다가오는 일정이 없습니다.</li>"
+    groups = {}
+    for e in upcoming: groups.setdefault(e["date"], []).append(e)
+    parts = []
+    cur_month = None
+    for date in sorted(groups):
+        d = datetime.date.fromisoformat(date)
+        if cur_month != (d.year, d.month):
+            cur_month = (d.year, d.month)
+            parts.append(f"<h2 class='scmonth'>{d.year}년 {d.month}월</h2>")
+        rows = []
+        for e in groups[date]:
+            if e["type"] == "dividend":
+                badge = "<span class='scbadge div'>배당 기준일</span>"
+                extra = f"<span class='scdps'>주당 {e['dps']:,}원</span>" if e.get("dps") else ""
+            else:
+                badge = "<span class='scbadge met'>주주총회</span>"
+                extra = ""
+            rows.append(f"<div class='scrow'>{badge}<span class='scname'>{esc(e['corp_name'])}</span>{extra}<a class='sclink' href='{esc(e['dart_url'])}' target='_blank' rel='nofollow noopener'>공시 ›</a></div>")
+        parts.append(f"<div class='scday'><div class='scdate'><b>{d.month}월 {d.day}일</b> <span>({WD[d.weekday()]})</span> <em>{dday(date, today)}</em></div>{''.join(rows)}</div>")
+    uplist = "".join(parts) or "<p>다가오는 일정이 없습니다.</p>"
     lo = (today - datetime.timedelta(days=14)).isoformat()
-    recent = sorted((e for e in events if e["type"] == "earnings" and lo <= e["date"] <= today.isoformat()),
-                    key=lambda e: (e["date"], e["corp_name"]), reverse=True)
-    rlist = "".join(
-        f"<li>{e['date']} · <a href='{esc(e['dart_url'])}' target='_blank' rel='nofollow noopener'>{esc(e['corp_name'])}</a> 실적 발표</li>"
-        for e in recent[:30]) or "<li>최근 14일 안에 실적 발표가 없습니다.</li>"
-    js = """<script>
-var EV = __EVENTS__;
-var now = new Date(); var cy = now.getFullYear(), cm = now.getMonth();
-function pad(n){ return (n < 10 ? "0" : "") + n; }
-function render(){
-  document.getElementById("cur").textContent = cy + "년 " + (cm + 1) + "월";
-  var first = new Date(cy, cm, 1); var startDay = first.getDay();
-  var days = new Date(cy, cm + 1, 0).getDate();
-  var prevDays = new Date(cy, cm, 0).getDate();
-  var html = "<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>";
-  var list = [];
-  var cells = [];
-  for (var i = 0; i < startDay; i++) cells.push({d: prevDays - startDay + 1 + i, out: 1});
-  for (var d = 1; d <= days; d++) cells.push({d: d, out: 0});
-  while (cells.length % 7) cells.push({d: cells.length - days - startDay + 1, out: 1});
-  for (var r = 0; r < cells.length / 7; r++){
-    html += "<tr>";
-    for (var c = 0; c < 7; c++){
-      var cell = cells[r * 7 + c];
-      var iso = cy + "-" + pad(cm + 1) + "-" + pad(cell.d);
-      var isToday = !cell.out && iso === now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
-      html += "<td class='" + (cell.out ? "out" : "") + (isToday ? " today" : "") + "'><span class='dn'>" + cell.d + "</span>";
-      if (!cell.out && EV[iso]) EV[iso].forEach(function(e, idx){
-        if (idx < 4) html += "<a class='ev " + e.t + "' href='" + e.u + "' target='_blank' rel='nofollow noopener'>" + e.n + " " + e.l + "</a>";
-        else if (idx === 4) html += "<span class='ev more'>+" + (EV[iso].length - 4) + "건 더 (아래 목록)</span>";
-        list.push({iso: iso, e: e});
-      });
-      html += "</td>";
-    }
-    html += "</tr>";
-  }
-  document.getElementById("cal").innerHTML = html;
-  list.sort(function(a, b){ return a.iso < b.iso ? -1 : 1; });
-  document.getElementById("calist").innerHTML = list.length
-    ? list.map(function(it){ return "<li>" + it.iso + " · <a href='" + it.e.u + "' target='_blank' rel='nofollow noopener'>" + it.e.n + "</a> " + it.e.l + "</li>"; }).join("")
-    : "<li>이 달은 일정이 없습니다.</li>";
-}
-function move(m){ cm += m; if (cm < 0){ cm = 11; cy--; } if (cm > 11){ cm = 0; cy++; } render(); }
-render();
-</script>"""
+    recent = [e for e in events if e["type"] == "earnings" and lo <= e["date"] <= today.isoformat()]
+    egroups = {}
+    for e in recent: egroups.setdefault(e["date"], []).append(e)
+    erows = []
+    for date in sorted(egroups, reverse=True):
+        d = datetime.date.fromisoformat(date)
+        chips = "".join(f"<a class='scchip' href='{esc(e['dart_url'])}' target='_blank' rel='nofollow noopener'>{esc(e['corp_name'])}</a>"
+                        for e in sorted(egroups[date], key=lambda z: z["corp_name"]))
+        erows.append(f"<div class='scerow'><div class='scehead'><b>{d.month}월 {d.day}일</b> <span>{len(egroups[date])}건</span></div><div class='scchips'>{chips}</div></div>")
+    earnings_block = (f"<details class='scdet'><summary>최근 실적 발표 {len(recent)}건 펼치기 (최근 14일, 공시 접수일 기준)</summary>{''.join(erows)}</details>"
+                      if recent else "<p>최근 14일 안에 실적 발표가 없습니다.</p>")
+    cta_top = ('<div style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 6px">'
+               '<a href="/calendar.html" style="flex:1 1 240px;display:block;text-align:center;background:#123a6d;color:#fff;font-size:18px;font-weight:800;padding:17px 14px;border-radius:14px;text-decoration:none">📅 공모주 청약 일정 보기</a>'
+               '<a href="/calculator.html" style="flex:1 1 240px;display:block;text-align:center;background:#eef3fa;color:#123a6d;font-size:18px;font-weight:800;padding:17px 14px;border-radius:14px;text-decoration:none;border:2px solid #123a6d">🧮 공모주 증거금 계산기</a></div>')
+    cta_bottom = ('<a href="/" style="display:block;text-align:center;background:#123a6d;color:#fff;font-size:18px;font-weight:800;'
+                  'padding:17px 14px;border-radius:14px;text-decoration:none;margin:22px 0 6px">📈 공모주 청약 일정도 확인하세요</a>')
+    style = """<style>
+.scmonth{font-size:19px;margin:24px 0 10px;color:#123a6d}
+.scday{background:#fff;border:1px solid #dde4ee;border-radius:12px;padding:12px 14px;margin:0 0 10px}
+.scdate{font-size:15px;margin-bottom:8px;color:#345}
+.scdate b{font-size:16.5px;color:#1c2333}
+.scdate em{font-style:normal;color:#123a6d;font-weight:800;margin-left:4px}
+.scrow{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid #f0f3f8}
+.scrow:first-of-type{border-top:none}
+.scbadge{flex:0 0 auto;font-size:11.5px;font-weight:700;border-radius:5px;padding:2.5px 7px}
+.scbadge.div{background:#fdf6e0;color:#7a5b00}
+.scbadge.met{background:#e6f2f7;color:#0f5b74}
+.scname{font-size:16px;font-weight:700;color:#1c2333}
+.scdps{font-size:13.5px;color:#7a5b00;font-weight:700}
+.sclink{margin-left:auto;flex:0 0 auto;font-size:13.5px;color:#123a6d;text-decoration:none;font-weight:700}
+.scdet{background:#fff;border:1px solid #dde4ee;border-radius:12px;padding:12px 14px;margin-top:10px}
+.scdet summary{font-size:15.5px;font-weight:700;cursor:pointer;color:#1c2333}
+.scerow{padding:10px 0;border-top:1px solid #f0f3f8}
+.scehead{font-size:14px;color:#345;margin-bottom:6px}
+.scehead span{color:#889;font-size:12.5px}
+.scchips{display:flex;flex-wrap:wrap;gap:5px}
+.scchip{font-size:12.5px;background:#f2f6fc;color:#345;border-radius:12px;padding:3px 9px;text-decoration:none}
+</style>"""
     body = f"""<h1>주식 일정 캘린더</h1>
-<p class="lead">배당 기준일·주주총회 일정을 DART 공시 기준으로 정리합니다. 실적 발표는 한 번에 수십 건씩 몰려 달력에 넣지 않고, 아래 "최근 실적 발표" 목록에서 확인하세요 (공시가 접수된 날짜 기준).</p>
-<p class="legend"><span class="ev div">배당 기준일</span><span class="ev met">주주총회</span> 칩을 누르면 DART 공시 원문으로 이동합니다.</p>
-<style>.ev.div{{background:#fdf6e0;color:#7a5b00}}.ev.met{{background:#e6f2f7;color:#0f5b74}}.ev.more{{background:#eef1f6;color:#667}}</style>
-<div class="calnav"><button onclick="move(-1)">← 이전 달</button><span class="cur" id="cur"></span><button onclick="move(1)">다음 달 →</button></div>
-<table class="cal" id="cal"></table>
-<h2 style="font-size:17px;margin-top:20px">이 달의 일정</h2>
-<ul class="calist" id="calist"></ul>
-<h2 style="font-size:17px;margin-top:24px">다가오는 배당·주총 일정</h2>
-<ul class="calist">{uplist}</ul>
-<h2 style="font-size:17px;margin-top:24px">최근 실적 발표 (14일)</h2>
-<ul class="calist">{rlist}</ul>
-""" + js.replace("__EVENTS__", json.dumps(ev, ensure_ascii=False))
+<p class="lead">배당 기준일과 주주총회 일정을 날짜순으로 정리했습니다. 배당 종목은 주당 배당금까지 표시합니다. (DART 공시 기준)</p>
+{cta_top}
+{ad("detail-top")}
+<h2 class="scmonth" style="margin-top:18px">다가오는 배당·주총 일정</h2>
+{uplist}
+{ad("detail-bottom")}
+<h2 class="scmonth">최근 실적 발표</h2>
+{earnings_block}
+{cta_bottom}
+{style}"""
     return head("주식 일정 캘린더 — 배당 기준일·실적 발표·주주총회 | 공모주 나침반",
-                "배당 기준일, 실적 발표, 주주총회 일정을 한 달 달력으로 확인하세요. DART 공시 기준.",
+                "배당 기준일, 주주총회 일정을 날짜순으로 확인하세요. 배당 종목은 주당 배당금까지, 실적 발표는 최근 14일 목록으로 정리합니다. DART 공시 기준.",
                 SITE_URL + "/stock-calendar.html", img=img) + body + FOOT
 
 def home_stock_section(events, today):
