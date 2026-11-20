@@ -1,6 +1,6 @@
 {
  "date": "2026-11-20",
- "collected_at": "2026-11-20T15:41+09:00",
+ "collected_at": "2026-11-20T19:35+09:00",
  "scanned": 4332,
  "upper": [
   {
@@ -9,7 +9,7 @@
    "market": "KOSPI",
    "close": 99700,
    "ratio": 29.99,
-   "value": 43490
+   "value": 43491
   },
   {
    "name": "삐아",
@@ -17,7 +17,7 @@
    "market": "KOSDAQ",
    "close": 7810,
    "ratio": 29.95,
-   "value": 5737
+   "value": 5791
   },
   {
    "name": "타임X AI",
@@ -25,7 +25,7 @@
    "market": "KOSDAQ",
    "close": 1586,
    "ratio": 30.0,
-   "value": 194
+   "value": 198
   }
  ],
  "lower": [
@@ -35,7 +35,7 @@
    "market": "KOSDAQ",
    "close": 810,
    "ratio": -29.99,
-   "value": 988
+   "value": 1000
   }
  ]
 }
