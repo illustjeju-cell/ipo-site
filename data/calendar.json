@@ -1,12 +1,12 @@
 {
- "updated": "2026-11-20T06:25:49",
+ "updated": "2026-11-20T06:41:02",
  "meta": {
   "parser_ver": 3,
   "window": "20261106~20261120",
   "types": {
    "B": {
-    "total": 347,
-    "fetched": 347,
+    "total": 348,
+    "fetched": 348,
     "hits": {}
    },
    "E": {
@@ -17,8 +17,8 @@
     }
    },
    "I": {
-    "total": 1959,
-    "fetched": 1959,
+    "total": 1973,
+    "fetched": 1973,
     "hits": {
      "meeting": 107,
      "earnings": 218,

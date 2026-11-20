@@ -1,0 +1,41 @@
+{
+ "date": "2026-11-20",
+ "collected_at": "2026-11-20T15:41+09:00",
+ "scanned": 4332,
+ "upper": [
+  {
+   "name": "한진칼우",
+   "code": "18064K",
+   "market": "KOSPI",
+   "close": 99700,
+   "ratio": 29.99,
+   "value": 43490
+  },
+  {
+   "name": "삐아",
+   "code": "451250",
+   "market": "KOSDAQ",
+   "close": 7810,
+   "ratio": 29.95,
+   "value": 5737
+  },
+  {
+   "name": "타임X AI",
+   "code": "304840",
+   "market": "KOSDAQ",
+   "close": 1586,
+   "ratio": 30.0,
+   "value": 194
+  }
+ ],
+ "lower": [
+  {
+   "name": "크라우드웍스",
+   "code": "355390",
+   "market": "KOSDAQ",
+   "close": 810,
+   "ratio": -29.99,
+   "value": 988
+  }
+ ]
+}
