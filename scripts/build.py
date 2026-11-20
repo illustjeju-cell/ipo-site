@@ -40,7 +40,7 @@ def head(title, desc, url, body_cls="", img=""):
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}">{ogimg}
 {ads}{ga}<style>{CSS}</style></head>
-<body class="{body_cls}"><header class="site"><a href="/">공모주 나침반</a><nav><a href="/calculator.html">🧮 증거금 계산기</a> <a href="/calendar.html">📅 일정 캘린더</a></nav></header><main>"""
+<body class="{body_cls}"><header class="site"><a href="/">공모주 나침반</a><nav><a href="/calculator.html">🧮 증거금 계산기</a> <a href="/calendar.html">📅 일정 캘린더</a> <a href="/stock-calendar.html">🗓️ 주식 캘린더</a></nav></header><main>"""
 
 FOOT = """</main><footer>공모 일정과 공모가는 금융감독원 전자공시시스템(DART) 공시를 바탕으로 정리합니다. 투자 판단의 책임은 본인에게 있습니다.</footer></body></html>"""
 
@@ -291,6 +291,104 @@ render();
                 "공모주 청약·수요예측·상장 일정을 한 달 달력으로 확인하세요.",
                 SITE_URL + "/calendar.html") + body + FOOT
 
+# ---------- 주식 일정 캘린더 (2026-11-20 확장: 배당·실적·주총) ----------
+STOCK_NAMES = {"dividend": "배당 기준일", "earnings": "실적 발표", "meeting": "주주총회"}
+STOCK_CLS = {"dividend": "div", "earnings": "ern", "meeting": "met"}
+WD = "월화수목금토일"
+
+def stock_calendar_page(events, today, img=""):
+    ev = {}
+    for e in events:
+        t = STOCK_CLS.get(e.get("type"))
+        if not t: continue
+        ev.setdefault(e["date"], []).append({"n": e["corp_name"], "t": t, "l": STOCK_NAMES[e["type"]], "u": e["dart_url"]})
+    upcoming = sorted((e for e in events if e["type"] in ("dividend", "meeting") and e["date"] >= today.isoformat()),
+                      key=lambda e: (e["date"], e["corp_name"]))
+    def uline(e):
+        d = datetime.date.fromisoformat(e["date"])
+        extra = f" · 주당 {e['dps']:,}원" if e["type"] == "dividend" and e.get("dps") else ""
+        return (f"<li>{e['date']} ({WD[d.weekday()]}) · {STOCK_NAMES[e['type']]} · "
+                f"<a href='{esc(e['dart_url'])}' target='_blank' rel='nofollow noopener'>{esc(e['corp_name'])}</a>"
+                f"{extra} <b>{dday(e['date'], today)}</b></li>")
+    uplist = "".join(uline(e) for e in upcoming[:100]) or "<li>다가오는 일정이 없습니다.</li>"
+    lo = (today - datetime.timedelta(days=14)).isoformat()
+    recent = sorted((e for e in events if e["type"] == "earnings" and lo <= e["date"] <= today.isoformat()),
+                    key=lambda e: (e["date"], e["corp_name"]), reverse=True)
+    rlist = "".join(
+        f"<li>{e['date']} · <a href='{esc(e['dart_url'])}' target='_blank' rel='nofollow noopener'>{esc(e['corp_name'])}</a> 실적 발표</li>"
+        for e in recent[:30]) or "<li>최근 14일 안에 실적 발표가 없습니다.</li>"
+    js = """<script>
+var EV = __EVENTS__;
+var now = new Date(); var cy = now.getFullYear(), cm = now.getMonth();
+function pad(n){ return (n < 10 ? "0" : "") + n; }
+function render(){
+  document.getElementById("cur").textContent = cy + "년 " + (cm + 1) + "월";
+  var first = new Date(cy, cm, 1); var startDay = first.getDay();
+  var days = new Date(cy, cm + 1, 0).getDate();
+  var prevDays = new Date(cy, cm, 0).getDate();
+  var html = "<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>";
+  var list = [];
+  var cells = [];
+  for (var i = 0; i < startDay; i++) cells.push({d: prevDays - startDay + 1 + i, out: 1});
+  for (var d = 1; d <= days; d++) cells.push({d: d, out: 0});
+  while (cells.length % 7) cells.push({d: cells.length - days - startDay + 1, out: 1});
+  for (var r = 0; r < cells.length / 7; r++){
+    html += "<tr>";
+    for (var c = 0; c < 7; c++){
+      var cell = cells[r * 7 + c];
+      var iso = cy + "-" + pad(cm + 1) + "-" + pad(cell.d);
+      var isToday = !cell.out && iso === now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate());
+      html += "<td class='" + (cell.out ? "out" : "") + (isToday ? " today" : "") + "'><span class='dn'>" + cell.d + "</span>";
+      if (!cell.out && EV[iso]) EV[iso].forEach(function(e){
+        html += "<a class='ev " + e.t + "' href='" + e.u + "' target='_blank' rel='nofollow noopener'>" + e.n + " " + e.l + "</a>";
+        list.push({iso: iso, e: e});
+      });
+      html += "</td>";
+    }
+    html += "</tr>";
+  }
+  document.getElementById("cal").innerHTML = html;
+  list.sort(function(a, b){ return a.iso < b.iso ? -1 : 1; });
+  document.getElementById("calist").innerHTML = list.length
+    ? list.map(function(it){ return "<li>" + it.iso + " · <a href='" + it.e.u + "' target='_blank' rel='nofollow noopener'>" + it.e.n + "</a> " + it.e.l + "</li>"; }).join("")
+    : "<li>이 달은 일정이 없습니다.</li>";
+}
+function move(m){ cm += m; if (cm < 0){ cm = 11; cy--; } if (cm > 11){ cm = 0; cy++; } render(); }
+render();
+</script>"""
+    body = f"""<h1>주식 일정 캘린더</h1>
+<p class="lead">배당 기준일·실적 발표·주주총회 일정을 DART 공시 기준으로 정리합니다. 실적 발표는 공시가 접수된 날짜(발표일) 기준입니다.</p>
+<p class="legend"><span class="ev div">배당 기준일</span><span class="ev ern">실적 발표</span><span class="ev met">주주총회</span> 칩을 누르면 DART 공시 원문으로 이동합니다.</p>
+<style>.ev.div{{background:#fdf6e0;color:#7a5b00}}.ev.ern{{background:#efe9fb;color:#4b3480}}.ev.met{{background:#e6f2f7;color:#0f5b74}}</style>
+<div class="calnav"><button onclick="move(-1)">← 이전 달</button><span class="cur" id="cur"></span><button onclick="move(1)">다음 달 →</button></div>
+<table class="cal" id="cal"></table>
+<h2 style="font-size:17px;margin-top:20px">이 달의 일정</h2>
+<ul class="calist" id="calist"></ul>
+<h2 style="font-size:17px;margin-top:24px">다가오는 배당·주총 일정</h2>
+<ul class="calist">{uplist}</ul>
+<h2 style="font-size:17px;margin-top:24px">최근 실적 발표 (14일)</h2>
+<ul class="calist">{rlist}</ul>
+""" + js.replace("__EVENTS__", json.dumps(ev, ensure_ascii=False))
+    return head("주식 일정 캘린더 — 배당 기준일·실적 발표·주주총회 | 공모주 나침반",
+                "배당 기준일, 실적 발표, 주주총회 일정을 한 달 달력으로 확인하세요. DART 공시 기준.",
+                SITE_URL + "/stock-calendar.html", img=img) + body + FOOT
+
+def home_stock_section(events, today):
+    """홈 '이번 주 주식 일정' — 오늘부터 7일 안의 배당·주총 최대 7건."""
+    hi = (today + datetime.timedelta(days=7)).isoformat()
+    ups = sorted((e for e in events if e["type"] in ("dividend", "meeting") and today.isoformat() <= e["date"] <= hi),
+                 key=lambda e: (e["date"], e["corp_name"]))
+    if not ups: return ""
+    rows = []
+    for e in ups[:7]:
+        d = datetime.date.fromisoformat(e["date"])
+        extra = f" · 주당 {e['dps']:,}원" if e["type"] == "dividend" and e.get("dps") else ""
+        rows.append(f"<li style='margin:5px 0;font-size:15px'>{d.month}월 {d.day}일 ({WD[d.weekday()]}) · {STOCK_NAMES[e['type']]} · <b>{esc(e['corp_name'])}</b>{extra} <span style='color:#123a6d;font-weight:700'>{dday(e['date'], today)}</span></li>")
+    return ("<section style='background:#fff;border:1px solid #dde4ee;border-radius:12px;padding:16px 18px;margin:0 0 20px'>"
+            "<h2 style='font-size:18px;margin:0 0 8px'>🗓️ 이번 주 주식 일정</h2>"
+            f"<ul style='list-style:none;margin:0;padding:0'>{''.join(rows)}</ul>"
+            "<p style='margin:10px 0 0'><a href='/stock-calendar.html' style='color:#123a6d;font-weight:700'>주식 일정 캘린더 전체 보기 →</a></p></section>")
+
 def ics_link(x):
     if not x.get("sub_start"): return ""
     return f"""<p><a class="icslink" href="/i/{x['corp_code']}.ics" download>📅 청약 일정을 내 캘린더에 저장 (.ics)</a></p>"""
@@ -373,6 +471,11 @@ calc();
 def main():
     data = json.load(open(os.path.join(ROOT, "data", "ipos.json"), encoding="utf-8"))
     items = data["items"]
+    try:
+        cal = json.load(open(os.path.join(ROOT, "data", "calendar.json"), encoding="utf-8"))
+        events = cal.get("events", [])
+    except Exception:
+        events = []
     today = datetime.date.today()
     dist = os.path.join(ROOT, "dist")
     shutil.rmtree(dist, ignore_errors=True)
@@ -385,9 +488,11 @@ def main():
                    '<a href="/calculator.html" style="flex:1 1 240px;display:block;text-align:center;background:#eef3fa;color:#123a6d;font-size:19px;font-weight:800;padding:18px 14px;border-radius:14px;text-decoration:none;border:2px solid #123a6d">🧮 공모주 증거금 계산기</a></div>')
     home = head("공모주 나침반 | 공모주 청약 일정·공모가·수요예측",
                 "다가오는 공모주 청약 일정과 공모가, 수요예측 결과를 DART 공시 기준으로 정리합니다.",
-                SITE_URL + "/", img=default_img) + home_banner + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + FOOT
+                SITE_URL + "/", img=default_img) + home_banner + home_stock_section(events, today) + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + FOOT
     open(os.path.join(dist, "index.html"), "w", encoding="utf-8").write(home)
     open(os.path.join(dist, "calendar.html"), "w", encoding="utf-8").write(calendar_page(items, today))
+    simg = f"{SITE_URL}/cards/stockcal.png" if _card_img(os.path.join(dist, "cards", "stockcal.png"), "주식 일정 캘린더", "배당·실적·주총 한눈에", "DART 공시 기준 일정 정리") else ""
+    open(os.path.join(dist, "stock-calendar.html"), "w", encoding="utf-8").write(stock_calendar_page(events, today, simg))
     open(os.path.join(dist, "calculator.html"), "w", encoding="utf-8").write(calculator_page(items, today))
     for x in items:
         cimg = f"{SITE_URL}/cards/{x['corp_code']}.png" if og_card(os.path.join(dist, "cards", x["corp_code"] + ".png"), x, today) else ""
@@ -395,7 +500,7 @@ def main():
         if x.get("sub_start"):
             open(os.path.join(dist, "i", x["corp_code"] + ".ics"), "w", encoding="utf-8", newline="").write(ics_file(x))
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for u in ("/", "/calendar.html", "/calculator.html"):
+    for u in ("/", "/calendar.html", "/calculator.html", "/stock-calendar.html"):
         sm.append(f"<url><loc>{SITE_URL}{u}</loc><lastmod>{data['updated'][:10]}</lastmod></url>")
     for x in items:
         sm.append(f"<url><loc>{SITE_URL}/i/{x['corp_code']}.html</loc><lastmod>{data['updated'][:10]}</lastmod></url>")
