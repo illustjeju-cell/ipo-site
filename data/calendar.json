@@ -1,408 +1,38 @@
 {
- "updated": "2026-11-20T14:34:14",
+ "updated": "2026-11-21T02:27:44",
  "meta": {
   "parser_ver": 3,
-  "window": "20261106~20261120",
+  "window": "20261107~20261121",
   "types": {
    "B": {
-    "total": 360,
-    "fetched": 360,
+    "total": 317,
+    "fetched": 317,
     "hits": {}
    },
    "E": {
-    "total": 204,
-    "fetched": 204,
+    "total": 190,
+    "fetched": 190,
     "hits": {
-     "meeting": 81
+     "meeting": 74
     }
    },
    "I": {
-    "total": 2061,
-    "fetched": 2061,
+    "total": 1870,
+    "fetched": 1870,
     "hits": {
-     "meeting": 111,
-     "earnings": 218,
-     "dividend": 35
+     "meeting": 106,
+     "earnings": 178,
+     "dividend": 34
     }
    }
   },
   "events": {
    "dividend": 11,
-   "earnings": 191,
+   "earnings": 154,
    "meeting": 79
   }
  },
  "events": [
-  {
-   "type": "earnings",
-   "corp_code": "01203808",
-   "corp_name": "AP시스템",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900830",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900830"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00303873",
-   "corp_name": "CJ CGV",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800724",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800724"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00140168",
-   "corp_name": "HS애드",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800671",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800671"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00372882",
-   "corp_name": "KTcs",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800464",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800464"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00503668",
-   "corp_name": "LIG디펜스앤에어로스페이스",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800588",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800588"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00133511",
-   "corp_name": "SG세계물산",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800688",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800688"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00131780",
-   "corp_name": "SK네트웍스",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800840",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800840"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00255619",
-   "corp_name": "강원랜드",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800609",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800609"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00453284",
-   "corp_name": "교촌에프앤비",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800611",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800611"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00106368",
-   "corp_name": "금호석유화학",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800457",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800457"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "01563667",
-   "corp_name": "더즌",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900194",
-   "rcept_dt": "20261106",
-   "report_nm": "영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900194"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00120526",
-   "corp_name": "롯데쇼핑",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800080",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800080"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00165413",
-   "corp_name": "롯데케미칼",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800601",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800601"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "01046708",
-   "corp_name": "바디텍메드",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900371",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900371"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00126955",
-   "corp_name": "삼양식품",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800605",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800605"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00132318",
-   "corp_name": "성광벤드",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900261",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900261"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00136271",
-   "corp_name": "신성이엔지",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800484",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800484"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00219486",
-   "corp_name": "신세계I&C",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800695",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800695"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00357430",
-   "corp_name": "쎌바이오텍",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900577",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900577"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "01514227",
-   "corp_name": "씨어스",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900007",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900007"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00670340",
-   "corp_name": "씨에스윈드",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800395",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800395"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00788773",
-   "corp_name": "씨젠",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900600",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900600"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "01381805",
-   "corp_name": "아로마티카",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900727",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900727"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00442145",
-   "corp_name": "아바코",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900736",
-   "rcept_dt": "20261106",
-   "report_nm": "영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900736"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "01492217",
-   "corp_name": "엑셀세라퓨틱스",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900711",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900711"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00405320",
-   "corp_name": "웹젠",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900615",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900615"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00604426",
-   "corp_name": "인터로조",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900251",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900251"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "01165739",
-   "corp_name": "잉글우드랩",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900712",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900712"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00653024",
-   "corp_name": "진에어",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800652",
-   "rcept_dt": "20261106",
-   "report_nm": "영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800652"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00656289",
-   "corp_name": "코스맥스엔비티",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900590",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900590"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00763473",
-   "corp_name": "코스메카코리아",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900602",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900602"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00170558",
-   "corp_name": "코웨이",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800224",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800224"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00970453",
-   "corp_name": "파마리서치",
-   "date": "2026-11-06",
-   "rcept_no": "20261106900196",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106900196"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00939331",
-   "corp_name": "한국콜마",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800125",
-   "rcept_dt": "20261106",
-   "report_nm": "영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800125"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00937324",
-   "corp_name": "한국타이어앤테크놀로지",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800449",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800449"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00361008",
-   "corp_name": "한화엔진",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800463",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800463"
-  },
-  {
-   "type": "earnings",
-   "corp_code": "00105280",
-   "corp_name": "현대지에프홀딩스",
-   "date": "2026-11-06",
-   "rcept_no": "20261106800399",
-   "rcept_dt": "20261106",
-   "report_nm": "연결재무제표기준영업(잠정)실적(공정공시)              ",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261106800399"
-  },
   {
    "type": "earnings",
    "corp_code": "00220057",
@@ -1944,17 +1574,6 @@
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261117800548"
   },
   {
-   "type": "meeting",
-   "corp_code": "01791561",
-   "corp_name": "하나31호기업인수목적",
-   "date": "2026-11-17",
-   "rcept_no": "20261117000018",
-   "rcept_dt": "20261117",
-   "report_nm": "주주총회소집공고",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261117000018",
-   "debug": "시는 분께서는 별첨 1 '서면투표에 의한 의결권 행사서'의 안내사항을 참조하시어 투표용지에 의사를 표시하여 주주총회일 전일까지 제출하여 주시기 바랍니다. 6. 주주총회 참석시 준비물- 직접행사 : 주주총회참석장, 신분증- 대리행사 : 주주총회참석장, 위임장(주주와 대리인의 인적사항 등 기재, 인감날인), 대리인의 신분증 2026년 11월 17일 하나31호기업인수목적 주식회사 대표청산인 한 규 정 (직인생략) (☏02-3771-3197) [별첨1] 서면투표에 의한 의결권 행사서 ( 서면투표에 의한 의결권행사서 ) 하나31호기업인수목적"
-  },
-  {
    "type": "dividend",
    "corp_code": "00365387",
    "corp_name": "AJ네트웍스",
@@ -2558,6 +2177,17 @@
    "report_nm": "주주총회소집결의              (임시주주총회)",
    "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111900367",
    "debug": "씨앤씨인터내셔널/주주총회소집결의/(2026.11.11)주주총회소집결의(임시주주총회) 주주총회소집 결의 1. 일시 날짜 2026-12-21 시간 오전 10시 2. 장소 경기도 화성시 동탄구 삼성1로 5길 39(석우동) ㈜씨앤씨인터내셔널 퍼플카운티 본사 대회의실 3. 의결권행사기준일 2026-11-26 4. 이사회결의일(결정일) 2026-11-11 -사외이사 참석여부 참석(명) 2 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 - 하기 주주총회 안건 세부내역"
+  },
+  {
+   "type": "meeting",
+   "corp_code": "01397903",
+   "corp_name": "엔젠바이오",
+   "date": "2026-12-21",
+   "rcept_no": "20261110900415",
+   "rcept_dt": "20261110",
+   "report_nm": "주주총회소집결의              ",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261110900415",
+   "debug": "gn:left; } 엔젠바이오/주주총회소집결의/(2026.11.10)주주총회소집결의 주주총회소집 결의 1. 일시 날짜 2026-12-21 시간 오전 09:00 2. 장소 서울시 구로구 디지털로 288, 대륭포스트타워 1차 제비127호 3. 의결권행사기준일 2026-11-25 4. 이사회결의일(결정일) 2026-11-10 -사외이사 참석여부 참석(명) 2 불참(명) 0 -감사(사외이사가 아닌 감사위원) 참석여부 참석 -주주총회 구분 임시주주총회 5. 기타 투자판단에 참고할 사항 - ※관련공시 - 【주주총회 안건 세부내역】 번호 회의목"
   },
   {
    "type": "meeting",
