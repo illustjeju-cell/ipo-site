@@ -1,6 +1,6 @@
 {
  "date": "2026-11-23",
- "collected_at": "2026-11-23T18:23+09:00",
+ "collected_at": "2026-11-23T21:30+09:00",
  "scanned": 4332,
  "upper": [
   {
@@ -9,7 +9,7 @@
    "market": "KOSDAQ",
    "close": 5720,
    "ratio": 30.0,
-   "value": 56264
+   "value": 56352
   },
   {
    "name": "코스모로보틱스",
@@ -17,7 +17,7 @@
    "market": "KOSDAQ",
    "close": 4640,
    "ratio": 29.97,
-   "value": 32197
+   "value": 32231
   },
   {
    "name": "금양그린파워",
@@ -25,7 +25,7 @@
    "market": "KOSDAQ",
    "close": 9620,
    "ratio": 30.0,
-   "value": 21684
+   "value": 21707
   },
   {
    "name": "큐로셀",
@@ -33,7 +33,7 @@
    "market": "KOSDAQ",
    "close": 27550,
    "ratio": 29.95,
-   "value": 1637
+   "value": 1640
   },
   {
    "name": "휴림에이텍",
@@ -41,7 +41,7 @@
    "market": "KOSDAQ",
    "close": 2765,
    "ratio": 29.81,
-   "value": 879
+   "value": 883
   },
   {
    "name": "애드바이오텍",
@@ -59,7 +59,7 @@
    "market": "KOSDAQ",
    "close": 567,
    "ratio": -30.0,
-   "value": 4346
+   "value": 4391
   }
  ]
 }
