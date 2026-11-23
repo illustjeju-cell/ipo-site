@@ -40,7 +40,7 @@ def head(title, desc, url, body_cls="", img=""):
 <meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}">{ogimg}
 {ads}{ga}<style>{CSS}</style></head>
-<body class="{body_cls}"><header class="site"><a href="/">공모주 나침반</a><nav><a href="/calculator.html">🧮 증거금 계산기</a> <a href="/calendar.html">📅 일정 캘린더</a> <a href="/stock-calendar.html">🗓️ 주식 캘린더</a></nav></header><main>"""
+<body class="{body_cls}"><header class="site"><a href="/">공모주 나침반</a><nav><a href="/issue.html">📌 오늘의 이슈</a> <a href="/tip.html">💡 주식 꿀팁</a> <a href="/calculator.html">🧮 증거금 계산기</a> <a href="/calendar.html">📅 일정 캘린더</a> <a href="/stock-calendar.html">🗓️ 주식 캘린더</a></nav></header><main>"""
 
 FOOT = """</main><footer>공모 일정과 공모가는 금융감독원 전자공시시스템(DART) 공시를 바탕으로 정리합니다. 투자 판단의 책임은 본인에게 있습니다.</footer></body></html>"""
 
@@ -223,6 +223,7 @@ def detail(x, today, img=""):
 {ad("detail-top")}
 <table class="facts">{"".join(rows)}</table>
 {action_btns(x)}
+{decision_banner(x, today)}
 {ics_link(x)}
 <p class="src">출처: <a href="{esc(x['dart_url'])}" rel="nofollow">DART 공시 원문</a> ({esc(x['rcept_dt'])} 접수)</p>
 {ad("detail-bottom")}"""
@@ -508,6 +509,212 @@ calc();
                 "공모주 청약에 필요한 증거금을 공모가·주식수·경쟁률로 계산하세요.",
                 SITE_URL + "/calculator.html") + body + FOOT
 
+# ---------- 글 페이지 확장 (2026-11-23: 결정 글·주식 꿀팁·오늘의 이슈) ----------
+# 배경: 쓰레드 조회가 사이트로 이어지지 않는 병목은 링크 부족이 아니라 랜딩할 "글"의 부재였다.
+# 결정 글 = 돈이 걸린 순간(청약 마감·상장일)에 맞춘 종목별 글, 꿀팁 = 상시 검색·순환 소재,
+# 이슈 = 공모주 밖 시장의 관심을 가져오는 일일 페이지. 셋 다 빌드 때 자동 생성한다.
+FEE_EX = 2000  # 청약 수수료 예시 금액 (증권사마다 다름을 본문에 고지)
+
+def _d(iso):
+    try: return datetime.date.fromisoformat(iso) if iso else None
+    except Exception: return None
+
+def decision_kind(x, today):
+    """결정 글 대상 판정. 날짜 파싱 오류가 의심되면 만들지 않는다 (없는 글보다 틀린 글이 나쁘다).
+    반환: 'deadline' / 'listing' / 'deadline+listing' / None"""
+    ss, se, ld = _d(x.get("sub_start")), _d(x.get("sub_end")), _d(x.get("listing_date"))
+    if ss and ld and (ld - ss).days > 120: return None
+    if ss and se and se < ss: return None
+    kinds = []
+    if se and (today - datetime.timedelta(days=2)) <= se <= (today + datetime.timedelta(days=14)) \
+            and (x.get("price_final") or x.get("price_high")):
+        kinds.append("deadline")
+    if ld and (today - datetime.timedelta(days=3)) <= ld <= (today + datetime.timedelta(days=14)) \
+            and x.get("price_final"):
+        kinds.append("listing")
+    return "+".join(kinds) if kinds else None
+
+def decision_banner(x, today):
+    if not decision_kind(x, today): return ""
+    return (f'<a href="/g/{x["corp_code"]}.html" style="display:block;text-align:center;background:#fdf6e0;color:#7a5b00;'
+            f'font-size:17px;font-weight:800;padding:16px 14px;border-radius:14px;text-decoration:none;border:2px solid #e3c766;margin:0 0 14px">'
+            f'📖 {esc(x["corp_name"])} 결정 글 — 마감·시나리오 숫자 정리 보기</a>')
+
+def decision_page(x, today, kind, tips, img=""):
+    name = esc(x["corp_name"])
+    price = x.get("price_final") or x.get("price_high")
+    blocks, title_bits, hook = [], [], ""
+    if "deadline" in kind:
+        se = _d(x["sub_end"]); ss = _d(x.get("sub_start"))
+        min_margin = price * 10 // 2
+        rows = []
+        if ss: rows.append(f"<tr><th>청약 기간</th><td>{ss.isoformat()} ~ {se.isoformat()} ({dday(se.isoformat(), today)} 마감)</td></tr>")
+        rows.append(f"<tr><th>공모가</th><td>{esc(price_line(x))}</td></tr>")
+        if x.get("underwriter"): rows.append(f"<tr><th>대표주관회사</th><td>{esc(x['underwriter'])}</td></tr>")
+        if x.get("demand_ratio"): rows.append(f"<tr><th>수요예측 경쟁률</th><td>{x['demand_ratio']:,} : 1</td></tr>")
+        if x.get("listing_date"): rows.append(f"<tr><th>상장 예정일</th><td>{esc(x['listing_date'])}</td></tr>")
+        prop = ""
+        if x.get("demand_ratio"):
+            pr = []
+            for amt in (1000000, 3000000, 5000000, 10000000):
+                qty = amt // price
+                est = qty / x["demand_ratio"]
+                est_s = f"약 {est:.2f}주" if est < 10 else f"약 {est:,.0f}주"
+                pr.append(f"<tr><th>{amt // 10000:,}만원</th><td>{qty:,}주 청약 → {est_s} 기대</td></tr>")
+            prop = (f"<h2 style='font-size:18px;margin:22px 0 8px'>비례로 넣으면 몇 주나 기대할 수 있을까</h2>"
+                    f"<table class='facts'>{''.join(pr)}</table>"
+                    f"<p class='snote'>수요예측 경쟁률 기준의 단순 계산입니다. 실제 청약 경쟁률과 배정은 달라지며, 균등 배정은 청약 건수로 나뉘어 따로 계산됩니다.</p>")
+        blocks.append(f"""<p class="lead">{name} 청약이 <b>{se.month}월 {se.day}일</b>에 마감돼요. 균등만 노린다면 최소 청약 10주 기준 증거금 <b>{min_margin:,}원</b>이면 됩니다.</p>
+<table class="facts">{''.join(rows)}</table>
+{prop}
+<p class="snote">최소 청약 수량과 증거금률은 종목·증권사 공고마다 다를 수 있으니, 청약 전에 주관사 공고에서 한 번 더 확인하세요.</p>""")
+        title_bits.append(f"청약 {se.month}월 {se.day}일 마감")
+        hook = f"균등 증거금 {min_margin:,}원"
+    if "listing" in kind:
+        ld = _d(x["listing_date"]); pf = x["price_final"]
+        srows = []
+        for label, mult in (("시초가 공모가의 90%", 0.9), ("시초가 공모가의 130%", 1.3), ("시초가 공모가의 160%", 1.6), ("시초가 공모가의 200%", 2.0), ("따상 (시초가 200% + 상한가)", 2.6)):
+            open_p = round(pf * mult)
+            gain = open_p - pf - FEE_EX
+            gain_s = f"+{gain:,}원" if gain >= 0 else f"{gain:,}원"
+            srows.append(f"<tr><th>{label}</th><td>시초가 {open_p:,}원 · 균등 1주 차익 {gain_s}</td></tr>")
+        blocks.append(f"""<p class="lead">{name}가 <b>{ld.month}월 {ld.day}일</b> 상장해요. 공모가 {pf:,}원 기준으로, 시초가가 어디서 열리느냐에 따라 균등 1주의 결과가 이렇게 갈립니다.</p>
+{score_box(x)}
+<h2 style="font-size:18px;margin:22px 0 8px">시초가 시나리오 — 균등 1주 들고 있으면</h2>
+<table class="facts">{''.join(srows)}</table>
+<p class="snote">차익은 시초가 − 공모가 − 청약 수수료 예시 {FEE_EX:,}원 기준의 단순 계산입니다. 매도 수수료와 세금은 별도이고, 실제 시초가와 종가는 장에서 정해집니다. 어느 쪽이 될지 단정하는 글이 아니라 숫자를 미리 그려보는 정리예요.</p>""")
+        title_bits.append(f"{ld.month}월 {ld.day}일 상장")
+        if not hook: hook = f"공모가 {pf:,}원, 시초가 시나리오"
+    tip_link = ""
+    if tips:
+        t = tips[sum(ord(c) for c in x["corp_code"]) % len(tips)]
+        tip_link = (f"<p style='margin:20px 0 0'><a href='/tip/{esc(t['slug'])}.html' style='color:#123a6d;font-weight:700'>"
+                    f"💡 같이 읽으면 좋은 주식 꿀팁 — {esc(t['title'])} →</a></p>")
+    body = f"""<h1>{name} — {' · '.join(title_bits)}</h1>
+{ad("detail-top")}
+{''.join(blocks)}
+{action_btns(x)}
+<p style='margin:14px 0 0'><a href="/i/{x['corp_code']}.html" style='color:#123a6d;font-weight:700'>{name} 공모주 상세 정보 보기 →</a></p>
+{tip_link}
+<p class="src">출처: <a href="{esc(x['dart_url'])}" rel="nofollow">DART 공시 원문</a> ({esc(x['rcept_dt'])} 접수) · 이 글은 정보 정리이며 투자 권유가 아닙니다.</p>
+{ad("detail-bottom")}"""
+    return head(f"{name} {' · '.join(title_bits)} — {hook} | 공모주 나침반",
+                f"{name} 공모주 결정 글. {' · '.join(title_bits)}. {hook}. DART 공시 기준으로 정리했습니다.",
+                f"{SITE_URL}/g/{x['corp_code']}.html", img=img) + body + FOOT
+
+def decision_section(items, today):
+    """홈 '지금 결정할 것들' — 결정 글이 있는 종목 최대 5개, 임박 순."""
+    cands = []
+    for x in items:
+        k = decision_kind(x, today)
+        if not k: continue
+        key = x.get("sub_end") if "deadline" in k else x.get("listing_date")
+        cands.append((key or "9999", x, k))
+    if not cands: return ""
+    cands.sort(key=lambda z: z[0])
+    rows = []
+    for _key, x, k in cands[:5]:
+        if "deadline" in k:
+            se = _d(x["sub_end"]); price = x.get("price_final") or x.get("price_high")
+            rows.append(f"<li style='margin:6px 0;font-size:15px'>🔥 <a href='/g/{x['corp_code']}.html' style='color:#1c2333;font-weight:700;text-decoration:none'>{esc(x['corp_name'])} 청약 {se.month}월 {se.day}일 마감</a> <span style='color:#c62828;font-weight:800'>{dday(x['sub_end'], today)}</span> · 균등 증거금 {price * 10 // 2:,}원</li>")
+        else:
+            ld = _d(x["listing_date"])
+            rows.append(f"<li style='margin:6px 0;font-size:15px'>🚀 <a href='/g/{x['corp_code']}.html' style='color:#1c2333;font-weight:700;text-decoration:none'>{esc(x['corp_name'])} {ld.month}월 {ld.day}일 상장</a> <span style='color:#123a6d;font-weight:800'>{dday(x['listing_date'], today)}</span> · 시초가 시나리오 정리</li>")
+    return ("<section style='background:#fff7e8;border:1px solid #ecd9a0;border-radius:12px;padding:16px 18px;margin:0 0 20px'>"
+            "<h2 style='font-size:18px;margin:0 0 8px'>🔥 지금 결정할 것들</h2>"
+            f"<ul style='list-style:none;margin:0;padding:0'>{''.join(rows)}</ul></section>")
+
+TIP_CATS = {"term": "용어 설명", "chart": "차트 설명", "master": "대가들의 투자법"}
+
+def tip_page(t, tips, img=""):
+    rel = [z for z in tips if z["slug"] != t["slug"] and z.get("cat") == t.get("cat")][:3]
+    if len(rel) < 3:
+        rel += [z for z in tips if z["slug"] != t["slug"] and z not in rel][:3 - len(rel)]
+    rel_html = "".join(f"<li style='margin:5px 0;font-size:15px'><a href='/tip/{esc(z['slug'])}.html' style='color:#123a6d;font-weight:700;text-decoration:none'>{esc(z['title'])}</a></li>" for z in rel)
+    body = f"""<h1>{esc(t['title'])}</h1>
+<p class="lead">{esc(t.get('hook') or '')}</p>
+{ad("detail-top")}
+<div class="article">{t.get('body') or ''}</div>
+{ad("detail-bottom")}
+<h2 style="font-size:17px;margin-top:24px">다른 주식 꿀팁</h2>
+<ul style="list-style:none;margin:0;padding:0">{rel_html}</ul>
+<p style='margin:14px 0 0'><a href="/tip.html" style='color:#123a6d;font-weight:700'>주식 꿀팁 전체 목록 →</a></p>
+<p class="snote">교육 목적의 일반 정보입니다. 특정 종목의 매수·매도 권유가 아니며, 투자 판단의 책임은 본인에게 있습니다.</p>"""
+    return head(f"{t['title']} | 주식 꿀팁 — 공모주 나침반",
+                esc(t.get('hook') or t['title']),
+                f"{SITE_URL}/tip/{t['slug']}.html", img=img) + body + FOOT
+
+def tip_index_page(tips, img=""):
+    secs = []
+    for cat, label in TIP_CATS.items():
+        rows = "".join(f"<li style='margin:7px 0;font-size:15.5px'><a href='/tip/{esc(t['slug'])}.html' style='color:#1c2333;font-weight:700;text-decoration:none'>{esc(t['title'])}</a><br><span style='color:#667;font-size:13.5px'>{esc(t.get('hook') or '')}</span></li>"
+                       for t in tips if t.get("cat") == cat)
+        if rows: secs.append(f"<h2 style='font-size:18px;margin:24px 0 8px'>{label}</h2><ul style='list-style:none;margin:0;padding:0'>{rows}</ul>")
+    body = f"""<h1>💡 주식 꿀팁</h1>
+<p class="lead">대가들은 어떻게 투자했는지, 차트와 용어는 어떻게 읽는지 — 짧게 정리한 주식 공부 글입니다.</p>
+{ad("detail-top")}
+{''.join(secs)}
+{ad("detail-bottom")}"""
+    return head("주식 꿀팁 — 대가들의 투자법·용어·차트 설명 | 공모주 나침반",
+                "워런 버핏·피터 린치 같은 대가들의 투자법, PER·RSI 같은 용어, 캔들·거래량 같은 차트 읽는 법을 짧게 정리합니다.",
+                SITE_URL + "/tip.html", img=img) + body + FOOT
+
+def tip_section(tips, today):
+    if not tips: return ""
+    start = today.toordinal() % len(tips)
+    pick = [tips[(start + i) % len(tips)] for i in range(min(4, len(tips)))]
+    rows = "".join(f"<li style='margin:5px 0;font-size:15px'>💡 <a href='/tip/{esc(t['slug'])}.html' style='color:#1c2333;font-weight:700;text-decoration:none'>{esc(t['title'])}</a></li>" for t in pick)
+    return ("<section style='background:#fff;border:1px solid #dde4ee;border-radius:12px;padding:16px 18px;margin:20px 0'>"
+            "<h2 style='font-size:18px;margin:0 0 8px'>💡 오늘의 주식 꿀팁</h2>"
+            f"<ul style='list-style:none;margin:0;padding:0'>{rows}</ul>"
+            "<p style='margin:10px 0 0'><a href='/tip.html' style='color:#123a6d;font-weight:700'>주식 꿀팁 전체 보기 →</a></p></section>")
+
+def issue_page(market, today, tips, img=""):
+    def val_fmt(v):
+        eok = v / 100.0
+        return f"{eok / 10000:.1f}조원" if eok >= 10000 else f"{eok:,.0f}억원"
+    tipmap = {t["slug"]: t for t in tips}
+    def tip_link(slug, text):
+        t = tipmap.get(slug)
+        return f"<p style='margin:6px 0 0;font-size:14px'><a href='/tip/{slug}.html' style='color:#123a6d;font-weight:700'>💡 {esc(text)} →</a></p>" if t else ""
+    blocks = []
+    mdate_s = (market or {}).get("date") or today.isoformat()
+    md = _d(mdate_s) or today
+    day_label = "오늘" if mdate_s == today.isoformat() else f"{md.month}월 {md.day}일"
+    def stock_rows(items, up):
+        out = []
+        for it in items:
+            color = "#c62828" if up else "#1565c0"
+            sign = "+" if up else ""
+            out.append(f"<div class='scrow'><a class='scname' style='text-decoration:none' href='https://finance.naver.com/item/main.naver?code={esc(it['code'])}' target='_blank' rel='nofollow noopener'>{esc(it['name'])}</a>"
+                       f"<span class='scmk'>{esc(it['market'])}</span>"
+                       f"<span class='scmv'>{it['close']:,}원 <b style='color:{color}'>{sign}{it['ratio']:.2f}%</b> · 거래대금 {val_fmt(it['value'])}</span></div>")
+        return "".join(out) or "<p style='color:#889;font-size:14.5px'>해당 종목이 없어요.</p>"
+    if market and market.get("upper"):
+        blocks.append(f"<h2 style='font-size:19px;margin:22px 0 6px;color:#c62828'>🔺 {day_label} 상한가 {len(market['upper'])}종목</h2>"
+                      f"<p style='font-size:14.5px;color:#345;margin:0 0 6px'>가격제한폭까지 오른 종목들입니다. 상한가 다음 날은 시초가부터 크게 흔들리는 경우가 많아요 — 왜 올랐는지보다, 거래량이 실렸는지를 먼저 보는 게 순서입니다.</p>"
+                      f"{stock_rows(market['upper'], True)}"
+                      + tip_link("volume", "거래량 읽는 법 — 가격보다 먼저 움직이는 신호"))
+    if market and market.get("lower"):
+        blocks.append(f"<h2 style='font-size:19px;margin:22px 0 6px;color:#1565c0'>🔻 {day_label} 하한가 {len(market['lower'])}종목</h2>"
+                      f"<p style='font-size:14.5px;color:#345;margin:0 0 6px'>가격제한폭까지 떨어진 종목들입니다. 하한가에 물리면 팔고 싶어도 못 파는 날이 생깁니다 — 대가들이 손절 원칙을 먼저 세워두는 이유예요.</p>"
+                      f"{stock_rows(market['lower'], False)}"
+                      + tip_link("livermore", "제시 리버모어 — 추세를 따르고 손절을 먼저 정한 사람"))
+    if not blocks:
+        blocks.append("<p>아직 수집된 상한가·하한가 데이터가 없어요. 장이 열린 날 마감 뒤에 업데이트됩니다.</p>")
+    body = f"""<h1>📌 오늘의 이슈 종목</h1>
+<p class="lead">{md.month}월 {md.day}일 시장에서 가장 크게 움직인 종목들입니다. 공모주 밖에서도 시장 전체의 온도를 읽는 자리예요.</p>
+{ad("detail-top")}
+{''.join(blocks)}
+{ad("detail-bottom")}
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 6px">
+<a href="/stock-calendar.html" style="flex:1 1 240px;display:block;text-align:center;background:#123a6d;color:#fff;font-size:17px;font-weight:800;padding:16px 14px;border-radius:14px;text-decoration:none">🗓️ 배당·주총 주식 캘린더 보기</a>
+<a href="/tip.html" style="flex:1 1 240px;display:block;text-align:center;background:#eef3fa;color:#123a6d;font-size:17px;font-weight:800;padding:16px 14px;border-radius:14px;text-decoration:none;border:2px solid #123a6d">💡 주식 꿀팁 더 보기</a></div>
+<p style='color:#889;font-size:12.5px'>{(market or {}).get('collected_at', '')} 기준 · 네이버 증권 시세로 가격제한폭 도달 종목을 계산했습니다. 장중에는 바뀔 수 있어요.</p>"""
+    return head(f"오늘의 이슈 종목 — {md.month}월 {md.day}일 상한가·하한가 | 공모주 나침반",
+                f"{md.month}월 {md.day}일 상한가·하한가 종목과 거래대금을 정리합니다. 시장 전체의 온도를 읽는 페이지입니다.",
+                SITE_URL + "/issue.html", img=img) + body + FOOT
+
 def main():
     data = json.load(open(os.path.join(ROOT, "data", "ipos.json"), encoding="utf-8"))
     items = data["items"]
@@ -520,11 +727,17 @@ def main():
         market = json.load(open(os.path.join(ROOT, "data", "market.json"), encoding="utf-8"))
     except Exception:
         market = None
+    try:
+        tips = json.load(open(os.path.join(ROOT, "data", "tips.json"), encoding="utf-8")).get("items", [])
+    except Exception:
+        tips = []
     today = datetime.date.today()
     dist = os.path.join(ROOT, "dist")
     shutil.rmtree(dist, ignore_errors=True)
     os.makedirs(os.path.join(dist, "i"))
     os.makedirs(os.path.join(dist, "cards"))
+    os.makedirs(os.path.join(dist, "g"))
+    os.makedirs(os.path.join(dist, "tip"))
     default_img = f"{SITE_URL}/cards/default.png" if _card_img(os.path.join(dist, "cards", "default.png"), "공모주 나침반", "청약 일정 한눈에", "공모가·수요예측 점수까지 정리") else ""
     cards = "\n".join(card(x, today) for x in items)
     home_banner = ('<div style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 20px">'
@@ -532,22 +745,37 @@ def main():
                    '<a href="/calculator.html" style="flex:1 1 240px;display:block;text-align:center;background:#eef3fa;color:#123a6d;font-size:19px;font-weight:800;padding:18px 14px;border-radius:14px;text-decoration:none;border:2px solid #123a6d">🧮 공모주 증거금 계산기</a></div>')
     home = head("공모주 나침반 | 공모주 청약 일정·공모가·수요예측",
                 "다가오는 공모주 청약 일정과 공모가, 수요예측 결과를 DART 공시 기준으로 정리합니다.",
-                SITE_URL + "/", img=default_img) + home_banner + home_stock_section(events, today) + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + FOOT
+                SITE_URL + "/", img=default_img) + home_banner + decision_section(items, today) + home_stock_section(events, today) + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + tip_section(tips, today) + FOOT
     open(os.path.join(dist, "index.html"), "w", encoding="utf-8").write(home)
     open(os.path.join(dist, "calendar.html"), "w", encoding="utf-8").write(calendar_page(items, today))
     simg = f"{SITE_URL}/cards/stockcal.png" if _card_img(os.path.join(dist, "cards", "stockcal.png"), "주식 일정 캘린더", "배당·실적·주총 한눈에", "DART 공시 기준 일정 정리") else ""
     open(os.path.join(dist, "stock-calendar.html"), "w", encoding="utf-8").write(stock_calendar_page(events, today, simg, market))
     open(os.path.join(dist, "calculator.html"), "w", encoding="utf-8").write(calculator_page(items, today))
+    open(os.path.join(dist, "issue.html"), "w", encoding="utf-8").write(issue_page(market, today, tips, default_img))
+    open(os.path.join(dist, "tip.html"), "w", encoding="utf-8").write(tip_index_page(tips, default_img))
+    for t in tips:
+        open(os.path.join(dist, "tip", t["slug"] + ".html"), "w", encoding="utf-8").write(tip_page(t, tips, default_img))
+    g_made = []
+    for x in items:
+        kind = decision_kind(x, today)
+        if not kind: continue
+        gimg = f"{SITE_URL}/cards/g{x['corp_code']}.png" if _card_img(os.path.join(dist, "cards", "g" + x["corp_code"] + ".png"), x["corp_name"], "지금 결정할 숫자", " · ".join(b for b in [f"청약 {mdd(x['sub_end'])} 마감" if "deadline" in kind else "", f"상장 {mdd(x['listing_date'])}" if "listing" in kind else ""] if b)) else ""
+        open(os.path.join(dist, "g", x["corp_code"] + ".html"), "w", encoding="utf-8").write(decision_page(x, today, kind, tips, gimg))
+        g_made.append(x["corp_code"])
     for x in items:
         cimg = f"{SITE_URL}/cards/{x['corp_code']}.png" if og_card(os.path.join(dist, "cards", x["corp_code"] + ".png"), x, today) else ""
         open(os.path.join(dist, "i", x["corp_code"] + ".html"), "w", encoding="utf-8").write(detail(x, today, cimg))
         if x.get("sub_start"):
             open(os.path.join(dist, "i", x["corp_code"] + ".ics"), "w", encoding="utf-8", newline="").write(ics_file(x))
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for u in ("/", "/calendar.html", "/calculator.html", "/stock-calendar.html"):
+    for u in ("/", "/calendar.html", "/calculator.html", "/stock-calendar.html", "/issue.html", "/tip.html"):
         sm.append(f"<url><loc>{SITE_URL}{u}</loc><lastmod>{data['updated'][:10]}</lastmod></url>")
     for x in items:
         sm.append(f"<url><loc>{SITE_URL}/i/{x['corp_code']}.html</loc><lastmod>{data['updated'][:10]}</lastmod></url>")
+    for code in g_made:
+        sm.append(f"<url><loc>{SITE_URL}/g/{code}.html</loc><lastmod>{data['updated'][:10]}</lastmod></url>")
+    for t in tips:
+        sm.append(f"<url><loc>{SITE_URL}/tip/{t['slug']}.html</loc><lastmod>{data['updated'][:10]}</lastmod></url>")
     sm.append("</urlset>")
     open(os.path.join(dist, "sitemap.xml"), "w", encoding="utf-8").write("\n".join(sm))
     open(os.path.join(dist, "robots.txt"), "w", encoding="utf-8").write(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
