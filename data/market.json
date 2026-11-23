@@ -1,31 +1,39 @@
 {
- "date": "2026-11-20",
- "collected_at": "2026-11-23T02:18+09:00",
+ "date": "2026-11-23",
+ "collected_at": "2026-11-23T14:31+09:00",
  "scanned": 4332,
  "upper": [
   {
-   "name": "한진칼우",
-   "code": "18064K",
-   "market": "KOSPI",
-   "close": 99700,
-   "ratio": 29.99,
-   "value": 43491
-  },
-  {
-   "name": "삐아",
-   "code": "451250",
+   "name": "휴림로봇",
+   "code": "090710",
    "market": "KOSDAQ",
-   "close": 7810,
-   "ratio": 29.95,
-   "value": 5792
-  },
-  {
-   "name": "타임X AI",
-   "code": "304840",
-   "market": "KOSDAQ",
-   "close": 1586,
+   "close": 5720,
    "ratio": 30.0,
-   "value": 198
+   "value": 55925
+  },
+  {
+   "name": "큐로셀",
+   "code": "372320",
+   "market": "KOSDAQ",
+   "close": 27550,
+   "ratio": 29.95,
+   "value": 1596
+  },
+  {
+   "name": "휴림에이텍",
+   "code": "078590",
+   "market": "KOSDAQ",
+   "close": 2765,
+   "ratio": 29.81,
+   "value": 865
+  },
+  {
+   "name": "애드바이오텍",
+   "code": "179530",
+   "market": "KOSDAQ",
+   "close": 627,
+   "ratio": 29.81,
+   "value": 709
   }
  ],
  "lower": [
@@ -33,9 +41,17 @@
    "name": "크라우드웍스",
    "code": "355390",
    "market": "KOSDAQ",
-   "close": 810,
-   "ratio": -29.99,
-   "value": 1001
+   "close": 567,
+   "ratio": -30.0,
+   "value": 3971
+  },
+  {
+   "name": "제이케이시냅스",
+   "code": "060230",
+   "market": "KOSDAQ",
+   "close": 650,
+   "ratio": -29.96,
+   "value": 596
   }
  ]
 }
