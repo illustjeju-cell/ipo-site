@@ -26,7 +26,11 @@ def dday(iso, today):
     d = (datetime.date.fromisoformat(iso) - today).days
     return "오늘" if d == 0 else f"D-{d}" if d > 0 else "종료"
 
-def head(title, desc, url, body_cls="", img=""):
+def head(title, desc, url, body_cls="", img="", og_title=None, og_desc=None):
+    # og_title/og_desc: 링크 카드(Threads 등) 전용 문구 — 검색용 <title>과 분리한다 (2026-11-23).
+    # 없으면 title/desc를 그대로 쓴다.
+    ogt = og_title or title
+    ogd = og_desc or desc
     ads = f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ADSENSE}" crossorigin="anonymous"></script>' if ADSENSE else ""
     ga = f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag("js",new Date());gtag("config","{GA}");</script>' if GA else ""
     ogimg = f"""
@@ -37,8 +41,8 @@ def head(title, desc, url, body_cls="", img=""):
 <meta name="naver-site-verification" content="91aee779d77f133a196ee07d1d94801eba426e0b">
 <title>{esc(title)}</title><meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{url}">
-<meta property="og:type" content="website"><meta property="og:title" content="{esc(title)}">
-<meta property="og:description" content="{esc(desc)}"><meta property="og:url" content="{url}">{ogimg}
+<meta property="og:type" content="website"><meta property="og:title" content="{esc(ogt)}">
+<meta property="og:description" content="{esc(ogd)}"><meta property="og:url" content="{url}">{ogimg}
 {ads}{ga}<style>{CSS}</style></head>
 <body class="{body_cls}"><header class="site"><a href="/">공모주 나침반</a><nav><a href="/issue.html">📌 오늘의 이슈</a> <a href="/tip.html">💡 주식 꿀팁</a> <a href="/calculator.html">🧮 증거금 계산기</a> <a href="/calendar.html">📅 일정 캘린더</a> <a href="/stock-calendar.html">🗓️ 주식 캘린더</a></nav></header><main>"""
 
@@ -204,6 +208,34 @@ def og_card(path, x, today):
     if x.get("underwriter"): bits.append(x["underwriter"])
     return _card_img(path, x["corp_name"], price_line(x), " · ".join(bits))
 
+def detail_og(x, today):
+    """종목 상세 링크 카드 문구 (2026-11-23): 짧은 CTA 제목 + 숫자 설명.
+    제목은 단계에 따라 — 청약 임박이면 '청약 바로가기', 상장 임박이면 '상장일 확인하기'."""
+    name = x["corp_name"]
+    t = today.isoformat()
+    soon = (today + datetime.timedelta(days=21)).isoformat()
+    se, ld = x.get("sub_end"), x.get("listing_date")
+    if se and t <= se <= soon:
+        ogt = f"{name} 청약 바로가기"
+    elif ld and t <= ld <= soon:
+        ogt = f"{name} 상장일 확인하기"
+    elif se and se >= t:
+        ogt = f"{name} 청약 바로가기"
+    elif ld and ld >= t:
+        ogt = f"{name} 상장일 확인하기"
+    else:
+        ogt = f"{name} 공모주 확인하기"
+    bits = []
+    if x.get("sub_start") and se: bits.append(f"청약 {mdd(x['sub_start'])}~{mdd(se)}")
+    pl = price_line(x)
+    if pl != "공모가 미정": bits.append(pl)
+    if x.get("demand_ratio"): bits.append(f"수요예측 경쟁률 {x['demand_ratio']:,} : 1")
+    else:
+        s = demand_score(x)
+        if s: bits.append(f"수요예측 지표 {s[0]}점")
+    if ld: bits.append(f"상장 {mdd(ld)}")
+    return ogt, " · ".join(bits)
+
 def detail(x, today, img=""):
     rows = []
     def row(k, v):
@@ -227,9 +259,10 @@ def detail(x, today, img=""):
 {ics_link(x)}
 <p class="src">출처: <a href="{esc(x['dart_url'])}" rel="nofollow">DART 공시 원문</a> ({esc(x['rcept_dt'])} 접수)</p>
 {ad("detail-bottom")}"""
+    _ogt, _ogd = detail_og(x, today)
     return head(f"{x['corp_name']} 공모주 청약 일정·공모가 | 공모주 나침반",
                 f"{x['corp_name']} 공모주 청약 일정, 희망공모가·확정공모가, 수요예측 결과를 정리했습니다.",
-                f"{SITE_URL}/i/{x['corp_code']}.html", img=img) + body + FOOT
+                f"{SITE_URL}/i/{x['corp_code']}.html", img=img, og_title=_ogt, og_desc=_ogd or None) + body + FOOT
 
 def calendar_page(items, today):
     ev = {}
@@ -290,7 +323,7 @@ render();
 """ + js.replace("__EVENTS__", json.dumps(ev, ensure_ascii=False))
     return head("공모주 일정 캘린더 | 공모주 나침반",
                 "공모주 청약·수요예측·상장 일정을 한 달 달력으로 확인하세요.",
-                SITE_URL + "/calendar.html") + body + FOOT
+                SITE_URL + "/calendar.html", og_title="공모주 청약 일정 확인하기") + body + FOOT
 
 # ---------- 주식 일정 캘린더 (2026-11-20 확장: 배당·실적·주총) ----------
 STOCK_NAMES = {"dividend": "배당 기준일", "earnings": "실적 발표", "meeting": "주주총회"}
@@ -410,9 +443,19 @@ def stock_calendar_page(events, today, img="", market=None):
 {earnings_block}
 {cta_bottom}
 {style}"""
+    # 링크 카드 문구 (2026-11-23): 가장 임박한 배당·주총 종목으로 짧은 CTA 제목을 만든다.
+    _ogt, _ogd = "주식 일정 확인하기", None
+    if upcoming:
+        _e0 = upcoming[0]; _d0 = _d(_e0["date"])
+        if _e0["type"] == "dividend":
+            _ogt = f"{_e0['corp_name']} 배당일 바로가기"
+            _ogd = (f"주당 {_e0['dps']:,}원 · 기준일 {_d0.month}월 {_d0.day}일" if _e0.get("dps") else f"기준일 {_d0.month}월 {_d0.day}일") + " — 이번 주 배당·실적·주총 일정 확인하기"
+        else:
+            _ogt = f"{_e0['corp_name']} 주주총회 일정 확인하기"
+            _ogd = f"{_d0.month}월 {_d0.day}일 주주총회 — 이번 주 주식 일정 확인하기"
     return head("주식 일정 캘린더 — 배당 기준일·실적 발표·주주총회 | 공모주 나침반",
                 "배당 기준일, 주주총회 일정을 날짜순으로 확인하세요. 배당 종목은 주당 배당금까지, 실적 발표는 최근 14일 목록으로 정리합니다. DART 공시 기준.",
-                SITE_URL + "/stock-calendar.html", img=img) + body + FOOT
+                SITE_URL + "/stock-calendar.html", img=img, og_title=_ogt, og_desc=_ogd) + body + FOOT
 
 def home_stock_section(events, today):
     """홈 '이번 주 주식 일정' — 오늘부터 7일 안의 배당·주총 최대 7건."""
@@ -507,7 +550,7 @@ calc();
 """ + js
     return head("공모주 증거금 계산기 | 공모주 나침반",
                 "공모주 청약에 필요한 증거금을 공모가·주식수·경쟁률로 계산하세요.",
-                SITE_URL + "/calculator.html") + body + FOOT
+                SITE_URL + "/calculator.html", og_title="공모주 증거금 계산하기") + body + FOOT
 
 # ---------- 글 페이지 확장 (2026-11-23: 결정 글·주식 꿀팁·오늘의 이슈) ----------
 # 배경: 쓰레드 조회가 사이트로 이어지지 않는 병목은 링크 부족이 아니라 랜딩할 "글"의 부재였다.
@@ -598,9 +641,11 @@ def decision_page(x, today, kind, tips, img=""):
 {tip_link}
 <p class="src">출처: <a href="{esc(x['dart_url'])}" rel="nofollow">DART 공시 원문</a> ({esc(x['rcept_dt'])} 접수) · 이 글은 정보 정리이며 투자 권유가 아닙니다.</p>
 {ad("detail-bottom")}"""
+    _ogt = f"{name} 청약 마감 확인하기" if "deadline" in kind else f"{name} 상장일 확인하기"
+    _ogd = " · ".join(title_bits + ([hook] if hook else []))
     return head(f"{name} {' · '.join(title_bits)} — {hook} | 공모주 나침반",
                 f"{name} 공모주 결정 글. {' · '.join(title_bits)}. {hook}. DART 공시 기준으로 정리했습니다.",
-                f"{SITE_URL}/g/{x['corp_code']}.html", img=img) + body + FOOT
+                f"{SITE_URL}/g/{x['corp_code']}.html", img=img, og_title=_ogt, og_desc=_ogd or None) + body + FOOT
 
 def decision_section(items, today):
     """홈 '지금 결정할 것들' — 결정 글이 있는 종목 최대 5개, 임박 순."""
@@ -642,7 +687,7 @@ def tip_page(t, tips, img=""):
 <p class="snote">교육 목적의 일반 정보입니다. 특정 종목의 매수·매도 권유가 아니며, 투자 판단의 책임은 본인에게 있습니다.</p>"""
     return head(f"{t['title']} | 주식 꿀팁 — 공모주 나침반",
                 esc(t.get('hook') or t['title']),
-                f"{SITE_URL}/tip/{t['slug']}.html", img=img) + body + FOOT
+                f"{SITE_URL}/tip/{t['slug']}.html", img=img, og_title=t['title']) + body + FOOT
 
 def tip_index_page(tips, img=""):
     secs = []
@@ -657,7 +702,7 @@ def tip_index_page(tips, img=""):
 {ad("detail-bottom")}"""
     return head("주식 꿀팁 — 대가들의 투자법·용어·차트 설명 | 공모주 나침반",
                 "워런 버핏·피터 린치 같은 대가들의 투자법, PER·RSI 같은 용어, 캔들·거래량 같은 차트 읽는 법을 짧게 정리합니다.",
-                SITE_URL + "/tip.html", img=img) + body + FOOT
+                SITE_URL + "/tip.html", img=img, og_title="주식 꿀팁 확인하기") + body + FOOT
 
 def tip_section(tips, today):
     if not tips: return ""
@@ -711,9 +756,19 @@ def issue_page(market, today, tips, img=""):
 <a href="/stock-calendar.html" style="flex:1 1 240px;display:block;text-align:center;background:#123a6d;color:#fff;font-size:17px;font-weight:800;padding:16px 14px;border-radius:14px;text-decoration:none">🗓️ 배당·주총 주식 캘린더 보기</a>
 <a href="/tip.html" style="flex:1 1 240px;display:block;text-align:center;background:#eef3fa;color:#123a6d;font-size:17px;font-weight:800;padding:16px 14px;border-radius:14px;text-decoration:none;border:2px solid #123a6d">💡 주식 꿀팁 더 보기</a></div>
 <p style='color:#889;font-size:12.5px'>{(market or {}).get('collected_at', '')} 기준 · 네이버 증권 시세로 가격제한폭 도달 종목을 계산했습니다. 장중에는 바뀔 수 있어요.</p>"""
+    # 링크 카드 문구 (2026-11-23): 그날 상한가·하한가 데이터로 짧은 CTA 제목을 만든다.
+    _ogt, _ogd = "오늘의 이슈 종목 확인하기", None
+    if market and market.get("upper"):
+        _ogt = "30% 상한가 종목 확인하기"
+        _top = max(market["upper"], key=lambda it: it.get("value", 0))
+        _ogd = f"{_top['name']} {_top['close']:,}원 +{_top['ratio']:.2f}% · 상한가 {len(market['upper'])}종목 전체 보기"
+    elif market and market.get("lower"):
+        _ogt = "하한가 종목 확인하기"
+        _top = max(market["lower"], key=lambda it: it.get("value", 0))
+        _ogd = f"{_top['name']} {_top['close']:,}원 {_top['ratio']:.2f}% · 하한가 {len(market['lower'])}종목 전체 보기"
     return head(f"오늘의 이슈 종목 — {md.month}월 {md.day}일 상한가·하한가 | 공모주 나침반",
                 f"{md.month}월 {md.day}일 상한가·하한가 종목과 거래대금을 정리합니다. 시장 전체의 온도를 읽는 페이지입니다.",
-                SITE_URL + "/issue.html", img=img) + body + FOOT
+                SITE_URL + "/issue.html", img=img, og_title=_ogt, og_desc=_ogd) + body + FOOT
 
 def main():
     data = json.load(open(os.path.join(ROOT, "data", "ipos.json"), encoding="utf-8"))
@@ -745,13 +800,38 @@ def main():
                    '<a href="/calculator.html" style="flex:1 1 240px;display:block;text-align:center;background:#eef3fa;color:#123a6d;font-size:19px;font-weight:800;padding:18px 14px;border-radius:14px;text-decoration:none;border:2px solid #123a6d">🧮 공모주 증거금 계산기</a></div>')
     home = head("공모주 나침반 | 공모주 청약 일정·공모가·수요예측",
                 "다가오는 공모주 청약 일정과 공모가, 수요예측 결과를 DART 공시 기준으로 정리합니다.",
-                SITE_URL + "/", img=default_img) + home_banner + decision_section(items, today) + home_stock_section(events, today) + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + tip_section(tips, today) + FOOT
+                SITE_URL + "/", img=default_img, og_title="공모주 청약 일정 확인하기") + home_banner + decision_section(items, today) + home_stock_section(events, today) + f"<h1>공모주 청약 일정</h1><p class='upd'>업데이트 {esc(data['updated'][:16].replace('T', ' '))} · {len(items)}개 종목</p><div class='grid'>{cards}</div>" + tip_section(tips, today) + FOOT
     open(os.path.join(dist, "index.html"), "w", encoding="utf-8").write(home)
     open(os.path.join(dist, "calendar.html"), "w", encoding="utf-8").write(calendar_page(items, today))
-    simg = f"{SITE_URL}/cards/stockcal.png" if _card_img(os.path.join(dist, "cards", "stockcal.png"), "주식 일정 캘린더", "배당·실적·주총 한눈에", "DART 공시 기준 일정 정리") else ""
+    # 캘린더 카드 이미지도 가장 임박한 일정으로 동적 생성 (2026-11-23) — 파일명에 날짜를 넣어 메타 이미지 캐시를 우회한다.
+    _cal_t, _cal_l1, _cal_l2 = "주식 일정 캘린더", "배당·실적·주총 한눈에", "DART 공시 기준 일정 정리"
+    _up = sorted((e for e in events if e["type"] in ("dividend", "meeting") and e["date"] >= today.isoformat()), key=lambda e: (e["date"], e["corp_name"]))
+    if _up:
+        _e0 = _up[0]; _d0 = _d(_e0["date"])
+        if _e0["type"] == "dividend":
+            _cal_t = f"{_e0['corp_name']} 배당 기준일"
+            _cal_l1 = f"{_d0.month}월 {_d0.day}일" + (f" · 주당 {_e0['dps']:,}원" if _e0.get("dps") else "")
+            _cal_l2 = "이번 주 배당·실적·주총 일정"
+        else:
+            _cal_t = f"{_e0['corp_name']} 주주총회"
+            _cal_l1 = f"{_d0.month}월 {_d0.day}일 개최"
+            _cal_l2 = "이번 주 배당·실적·주총 일정"
+    _simg_name = f"stockcal-{today.strftime('%m%d')}.png"
+    simg = f"{SITE_URL}/cards/{_simg_name}" if _card_img(os.path.join(dist, "cards", _simg_name), _cal_t, _cal_l1, _cal_l2) else ""
     open(os.path.join(dist, "stock-calendar.html"), "w", encoding="utf-8").write(stock_calendar_page(events, today, simg, market))
     open(os.path.join(dist, "calculator.html"), "w", encoding="utf-8").write(calculator_page(items, today))
-    open(os.path.join(dist, "issue.html"), "w", encoding="utf-8").write(issue_page(market, today, tips, default_img))
+    _iimg = default_img
+    if market and (market.get("upper") or market.get("lower")):
+        _iname = f"issue-{today.strftime('%m%d')}.png"
+        if market.get("upper"):
+            _top = max(market["upper"], key=lambda it: it.get("value", 0))
+            _il1, _il2 = f"상한가 {len(market['upper'])}종목", f"{_top['name']} +{_top['ratio']:.2f}%"
+        else:
+            _top = max(market["lower"], key=lambda it: it.get("value", 0))
+            _il1, _il2 = f"하한가 {len(market['lower'])}종목", f"{_top['name']} {_top['ratio']:.2f}%"
+        if _card_img(os.path.join(dist, "cards", _iname), "오늘의 이슈 종목", _il1, _il2):
+            _iimg = f"{SITE_URL}/cards/{_iname}"
+    open(os.path.join(dist, "issue.html"), "w", encoding="utf-8").write(issue_page(market, today, tips, _iimg))
     open(os.path.join(dist, "tip.html"), "w", encoding="utf-8").write(tip_index_page(tips, default_img))
     for t in tips:
         open(os.path.join(dist, "tip", t["slug"] + ".html"), "w", encoding="utf-8").write(tip_page(t, tips, default_img))
