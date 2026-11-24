@@ -1,65 +1,80 @@
 {
- "date": "2026-11-23",
- "collected_at": "2026-11-24T06:39+09:00",
- "scanned": 4332,
+ "date": "2026-11-24",
+ "collected_at": "2026-11-24T20:09+09:00",
+ "scanned": 4335,
  "upper": [
   {
    "name": "휴림로봇",
    "code": "090710",
    "market": "KOSDAQ",
-   "close": 5720,
+   "close": 7430,
+   "ratio": 29.9,
+   "value": 153450
+  },
+  {
+   "name": "KH바텍",
+   "code": "060720",
+   "market": "KOSDAQ",
+   "close": 12190,
+   "ratio": 29.96,
+   "value": 40897
+  },
+  {
+   "name": "모베이스전자",
+   "code": "012860",
+   "market": "KOSDAQ",
+   "close": 2285,
+   "ratio": 29.98,
+   "value": 24531
+  },
+  {
+   "name": "대성하이텍",
+   "code": "129920",
+   "market": "KOSDAQ",
+   "close": 5590,
    "ratio": 30.0,
-   "value": 56352
+   "value": 6193
   },
   {
-   "name": "코스모로보틱스",
-   "code": "439960",
+   "name": "액트로",
+   "code": "290740",
    "market": "KOSDAQ",
-   "close": 4640,
-   "ratio": 29.97,
-   "value": 32231
-  },
-  {
-   "name": "금양그린파워",
-   "code": "282720",
-   "market": "KOSDAQ",
-   "close": 9620,
-   "ratio": 30.0,
-   "value": 21707
-  },
-  {
-   "name": "큐로셀",
-   "code": "372320",
-   "market": "KOSDAQ",
-   "close": 27550,
-   "ratio": 29.95,
-   "value": 1640
-  },
-  {
-   "name": "휴림에이텍",
-   "code": "078590",
-   "market": "KOSDAQ",
-   "close": 2765,
-   "ratio": 29.81,
-   "value": 883
+   "close": 9640,
+   "ratio": 29.92,
+   "value": 3434
   },
   {
    "name": "애드바이오텍",
    "code": "179530",
    "market": "KOSDAQ",
-   "close": 627,
-   "ratio": 29.81,
-   "value": 724
+   "close": 815,
+   "ratio": 29.98,
+   "value": 2063
+  },
+  {
+   "name": "바이오인프라",
+   "code": "199730",
+   "market": "KOSDAQ",
+   "close": 1687,
+   "ratio": 29.97,
+   "value": 821
+  },
+  {
+   "name": "휴림에이텍",
+   "code": "078590",
+   "market": "KOSDAQ",
+   "close": 3590,
+   "ratio": 29.84,
+   "value": 704
+  },
+  {
+   "name": "깨끗한나라우",
+   "code": "004545",
+   "market": "KOSPI",
+   "close": 5330,
+   "ratio": 30.0,
+   "value": 297
   }
  ],
- "lower": [
-  {
-   "name": "크라우드웍스",
-   "code": "355390",
-   "market": "KOSDAQ",
-   "close": 567,
-   "ratio": -30.0,
-   "value": 4391
-  }
- ]
+ "lower": []
 }
