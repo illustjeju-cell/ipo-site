@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25T10:00:08",
+ "updated": "2026-11-25T22:45:33",
  "meta": {
   "parser_ver": 3,
   "window": "20261111~20261125",
@@ -17,8 +17,8 @@
     }
    },
    "I": {
-    "total": 1932,
-    "fetched": 1932,
+    "total": 1935,
+    "fetched": 1935,
     "hits": {
      "meeting": 107,
      "dividend": 26,

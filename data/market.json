@@ -1,6 +1,6 @@
 {
  "date": "2026-11-25",
- "collected_at": "2026-11-25T19:00+09:00",
+ "collected_at": "2026-11-26T07:46+09:00",
  "scanned": 4334,
  "upper": [
   {
@@ -9,7 +9,7 @@
    "market": "KOSDAQ",
    "close": 157900,
    "ratio": 29.96,
-   "value": 274423
+   "value": 274461
   },
   {
    "name": "파수AI",
@@ -17,7 +17,7 @@
    "market": "KOSDAQ",
    "close": 7550,
    "ratio": 29.95,
-   "value": 45679
+   "value": 45709
   },
   {
    "name": "TPC로보틱스",
@@ -25,7 +25,7 @@
    "market": "KOSDAQ",
    "close": 4465,
    "ratio": 29.99,
-   "value": 3750
+   "value": 3786
   },
   {
    "name": "깨끗한나라",
@@ -33,7 +33,7 @@
    "market": "KOSPI",
    "close": 1420,
    "ratio": 29.92,
-   "value": 3380
+   "value": 3400
   },
   {
    "name": "케이아이이",
@@ -42,14 +42,6 @@
    "close": 8800,
    "ratio": 29.99,
    "value": 1924
-  },
-  {
-   "name": "티와이홀딩스우",
-   "code": "36328K",
-   "market": "KOSPI",
-   "close": 3460,
-   "ratio": 29.83,
-   "value": 1080
   },
   {
    "name": "윙스풋",
