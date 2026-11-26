@@ -1,63 +1,87 @@
 {
- "date": "2026-11-25",
- "collected_at": "2026-11-26T07:46+09:00",
- "scanned": 4334,
+ "date": "2026-11-26",
+ "collected_at": "2026-11-26T18:49+09:00",
+ "scanned": 4325,
  "upper": [
   {
-   "name": "안랩",
-   "code": "053800",
+   "name": "아리바이오랩",
+   "code": "261780",
    "market": "KOSDAQ",
-   "close": 157900,
+   "close": 4585,
+   "ratio": 29.89,
+   "value": 31910
+  },
+  {
+   "name": "하나에어로",
+   "code": "271160",
+   "market": "KOSDAQ",
+   "close": 5200,
+   "ratio": 30.0,
+   "value": 20402
+  },
+  {
+   "name": "진코스텍",
+   "code": "250030",
+   "market": "KOSDAQ",
+   "close": 10920,
+   "ratio": 30.0,
+   "value": 13154
+  },
+  {
+   "name": "LK삼양",
+   "code": "225190",
+   "market": "KOSDAQ",
+   "close": 4580,
+   "ratio": 29.93,
+   "value": 5417
+  },
+  {
+   "name": "동양고속",
+   "code": "084670",
+   "market": "KOSPI",
+   "close": 33400,
    "ratio": 29.96,
-   "value": 274461
+   "value": 4872
   },
   {
-   "name": "파수AI",
-   "code": "150900",
+   "name": "에이유브랜즈",
+   "code": "481070",
    "market": "KOSDAQ",
-   "close": 7550,
-   "ratio": 29.95,
-   "value": 45709
+   "close": 10950,
+   "ratio": 29.89,
+   "value": 4570
   },
   {
-   "name": "TPC로보틱스",
-   "code": "048770",
+   "name": "크라우드웍스",
+   "code": "355390",
    "market": "KOSDAQ",
-   "close": 4465,
-   "ratio": 29.99,
-   "value": 3786
+   "close": 585,
+   "ratio": 30.0,
+   "value": 4240
   },
   {
-   "name": "깨끗한나라",
-   "code": "004540",
+   "name": "천일고속",
+   "code": "000650",
    "market": "KOSPI",
-   "close": 1420,
-   "ratio": 29.92,
-   "value": 3400
+   "close": 197800,
+   "ratio": 29.96,
+   "value": 2959
   },
   {
-   "name": "케이아이이",
-   "code": "009140",
-   "market": "KOSPI",
-   "close": 8800,
-   "ratio": 29.99,
-   "value": 1924
+   "name": "셀로맥스사이언스",
+   "code": "471820",
+   "market": "KOSDAQ",
+   "close": 3950,
+   "ratio": 29.93,
+   "value": 217
   },
   {
    "name": "윙스풋",
    "code": "335870",
    "market": "KOSDAQ",
-   "close": 4125,
-   "ratio": 29.92,
-   "value": 391
-  },
-  {
-   "name": "동양2우B",
-   "code": "001527",
-   "market": "KOSPI",
-   "close": 3900,
-   "ratio": 30.0,
-   "value": 168
+   "close": 5360,
+   "ratio": 29.94,
+   "value": 58
   }
  ],
  "lower": []
