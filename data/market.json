@@ -1,6 +1,6 @@
 {
  "date": "2026-11-26",
- "collected_at": "2026-11-26T18:49+09:00",
+ "collected_at": "2026-11-27T07:34+09:00",
  "scanned": 4325,
  "upper": [
   {
@@ -9,7 +9,7 @@
    "market": "KOSDAQ",
    "close": 4585,
    "ratio": 29.89,
-   "value": 31910
+   "value": 31919
   },
   {
    "name": "하나에어로",
@@ -17,7 +17,7 @@
    "market": "KOSDAQ",
    "close": 5200,
    "ratio": 30.0,
-   "value": 20402
+   "value": 20419
   },
   {
    "name": "진코스텍",
@@ -25,7 +25,7 @@
    "market": "KOSDAQ",
    "close": 10920,
    "ratio": 30.0,
-   "value": 13154
+   "value": 13281
   },
   {
    "name": "LK삼양",
@@ -33,7 +33,7 @@
    "market": "KOSDAQ",
    "close": 4580,
    "ratio": 29.93,
-   "value": 5417
+   "value": 5436
   },
   {
    "name": "동양고속",
@@ -41,7 +41,7 @@
    "market": "KOSPI",
    "close": 33400,
    "ratio": 29.96,
-   "value": 4872
+   "value": 4929
   },
   {
    "name": "에이유브랜즈",
@@ -57,7 +57,7 @@
    "market": "KOSDAQ",
    "close": 585,
    "ratio": 30.0,
-   "value": 4240
+   "value": 4248
   },
   {
    "name": "천일고속",
