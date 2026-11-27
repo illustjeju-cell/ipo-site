@@ -1,87 +1,95 @@
 {
- "date": "2026-11-26",
- "collected_at": "2026-11-27T07:34+09:00",
- "scanned": 4325,
+ "date": "2026-11-27",
+ "collected_at": "2026-11-27T18:58+09:00",
+ "scanned": 4324,
  "upper": [
   {
-   "name": "아리바이오랩",
-   "code": "261780",
+   "name": "코스모로보틱스",
+   "code": "439960",
    "market": "KOSDAQ",
-   "close": 4585,
-   "ratio": 29.89,
-   "value": 31919
-  },
-  {
-   "name": "하나에어로",
-   "code": "271160",
-   "market": "KOSDAQ",
-   "close": 5200,
+   "close": 5720,
    "ratio": 30.0,
-   "value": 20419
+   "value": 35191
   },
   {
-   "name": "진코스텍",
-   "code": "250030",
+   "name": "앤로보틱스",
+   "code": "138360",
    "market": "KOSDAQ",
-   "close": 10920,
+   "close": 1483,
+   "ratio": 29.97,
+   "value": 29090
+  },
+  {
+   "name": "휴림에이텍",
+   "code": "078590",
+   "market": "KOSDAQ",
+   "close": 4405,
+   "ratio": 29.94,
+   "value": 23691
+  },
+  {
+   "name": "대성하이텍",
+   "code": "129920",
+   "market": "KOSDAQ",
+   "close": 7950,
+   "ratio": 29.9,
+   "value": 18839
+  },
+  {
+   "name": "제닉스로보틱스",
+   "code": "381620",
+   "market": "KOSDAQ",
+   "close": 8020,
+   "ratio": 29.98,
+   "value": 17760
+  },
+  {
+   "name": "큐리언트",
+   "code": "115180",
+   "market": "KOSDAQ",
+   "close": 15730,
    "ratio": 30.0,
-   "value": 13281
-  },
-  {
-   "name": "LK삼양",
-   "code": "225190",
-   "market": "KOSDAQ",
-   "close": 4580,
-   "ratio": 29.93,
-   "value": 5436
-  },
-  {
-   "name": "동양고속",
-   "code": "084670",
-   "market": "KOSPI",
-   "close": 33400,
-   "ratio": 29.96,
-   "value": 4929
-  },
-  {
-   "name": "에이유브랜즈",
-   "code": "481070",
-   "market": "KOSDAQ",
-   "close": 10950,
-   "ratio": 29.89,
-   "value": 4570
+   "value": 7608
   },
   {
    "name": "크라우드웍스",
    "code": "355390",
    "market": "KOSDAQ",
-   "close": 585,
-   "ratio": 30.0,
-   "value": 4248
+   "close": 760,
+   "ratio": 29.91,
+   "value": 7294
   },
   {
-   "name": "천일고속",
-   "code": "000650",
-   "market": "KOSPI",
-   "close": 197800,
-   "ratio": 29.96,
-   "value": 2959
-  },
-  {
-   "name": "셀로맥스사이언스",
-   "code": "471820",
+   "name": "에스피시스템스",
+   "code": "317830",
    "market": "KOSDAQ",
-   "close": 3950,
+   "close": 4580,
    "ratio": 29.93,
-   "value": 217
+   "value": 2817
   },
   {
-   "name": "윙스풋",
-   "code": "335870",
+   "name": "쏘닉스",
+   "code": "088280",
    "market": "KOSDAQ",
-   "close": 5360,
-   "ratio": 29.94,
-   "value": 58
+   "close": 3645,
+   "ratio": 29.95,
+   "value": 1413
+  },
+  {
+   "name": "퀀텀레일",
+   "code": "070300",
+   "market": "KOSDAQ",
+   "close": 235,
+   "ratio": 29.83,
+   "value": 1253
+  },
+  {
+   "name": "더코디",
+   "code": "224060",
+   "market": "KOSDAQ",
+   "close": 1431,
+   "ratio": 29.97,
+   "value": 382
   }
  ],
  "lower": []

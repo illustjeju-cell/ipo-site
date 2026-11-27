@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T22:29:12",
+ "updated": "2026-11-27T09:54:11",
  "items": [
   {
    "corp_code": "00116426",
@@ -30,11 +30,12 @@
    "corp_code": "00130587",
    "corp_name": "서울전자통신",
    "stage": "예정",
-   "rcept_no": "20261029000522",
-   "rcept_dt": "20261029",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261029000522",
-   "filings": 4,
+   "rcept_no": "20261127001996",
+   "rcept_dt": "20261127",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261127001996",
+   "filings": 5,
    "filings_nm": [
+    "[기재정정]소액공모공시서류(지분증권)",
     "[기재정정]소액공모공시서류(지분증권)",
     "[기재정정]소액공모공시서류(지분증권)",
     "[기재정정]소액공모공시서류(지분증권)",
@@ -1518,15 +1519,16 @@
    "corp_code": "02041694",
    "corp_name": "신영해피투모로우제12호기업인수목적",
    "stage": "확정",
-   "rcept_no": "20261123000371",
-   "rcept_dt": "20261123",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261123000371",
-   "filings": 4,
+   "rcept_no": "20261127001899",
+   "rcept_dt": "20261127",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261127001899",
+   "filings": 5,
    "filings_nm": [
     "증권신고서(지분증권)",
     "[첨부정정]증권신고서(지분증권)",
     "[기재정정]증권신고서(지분증권)",
-    "[발행조건확정]증권신고서(지분증권)"
+    "[발행조건확정]증권신고서(지분증권)",
+    "증권발행실적보고서"
    ],
    "sub_start": "2026-11-24",
    "sub_end": "2026-11-25",
@@ -1763,12 +1765,13 @@
    "corp_code": "01077540",
    "corp_name": "씨아이에스케미칼",
    "stage": "예정",
-   "rcept_no": "20261111000341",
-   "rcept_dt": "20261111",
-   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261111000341",
-   "filings": 3,
+   "rcept_no": "20261127001324",
+   "rcept_dt": "20261127",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261127001324",
+   "filings": 4,
    "filings_nm": [
     "[첨부추가]증권신고서(지분증권)",
+    "[기재정정]증권신고서(지분증권)",
     "[기재정정]증권신고서(지분증권)",
     "[기재정정]증권신고서(지분증권)"
    ],
@@ -2021,6 +2024,32 @@
    "filings_nm": [
     "소액공모공시서류(지분증권)"
    ]
+  },
+  {
+   "corp_code": "00109286",
+   "corp_name": "대동",
+   "stage": "예정",
+   "rcept_no": "20261127002035",
+   "rcept_dt": "20261127",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261127002035",
+   "filings": 1,
+   "filings_nm": [
+    "증권신고서(지분증권)"
+   ],
+   "error": "BadZipFile: File is not a zip file"
+  },
+  {
+   "corp_code": "01504211",
+   "corp_name": "라메디텍",
+   "stage": "예정",
+   "rcept_no": "20261127001913",
+   "rcept_dt": "20261127",
+   "dart_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261127001913",
+   "filings": 1,
+   "filings_nm": [
+    "소액공모공시서류(지분증권)"
+   ],
+   "error": "BadZipFile: File is not a zip file"
   },
   {
    "corp_code": "01136597",
